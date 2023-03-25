@@ -1,4 +1,5 @@
-﻿using QuizSystem.Domain.Exceptions;
+﻿using Framework.Domain;
+using QuizSystem.Domain.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace QuizSystem.Domain
 {
-    public class Student
+    public class Student : BaseEntity
     {
         public Student()
         {
