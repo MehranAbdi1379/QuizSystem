@@ -1,6 +1,7 @@
 ﻿using QuizSystem.Domain.Exceptions;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,6 +15,18 @@ namespace QuizSystem.Domain
 
         }
 
+        public Student(string firstName,
+            string lastName,
+            string nationalCode,
+            string password,
+            DateTime birthDate
+            )
+        {
+            SetFirstName(firstName);
+            SetLastName(lastName);
+            SetNationalCode(nationalCode);
+            SetBirthDate(birthDate);
+        }
 
 
         public string FirstName { get; private set; }
@@ -39,6 +52,13 @@ namespace QuizSystem.Domain
         private void SetNationalCode(string nationalCode)
         {
 
+        }
+
+        private void SetBirthDate(DateTime birthDate)
+        {
+            if (DateTime.Now.Year - birthDate.Year < 15 || DateTime.Now.Year - birthDate.Year > 100)
+                throw new StudentBirthDateInvalidValueException();
+            BirthDate = birthDate;
         }
     }
 }

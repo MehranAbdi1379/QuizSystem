@@ -61,6 +61,15 @@ namespace QuizSystem.Domain.Exceptions {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The birthdate is too old or too young.
+        /// </summary>
+        internal static string StudentBirthDateInvalidValueExceptionMessage {
+            get {
+                return ResourceManager.GetString("StudentBirthDateInvalidValueExceptionMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to FirstName is Required for Student.
         /// </summary>
         internal static string StudentFirstNameRequiredExceptionMessage {
