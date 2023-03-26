@@ -1,5 +1,5 @@
 ﻿using OnlineQuiz.Service.Contracts.DTO;
-using QuizSystem.Domain;
+using QuizSystem.Domain.Models;
 using QuizSystem.Domain.Repository;
 using System;
 using System.Collections.Generic;

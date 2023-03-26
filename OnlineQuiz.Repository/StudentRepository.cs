@@ -1,6 +1,6 @@
 ﻿using Framework.Repository;
 using OnlineQuiz.Repository.Exceptions;
-using QuizSystem.Domain;
+using QuizSystem.Domain.Models;
 using QuizSystem.Domain.Repository;
 using System;
 using System.Collections.Generic;
@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace OnlineQuiz.Repository
 {
-    
+
 
     public class StudentRepository : BaseRepository<Student>, IStudentRepository
     {

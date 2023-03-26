@@ -1,6 +1,6 @@
 ﻿using Framework.Repository;
 using Microsoft.EntityFrameworkCore;
-using QuizSystem.Domain;
+using QuizSystem.Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;

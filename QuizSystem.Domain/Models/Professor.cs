@@ -1,34 +1,32 @@
 ﻿using Framework.Core.Domain;
-using Framework.Domain;
 using QuizSystem.Domain.Exceptions;
 using QuizSystem.Domain.Repository;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace QuizSystem.Domain
+namespace QuizSystem.Domain.Models
 {
-    public class Student : BaseEntity
+    public class Professor : BaseEntity
     {
-        public Student()
+        public Professor()
         {
 
         }
 
-        public Student(string firstName,
+        public Professor(string firstName,
             string lastName,
             string nationalCode,
             string password,
             DateTime birthDate
-            ,IStudentRepository repository
+            , IStudentRepository repository
             )
         {
             SetFirstName(firstName);
             SetLastName(lastName);
-            SetNationalCode(nationalCode , repository);
+            SetNationalCode(nationalCode, repository);
             SetBirthDate(birthDate);
         }
 
@@ -54,17 +52,17 @@ namespace QuizSystem.Domain
             LastName = lastName;
         }
 
-        private void SetNationalCode(string nationalCode , IStudentRepository repository)
+        private void SetNationalCode(string nationalCode, IStudentRepository repository)
         {
             if (repository.NationalCodeExists(nationalCode))
                 throw new StudentNationalCodeExistsException();
             NationalCode = nationalCode;
-             
+
         }
 
         private void SetBirthDate(DateTime birthDate)
         {
-            if (DateTime.Now.Year - birthDate.Year < 15 || DateTime.Now.Year - birthDate.Year > 100)
+            if (DateTime.Now.Year - birthDate.Year < 22 || DateTime.Now.Year - birthDate.Year > 100)
                 throw new StudentBirthDateInvalidValueException();
             BirthDate = birthDate;
         }

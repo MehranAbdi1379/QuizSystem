@@ -117,6 +117,21 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ProfessorBirthDateInvalidValueExceptionMessage" xml:space="preserve">
+    <value>The birthdate is too old or too young</value>
+  </data>
+  <data name="ProfessorFirstNameRequiredExceptionMessage" xml:space="preserve">
+    <value>FirstName is Required for Professor</value>
+  </data>
+  <data name="ProfessorLastNameRequiredExceptionMessage" xml:space="preserve">
+    <value>LastName is Required for Professor</value>
+  </data>
+  <data name="ProfessorNationalCodeExistsExceptionMessage" xml:space="preserve">
+    <value>National Code already exists</value>
+  </data>
+  <data name="ProfessorNoMatchForNationalCodeAndPasswordExceptionMessage" xml:space="preserve">
+    <value>No match for this national code and password</value>
+  </data>
   <data name="StudentBirthDateInvalidValueExceptionMessage" xml:space="preserve">
     <value>The birthdate is too old or too young</value>
   </data>
