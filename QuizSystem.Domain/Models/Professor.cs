@@ -21,7 +21,7 @@ namespace QuizSystem.Domain.Models
             string nationalCode,
             string password,
             DateTime birthDate
-            , IStudentRepository repository
+            , IProfessorRepository repository
             )
         {
             SetFirstName(firstName);
@@ -41,21 +41,21 @@ namespace QuizSystem.Domain.Models
         private void SetFirstName(string firstName)
         {
             if (string.IsNullOrEmpty(firstName))
-                throw new StudentFirstNameRequiredException();
+                throw new ProfessorFirstNameRequiredException();
             FirstName = firstName;
         }
 
         private void SetLastName(string lastName)
         {
             if (string.IsNullOrEmpty(lastName))
-                throw new StudentLastNameRequiredException();
+                throw new ProfessorLastNameRequiredException();
             LastName = lastName;
         }
 
-        private void SetNationalCode(string nationalCode, IStudentRepository repository)
+        private void SetNationalCode(string nationalCode, IProfessorRepository repository)
         {
             if (repository.NationalCodeExists(nationalCode))
-                throw new StudentNationalCodeExistsException();
+                throw new ProfessorNationalCodeExistsException();
             NationalCode = nationalCode;
 
         }
@@ -63,7 +63,7 @@ namespace QuizSystem.Domain.Models
         private void SetBirthDate(DateTime birthDate)
         {
             if (DateTime.Now.Year - birthDate.Year < 22 || DateTime.Now.Year - birthDate.Year > 100)
-                throw new StudentBirthDateInvalidValueException();
+                throw new ProfessorBirthDateInvalidValueException();
             BirthDate = birthDate;
         }
     }
