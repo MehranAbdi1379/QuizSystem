@@ -61,6 +61,24 @@ namespace QuizSystem.Domain.Exceptions {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Time period is too short for a course.
+        /// </summary>
+        public static string CourseShortPeriodExceptionMessage {
+            get {
+                return ResourceManager.GetString("CourseShortPeriodExceptionMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Title is required for Course.
+        /// </summary>
+        public static string CourseTitleRequiredExceptionMessage {
+            get {
+                return ResourceManager.GetString("CourseTitleRequiredExceptionMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The birthdate is too old or too young.
         /// </summary>
         public static string ProfessorBirthDateInvalidValueExceptionMessage {

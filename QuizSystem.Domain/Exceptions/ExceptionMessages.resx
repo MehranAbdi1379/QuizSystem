@@ -117,6 +117,12 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="CourseShortPeriodExceptionMessage" xml:space="preserve">
+    <value>Time period is too short for a course</value>
+  </data>
+  <data name="CourseTitleRequiredExceptionMessage" xml:space="preserve">
+    <value>Title is required for Course</value>
+  </data>
   <data name="ProfessorBirthDateInvalidValueExceptionMessage" xml:space="preserve">
     <value>The birthdate is too old or too young</value>
   </data>

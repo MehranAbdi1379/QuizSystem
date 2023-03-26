@@ -40,6 +40,8 @@ namespace QuizSystem.Domain.Models
         public DateTime BirthDate { get; private set; }
         public bool Accepted { get; set; } = false;
 
+        public List<Course> Courses { get; set; }
+
         private void SetFirstName(string firstName)
         {
             if (string.IsNullOrEmpty(firstName))
