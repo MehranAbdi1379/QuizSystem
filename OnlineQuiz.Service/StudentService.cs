@@ -33,11 +33,20 @@ namespace OnlineQuiz.Service
             return student;
         }
 
-        public Student RemoveStudent(RemoveStudentDTO dto)
+        public void RemoveStudent(RemoveStudentDTO dto)
         {
             Student student = repository.GetUserFromNationalCodeAndPassword(dto.NationalCode, dto.Password);
 
             repository.Delete(student);
+        }
+
+        public Student AcceptStudent(AcceptStudentDTO dto)
+        {
+            Student student = repository.GetUserFromNationalCodeAndPassword(dto.NationalCode, dto.Password);
+
+            student.Accepted = true;
+
+            repository.Update(student);
 
             return student;
         }
