@@ -1,0 +1,16 @@
+﻿using Framework.Repository;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace QuizSystem.Domain.Repository
+{
+    public interface IStudentRepository : IBaseRepository<Student>
+    {
+        bool NationalCodeExists(string nationalCode);
+
+        Student GetUserFromNationalCodeAndPassword(string nationalCode, string password);
+    }
+}

@@ -1,5 +1,7 @@
-﻿using Framework.Domain;
+﻿using Framework.Core.Domain;
+using Framework.Domain;
 using QuizSystem.Domain.Exceptions;
+using QuizSystem.Domain.Repository;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -21,11 +23,12 @@ namespace QuizSystem.Domain
             string nationalCode,
             string password,
             DateTime birthDate
+            ,IStudentRepository repository
             )
         {
             SetFirstName(firstName);
             SetLastName(lastName);
-            SetNationalCode(nationalCode);
+            SetNationalCode(nationalCode , repository);
             SetBirthDate(birthDate);
         }
 
@@ -35,6 +38,7 @@ namespace QuizSystem.Domain
         public string NationalCode { get; private set; }
         public string Password { get; private set; }
         public DateTime BirthDate { get; private set; }
+        public bool Accepted { get; set; } = false;
 
         private void SetFirstName(string firstName)
         {
@@ -50,9 +54,12 @@ namespace QuizSystem.Domain
             LastName = lastName;
         }
 
-        private void SetNationalCode(string nationalCode)
+        private void SetNationalCode(string nationalCode , IStudentRepository repository)
         {
-
+            if (repository.NationalCodeExists(nationalCode))
+                throw new StudentNationalCodeExistsException();
+            NationalCode = nationalCode;
+             
         }
 
         private void SetBirthDate(DateTime birthDate)

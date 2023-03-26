@@ -4,15 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Framework.Domain
+namespace Framework.Core.Domain
 {
-    public class BaseEntity 
+    public class BaseEntity
     {
         public BaseEntity()
         {
             Id = Guid.NewGuid();
         }
 
-        public Guid Id{ get; set; }
+        public Guid Id { get; set; }
     }
 }

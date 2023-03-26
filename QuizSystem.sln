@@ -9,7 +9,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain", "Domain", "{2173C5
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Framework", "Framework", "{8243EB19-8A74-4EE6-985E-6C7E1927B4E8}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infostructure", "Infostructure", "{6A72BF3A-98AA-4275-84FB-8A0CA8B8FBB3}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{6A72BF3A-98AA-4275-84FB-8A0CA8B8FBB3}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Service", "Service", "{77D70269-6D01-43E0-B734-D214128656E0}"
 EndProject
@@ -19,7 +19,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Framework.Domain", "Framewo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OnlineQuiz.Repository", "OnlineQuiz.Repository\OnlineQuiz.Repository.csproj", "{BE73F731-975E-447D-97BD-9C7C697F0261}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Framework.Repository", "Framework.Repository\Framework.Repository.csproj", "{17C9698B-6A99-4DC6-B653-14AE022D4F68}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Framework.Repository", "Framework.Repository\Framework.Repository.csproj", "{17C9698B-6A99-4DC6-B653-14AE022D4F68}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Framework.Core", "Framework.Core\Framework.Core.csproj", "{6D372DD6-C08E-4141-8C4F-EBB167328143}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OnlineQuiz.Service", "OnlineQuiz.Service\OnlineQuiz.Service.csproj", "{A99428A7-05CB-43EB-B456-8933A5B79700}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineQuiz.Service.Contracts", "OnlineQuiz.Service.Contracts\OnlineQuiz.Service.Contracts.csproj", "{2C16248E-42D0-4D98-89BF-167A3CAAF6F3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -47,6 +53,18 @@ Global
 		{17C9698B-6A99-4DC6-B653-14AE022D4F68}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{17C9698B-6A99-4DC6-B653-14AE022D4F68}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{17C9698B-6A99-4DC6-B653-14AE022D4F68}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6D372DD6-C08E-4141-8C4F-EBB167328143}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6D372DD6-C08E-4141-8C4F-EBB167328143}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6D372DD6-C08E-4141-8C4F-EBB167328143}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6D372DD6-C08E-4141-8C4F-EBB167328143}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A99428A7-05CB-43EB-B456-8933A5B79700}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A99428A7-05CB-43EB-B456-8933A5B79700}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A99428A7-05CB-43EB-B456-8933A5B79700}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A99428A7-05CB-43EB-B456-8933A5B79700}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2C16248E-42D0-4D98-89BF-167A3CAAF6F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2C16248E-42D0-4D98-89BF-167A3CAAF6F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2C16248E-42D0-4D98-89BF-167A3CAAF6F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2C16248E-42D0-4D98-89BF-167A3CAAF6F3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -56,6 +74,9 @@ Global
 		{23D75AB3-5C3C-4A2F-B82E-5CFE707B53CB} = {8243EB19-8A74-4EE6-985E-6C7E1927B4E8}
 		{BE73F731-975E-447D-97BD-9C7C697F0261} = {6A72BF3A-98AA-4275-84FB-8A0CA8B8FBB3}
 		{17C9698B-6A99-4DC6-B653-14AE022D4F68} = {8243EB19-8A74-4EE6-985E-6C7E1927B4E8}
+		{6D372DD6-C08E-4141-8C4F-EBB167328143} = {8243EB19-8A74-4EE6-985E-6C7E1927B4E8}
+		{A99428A7-05CB-43EB-B456-8933A5B79700} = {77D70269-6D01-43E0-B734-D214128656E0}
+		{2C16248E-42D0-4D98-89BF-167A3CAAF6F3} = {77D70269-6D01-43E0-B734-D214128656E0}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3B1C8C5D-23C4-4DEC-AE44-2F31C2BC5661}

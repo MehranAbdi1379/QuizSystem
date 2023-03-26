@@ -22,7 +22,7 @@ namespace QuizSystem.Domain.Exceptions {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class ExceptionMessages {
+    public class ExceptionMessages {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace QuizSystem.Domain.Exceptions {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("QuizSystem.Domain.Exceptions.ExceptionMessages", typeof(ExceptionMessages).Assembly);
@@ -51,7 +51,7 @@ namespace QuizSystem.Domain.Exceptions {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -63,7 +63,7 @@ namespace QuizSystem.Domain.Exceptions {
         /// <summary>
         ///   Looks up a localized string similar to The birthdate is too old or too young.
         /// </summary>
-        internal static string StudentBirthDateInvalidValueExceptionMessage {
+        public static string StudentBirthDateInvalidValueExceptionMessage {
             get {
                 return ResourceManager.GetString("StudentBirthDateInvalidValueExceptionMessage", resourceCulture);
             }
@@ -72,7 +72,7 @@ namespace QuizSystem.Domain.Exceptions {
         /// <summary>
         ///   Looks up a localized string similar to FirstName is Required for Student.
         /// </summary>
-        internal static string StudentFirstNameRequiredExceptionMessage {
+        public static string StudentFirstNameRequiredExceptionMessage {
             get {
                 return ResourceManager.GetString("StudentFirstNameRequiredExceptionMessage", resourceCulture);
             }
@@ -81,9 +81,27 @@ namespace QuizSystem.Domain.Exceptions {
         /// <summary>
         ///   Looks up a localized string similar to LastName is Required for Student.
         /// </summary>
-        internal static string StudentLastNameRequiredExceptionMessage {
+        public static string StudentLastNameRequiredExceptionMessage {
             get {
                 return ResourceManager.GetString("StudentLastNameRequiredExceptionMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to National Code already exists.
+        /// </summary>
+        public static string StudentNationalCodeExistsExceptionMessage {
+            get {
+                return ResourceManager.GetString("StudentNationalCodeExistsExceptionMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No match for this national code and password.
+        /// </summary>
+        public static string StudentNoMatchForNationalCodeAndPasswordExceptionMessage {
+            get {
+                return ResourceManager.GetString("StudentNoMatchForNationalCodeAndPasswordExceptionMessage", resourceCulture);
             }
         }
     }

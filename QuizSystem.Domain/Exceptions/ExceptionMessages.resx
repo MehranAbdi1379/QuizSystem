@@ -126,4 +126,10 @@
   <data name="StudentLastNameRequiredExceptionMessage" xml:space="preserve">
     <value>LastName is Required for Student</value>
   </data>
+  <data name="StudentNationalCodeExistsExceptionMessage" xml:space="preserve">
+    <value>National Code already exists</value>
+  </data>
+  <data name="StudentNoMatchForNationalCodeAndPasswordExceptionMessage" xml:space="preserve">
+    <value>No match for this national code and password</value>
+  </data>
 </root>

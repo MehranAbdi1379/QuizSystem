@@ -11,15 +11,11 @@ namespace OnlineQuiz.Repository.DataBase
 {
     public class OnlineQuizContext : DataBaseContext
     {
-        public OnlineQuizContext(DbContextOptions<DataBaseContext> options) : base(options)
+        public OnlineQuizContext(DbContextOptions<OnlineQuizContext> options) : base(options)
         {
 
         }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=OnlineQuizDb;Integrated Security=True;Connect Timeout=60;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
-        }
 
         protected override void OnModelCreating(ModelBuilder model)
         {
