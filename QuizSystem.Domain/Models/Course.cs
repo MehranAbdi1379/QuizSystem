@@ -43,10 +43,10 @@ namespace QuizSystem.Domain.Models
 
         private void SetTime(DateTime startTime , DateTime endTime)
         {
-            TimePeriod timePeriod = new TimePeriod(startTime, endTime);
-            timePeriod.ValidateTimePeriod();
-            StartTime = startTime;
-            EndTime = endTime;
+            //TimePeriod timePeriod = new TimePeriod(startTime, endTime);
+            //timePeriod.ValidateTimePeriod();
+            //StartTime = startTime;
+            //EndTime = endTime;
         }
     }
 }

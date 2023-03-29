@@ -9,38 +9,48 @@ namespace QuizSystem.Domain.Value_Object
 {
     public class TimePeriod
     {
-        public DateTime StartTime { get; set; }
-        public DateTime EndTime { get; set; }
+        //public DateTime StartTime { get; set; }
+        //public DateTime EndTime { get; set; }
 
-        public TimePeriod(DateTime startTime , DateTime endTime)
-        {
-            StartTime = startTime;
-            EndTime = endTime;
-        }
+        //public TimePeriod(DateTime startTime , DateTime endTime)
+        //{
+        //    StartTime = startTime;
+        //    EndTime = endTime;
+        //}
 
-        public void ValidateTimePeriodLenght()
-        {
-            if (EndTime.Subtract(StartTime).TotalDays < 7)
-                throw new CourseShortPeriodException();
-        }
+        //public void ValidateTimePeriodLenght()
+        //{
+        //    if (EndTime.Subtract(StartTime).TotalDays < 7)
+        //        throw new CourseShortPeriodException();
+        //}
 
-        public void ValidateStartTimeIsInTheFuture()
-        {
-            if (StartTime.Subtract(DateTime.Now).TotalDays < 0)
-                throw new CourseStartTimeInThePastException();
-        }
+        //public void ValidateStartTimeIsInTheFuture()
+        //{
+        //    if (StartTime.Subtract(DateTime.Now).TotalDays < 0)
+        //        throw new CourseStartTimeInThePastException();
+        //}
 
-        public void ValidateStartAndEndTimeSort()
+        public void ValidateStartAndEndTimeSort(DateTime startDate, DateTime endDate)
         {
-            if (EndTime.Subtract(StartTime).TotalDays < 0)
+            if (endDate.Subtract(startDate).TotalDays < 0)
                 throw new CourseEndTimeIsBeforeStartTimeException();
         }
 
-        public void ValidateTimePeriod()
+        //public void ValidateTimePeriod()
+        //{
+        //    ValidateStartAndEndTimeSort();
+        //    ValidateStartTimeIsInTheFuture();
+        //    ValidateTimePeriodLenght();
+        //}
+
+        public TimePeriod(DateTime startDate, DateTime endDate)
         {
-            ValidateStartAndEndTimeSort();
-            ValidateStartTimeIsInTheFuture();
-            ValidateTimePeriodLenght();
+            ValidateStartAndEndTimeSort(startDate, endDate);
+            StartDate = startDate;
+            EndDate = endDate;
         }
+
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
     }
 }

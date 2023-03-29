@@ -61,7 +61,7 @@ namespace QuizSystem.Domain.Models
         private void SetPassword(string password)
         {
 
-            if (password.Length > 6 && Regex.IsMatch(password, "[a-zA-Z]") && Regex.IsMatch(password, "[1-9]"))
+            if (password.Length > 6 && Regex.IsMatch(password, "[a-zA-Z]") && Regex.IsMatch(password, "[0-9]"))
                 Password = password;
             else
                 throw new StudentPasswordInvalidException();

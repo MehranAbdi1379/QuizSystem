@@ -36,7 +36,7 @@ namespace QuizSystem.Service
 
         public void RemoveStudent(StudentDTO dto)
         {
-            Student student = repository.GetStudentFromNationalCodeAndPassword(dto.NationalCode, dto.Password);
+            Student student = new Student(dto.FirstName,dto.LastName,dto.NationalCode,dto.Password,dto.BirthDate,repository);
 
             repository.Delete(student);
         }
