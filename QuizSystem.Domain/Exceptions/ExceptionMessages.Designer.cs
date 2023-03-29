@@ -61,11 +61,29 @@ namespace QuizSystem.Domain.Exceptions {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to End time for the course is before start time.
+        /// </summary>
+        public static string CourseEndTimeIsBeforeStartTimeExceptionMessage {
+            get {
+                return ResourceManager.GetString("CourseEndTimeIsBeforeStartTimeExceptionMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Time period is too short for a course.
         /// </summary>
         public static string CourseShortPeriodExceptionMessage {
             get {
                 return ResourceManager.GetString("CourseShortPeriodExceptionMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Start time for course is in the past.
+        /// </summary>
+        public static string CourseStartTimeInThePastExceptionMessage {
+            get {
+                return ResourceManager.GetString("CourseStartTimeInThePastExceptionMessage", resourceCulture);
             }
         }
         

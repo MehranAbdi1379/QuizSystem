@@ -117,8 +117,14 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="CourseEndTimeIsBeforeStartTimeExceptionMessage" xml:space="preserve">
+    <value>End time for the course is before start time</value>
+  </data>
   <data name="CourseShortPeriodExceptionMessage" xml:space="preserve">
     <value>Time period is too short for a course</value>
+  </data>
+  <data name="CourseStartTimeInThePastExceptionMessage" xml:space="preserve">
+    <value>Start time for course is in the past</value>
   </data>
   <data name="CourseTitleExistsExceptionMessage" xml:space="preserve">
     <value>Title already exists</value>

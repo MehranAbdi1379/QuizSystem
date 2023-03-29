@@ -1,6 +1,7 @@
 ﻿using Framework.Core.Domain;
 using QuizSystem.Domain.Exceptions;
 using QuizSystem.Domain.Repository;
+using QuizSystem.Domain.Value_Object;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,11 +24,7 @@ namespace QuizSystem.Domain.Models
             Professor = professor;
 
             SetTitle(title, repository);
-
-            if (endTime.Subtract(StartTime).TotalDays < 7)
-            {
-                throw new CourseShortPeriodException();
-            }
+            SetTime(startTime, endTime);
         }
 
         public string Title { get; set; }
@@ -44,6 +41,12 @@ namespace QuizSystem.Domain.Models
             Title = title;
         }
 
-        
+        private void SetTime(DateTime startTime , DateTime endTime)
+        {
+            TimePeriod timePeriod = new TimePeriod(startTime, endTime);
+            timePeriod.ValidateTimePeriod();
+            StartTime = startTime;
+            EndTime = endTime;
+        }
     }
 }
