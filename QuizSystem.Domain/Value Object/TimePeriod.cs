@@ -9,6 +9,7 @@ namespace QuizSystem.Domain.Value_Object
 {
     public class TimePeriod
     {
+        
         public TimePeriod(DateTime startDate, DateTime endDate)
         {
             ValidateTimePeriod(startDate, endDate);
@@ -16,8 +17,8 @@ namespace QuizSystem.Domain.Value_Object
             EndDate = endDate;
         }
 
-        public DateTime StartDate { get; set; }
-        public DateTime EndDate { get; set; }
+        public DateTime StartDate { get; private set; }
+        public DateTime EndDate { get; private set; }
 
         public void ValidateTimePeriodLenght(DateTime startDate, DateTime endDate)
         {

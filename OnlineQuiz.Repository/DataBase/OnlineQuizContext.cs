@@ -1,6 +1,7 @@
 ﻿using Framework.Repository;
 using Microsoft.EntityFrameworkCore;
 using QuizSystem.Domain.Models;
+using QuizSystem.Domain.Value_Object;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -38,8 +39,7 @@ namespace QuizSystem.Repository.DataBase
             model.Entity<Course>().HasKey(c => c.Id);
             model.Entity<Course>().Property(c => c.Id).IsRequired();
             model.Entity<Course>().Property(c => c.Title).IsRequired().HasMaxLength(150);
-            model.Entity<Course>().Property(c => c.StartTime).IsRequired();
-            model.Entity<Course>().Property(c => c.EndTime).IsRequired();
+            model.Entity<Course>().OwnsOne(m => m.TimePeriod);
         }
 
         public DbSet<Student> Students { get; set; }

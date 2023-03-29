@@ -19,34 +19,30 @@ namespace QuizSystem.Domain.Models
 
         public Course(string title, DateTime startTime, DateTime endTime , Professor professor , ICourseRepository repository)
         {
-            StartTime = startTime;
-            EndTime = endTime;
-            Professor = professor;
-
+            SetProfessor(professor);
             SetTitle(title, repository);
             SetTime(startTime, endTime);
         }
 
         public string Title { get; set; }
-        public DateTime StartTime { get; set; }
-        public DateTime EndTime { get; set; }
-
+        public TimePeriod TimePeriod { get; set; }
         public Professor Professor { get; set; }
         public List<Student> Students { get; set; }
 
-        private void SetTitle(string title , ICourseRepository repository)
+        public void SetTitle(string title , ICourseRepository repository)
         {
             if (repository.CourseTitleExists(title))
                 throw new CourseTitleExistsException();
             Title = title;
         }
 
-        private void SetTime(DateTime startTime , DateTime endTime)
+        public void SetTime(DateTime startTime , DateTime endTime)
         {
-            //TimePeriod timePeriod = new TimePeriod(startTime, endTime);
-            //timePeriod.ValidateTimePeriod();
-            //StartTime = startTime;
-            //EndTime = endTime;
+            TimePeriod = new TimePeriod(startTime, endTime);
+        }
+        public void SetProfessor(Professor professor)
+        {
+            Professor = professor;
         }
     }
 }

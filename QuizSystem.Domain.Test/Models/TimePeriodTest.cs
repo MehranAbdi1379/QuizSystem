@@ -36,10 +36,12 @@ public class TimePeriodTest
     }
 
     [TestMethod]
-    public void SetStartAndEndDate_PeriodBetweenStartAndEndDateIsTooShort_ThrowException()
+    [DataRow(6)]
+    [DataRow(1)]
+    public void SetStartAndEndDate_PeriodBetweenStartAndEndDateIsShorterThan7Days_ThrowException(int addDays)
     {
         var startDate = DateTime.Now;
-        var endDate = DateTime.Now.AddDays(2);
+        var endDate = DateTime.Now.AddDays(addDays);
         Assert.ThrowsException<CourseShortPeriodException>(() => new TimePeriod(startDate, endDate));
     }
 
