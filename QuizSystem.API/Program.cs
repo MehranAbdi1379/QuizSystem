@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using OnlineQuiz.Repository.DataBase;
+using QuizSystem.Repository.DataBase;
 using Framework.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,7 +12,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 
 
-builder.Services.AddDbContext<OnlineQuizContext>(option
+builder.Services.AddDbContext<QuizSystemContext>(option
     => option.UseSqlServer(builder.Configuration.GetConnectionString("SQLServer")));
 
 

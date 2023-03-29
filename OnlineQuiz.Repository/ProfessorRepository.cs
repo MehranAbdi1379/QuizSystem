@@ -1,5 +1,5 @@
 ﻿using Framework.Repository;
-using OnlineQuiz.Repository.Exceptions;
+using QuizSystem.Repository.Exceptions;
 using QuizSystem.Domain.Models;
 using QuizSystem.Domain.Repository;
 using System;
@@ -21,17 +21,17 @@ namespace OnlineQuiz.Repository
             return context.Set<Professor>().Any(s => s.NationalCode == nationalCode);
         }
 
-        public Professor GetUserFromNationalCodeAndPassword(string nationalCode, string password)
+        public Professor GetProfessorFromNationalCodeAndPassword(string nationalCode, string password)
         {
             try
             {
                 return context.Set<Professor>().Where(s => s.Password == password && s.NationalCode == nationalCode).First();
             }
-            catch (ProfessorNoMatchForNationalCodeAndPasswordException ex)
+            catch (ProfessorNoMatchForNationalCodeAndPasswordException)
             {
-                throw ex;
+                throw;
             }
-
+                
         }
     }
 }

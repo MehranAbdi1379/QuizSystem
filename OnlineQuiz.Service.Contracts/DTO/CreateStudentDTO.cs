@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OnlineQuiz.Service.Contracts.DTO
+namespace QuizSystem.Service.Contracts.DTO
 {
     public class CreateStudentDTO
     {

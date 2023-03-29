@@ -70,11 +70,11 @@ namespace QuizSystem.Domain.Exceptions {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Title is required for Course.
+        ///   Looks up a localized string similar to Title already exists.
         /// </summary>
-        public static string CourseTitleRequiredExceptionMessage {
+        public static string CourseTitleExistsExceptionMessage {
             get {
-                return ResourceManager.GetString("CourseTitleRequiredExceptionMessage", resourceCulture);
+                return ResourceManager.GetString("CourseTitleExistsExceptionMessage", resourceCulture);
             }
         }
         
@@ -165,6 +165,15 @@ namespace QuizSystem.Domain.Exceptions {
         public static string StudentNoMatchForNationalCodeAndPasswordExceptionMessage {
             get {
                 return ResourceManager.GetString("StudentNoMatchForNationalCodeAndPasswordExceptionMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Password for student isn&apos;t sufficient.
+        /// </summary>
+        public static string StudentPasswordInvalidExceptionMessage {
+            get {
+                return ResourceManager.GetString("StudentPasswordInvalidExceptionMessage", resourceCulture);
             }
         }
     }

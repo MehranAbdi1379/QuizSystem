@@ -8,10 +8,8 @@ using System.Threading.Tasks;
 
 namespace QuizSystem.Domain.Repository
 {
-    public interface IStudentRepository : IBaseRepository<Student>
+    public interface ICourseRepository : IBaseRepository<Course>
     {
-        bool NationalCodeExists(string nationalCode);
-
-        Student GetStudentFromNationalCodeAndPassword(string nationalCode, string password);
+        bool CourseTitleExists(string title);
     }
 }

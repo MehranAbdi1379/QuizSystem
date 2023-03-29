@@ -25,9 +25,9 @@
     <ProjectReference Include="..\Framework.Core\Framework.Core.csproj" />
     <ProjectReference Include="..\Framework.Domain\Framework.Domain.csproj" />
     <ProjectReference Include="..\Framework.Repository\Framework.Repository.csproj" />
-    <ProjectReference Include="..\OnlineQuiz.Repository\OnlineQuiz.Repository.csproj" />
-    <ProjectReference Include="..\OnlineQuiz.Service.Contracts\OnlineQuiz.Service.Contracts.csproj" />
-    <ProjectReference Include="..\OnlineQuiz.Service\OnlineQuiz.Service.csproj" />
+    <ProjectReference Include="..\OnlineQuiz.Repository\QuizSystem.Repository.csproj" />
+    <ProjectReference Include="..\OnlineQuiz.Service.Contracts\QuizSystem.Service.Contracts.csproj" />
+    <ProjectReference Include="..\OnlineQuiz.Service\QuizSystem.Service.csproj" />
     <ProjectReference Include="..\QuizSystem.API\QuizSystem.API.csproj" />
     <ProjectReference Include="..\QuizSystem.Domain\QuizSystem.Domain.csproj" />
   </ItemGroup>

@@ -24,7 +24,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Framework.Domain\Framework.Domain.csproj" />
     <ProjectReference Include="..\Framework.Repository\Framework.Repository.csproj" />
-    <ProjectReference Include="..\OnlineQuiz.Repository\OnlineQuiz.Repository.csproj" />
+    <ProjectReference Include="..\OnlineQuiz.Repository\QuizSystem.Repository.csproj" />
     <ProjectReference Include="..\QuizSystem.Domain\QuizSystem.Domain.csproj" />
   </ItemGroup>
 

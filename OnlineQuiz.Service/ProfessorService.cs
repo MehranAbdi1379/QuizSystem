@@ -1,4 +1,4 @@
-﻿using OnlineQuiz.Service.Contracts.DTO;
+﻿using QuizSystem.Service.Contracts.DTO;
 using QuizSystem.Domain.Exceptions;
 using QuizSystem.Domain.Models;
 using QuizSystem.Domain.Repository;
@@ -7,10 +7,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using QuizSystem.Service.Contracts.SingleDTO;
 
-namespace OnlineQuiz.Service
+namespace QuizSystem.Service
 {
-    public class ProfessorService
+    public class ProfessorService : IProfessorService
     {
         protected readonly IProfessorRepository repository;
 
@@ -19,7 +20,7 @@ namespace OnlineQuiz.Service
             this.repository = repository;
         }
 
-        public Professor CreateStudent(CreateProfessorDTO dto)
+        public Professor CreateStudent(ProfessorDTO dto)
         {
             var professor = new Professor(dto.FirstName,
                 dto.LastName,
@@ -34,16 +35,16 @@ namespace OnlineQuiz.Service
             return professor;
         }
 
-        public void RemoveStudent(RemoveProfessorDTO dto)
+        public void RemoveStudent(ProfessorDTO dto)
         {
-            Professor professor = repository.GetUserFromNationalCodeAndPassword(dto.NationalCode, dto.Password);
+            Professor professor = repository.GetProfessorFromNationalCodeAndPassword(dto.NationalCode, dto.Password);
 
             repository.Delete(professor);
         }
 
-        public Professor AcceptStudent(AcceptProfessorDTO dto)
+        public Professor AcceptStudent(ProfessorDTO dto)
         {
-            Professor professor = repository.GetUserFromNationalCodeAndPassword(dto.NationalCode, dto.Password);
+            Professor professor = repository.GetProfessorFromNationalCodeAndPassword(dto.NationalCode, dto.Password);
 
             professor.Accepted = true;
 

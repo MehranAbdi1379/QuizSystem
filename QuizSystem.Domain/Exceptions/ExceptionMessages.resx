@@ -120,8 +120,8 @@
   <data name="CourseShortPeriodExceptionMessage" xml:space="preserve">
     <value>Time period is too short for a course</value>
   </data>
-  <data name="CourseTitleRequiredExceptionMessage" xml:space="preserve">
-    <value>Title is required for Course</value>
+  <data name="CourseTitleExistsExceptionMessage" xml:space="preserve">
+    <value>Title already exists</value>
   </data>
   <data name="ProfessorBirthDateInvalidValueExceptionMessage" xml:space="preserve">
     <value>The birthdate is too old or too young</value>
@@ -152,5 +152,8 @@
   </data>
   <data name="StudentNoMatchForNationalCodeAndPasswordExceptionMessage" xml:space="preserve">
     <value>No match for this national code and password</value>
+  </data>
+  <data name="StudentPasswordInvalidExceptionMessage" xml:space="preserve">
+    <value>Password for student isn't sufficient</value>
   </data>
 </root>

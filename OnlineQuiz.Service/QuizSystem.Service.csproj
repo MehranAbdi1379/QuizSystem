@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\OnlineQuiz.Service.Contracts\OnlineQuiz.Service.Contracts.csproj" />
+    <ProjectReference Include="..\OnlineQuiz.Service.Contracts\QuizSystem.Service.Contracts.csproj" />
     <ProjectReference Include="..\QuizSystem.Domain\QuizSystem.Domain.csproj" />
   </ItemGroup>
 

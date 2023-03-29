@@ -1,4 +1,4 @@
-﻿using OnlineQuiz.Service.Contracts.DTO;
+﻿using QuizSystem.Service.Contracts.DTO;
 using QuizSystem.Domain.Models;
 using QuizSystem.Domain.Repository;
 using System;
@@ -6,10 +6,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using QuizSystem.Service.Contracts.SingleDTO;
 
-namespace OnlineQuiz.Service
+namespace QuizSystem.Service
 {
-    public class StudentService
+    public class StudentService : IStudentService
     {
         protected readonly IStudentRepository repository;
 
@@ -18,7 +19,7 @@ namespace OnlineQuiz.Service
             this.repository = repository;
         }
 
-        public Student CreateStudent(CreateStudentDTO dto)
+        public Student CreateStudent(StudentDTO dto)
         {
             var student = new Student(dto.FirstName,
                 dto.LastName,
@@ -33,16 +34,16 @@ namespace OnlineQuiz.Service
             return student;
         }
 
-        public void RemoveStudent(RemoveStudentDTO dto)
+        public void RemoveStudent(StudentDTO dto)
         {
-            Student student = repository.GetUserFromNationalCodeAndPassword(dto.NationalCode, dto.Password);
+            Student student = repository.GetStudentFromNationalCodeAndPassword(dto.NationalCode, dto.Password);
 
             repository.Delete(student);
         }
 
-        public Student AcceptStudent(AcceptStudentDTO dto)
+        public Student AcceptStudent(StudentDTO dto)
         {
-            Student student = repository.GetUserFromNationalCodeAndPassword(dto.NationalCode, dto.Password);
+            Student student = repository.GetStudentFromNationalCodeAndPassword(dto.NationalCode, dto.Password);
 
             student.Accepted = true;
 

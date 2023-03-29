@@ -16,11 +16,13 @@ namespace QuizSystem.Domain.Models
 
         }
 
-        public Course(string title, DateTime startTime, DateTime endTime)
+        public Course(string title, DateTime startTime, DateTime endTime , Professor professor , ICourseRepository repository)
         {
-            Title = title;
             StartTime = startTime;
             EndTime = endTime;
+            Professor = professor;
+
+            SetTitle(title, repository);
 
             if (endTime.Subtract(StartTime).TotalDays < 7)
             {
@@ -35,11 +37,13 @@ namespace QuizSystem.Domain.Models
         public Professor Professor { get; set; }
         public List<Student> Students { get; set; }
 
-        private void SetTitle(string title)
+        private void SetTitle(string title , ICourseRepository repository)
         {
-            if (string.IsNullOrEmpty(title))
-                throw new CourseTitleRequiredException();
+            if (repository.CourseTitleExists(title))
+                throw new CourseTitleExistsException();
             Title = title;
         }
+
+        
     }
 }

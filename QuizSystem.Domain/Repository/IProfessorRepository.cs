@@ -12,6 +12,6 @@ namespace QuizSystem.Domain.Repository
     {
         bool NationalCodeExists(string nationalCode);
 
-        Professor GetUserFromNationalCodeAndPassword(string nationalCode, string password);
+        Professor GetProfessorFromNationalCodeAndPassword(string nationalCode, string password);
     }
 }

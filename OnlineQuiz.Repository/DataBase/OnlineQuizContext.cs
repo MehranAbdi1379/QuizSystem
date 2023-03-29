@@ -7,11 +7,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OnlineQuiz.Repository.DataBase
+namespace QuizSystem.Repository.DataBase
 {
-    public class OnlineQuizContext : DataBaseContext
+    public class QuizSystemContext : DataBaseContext
     {
-        public OnlineQuizContext(DbContextOptions<OnlineQuizContext> options) : base(options)
+        public QuizSystemContext(DbContextOptions<QuizSystemContext> options) : base(options)
         {
 
         }

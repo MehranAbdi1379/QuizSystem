@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace QuizSystem.Domain.Models
@@ -30,6 +31,7 @@ namespace QuizSystem.Domain.Models
             SetLastName(lastName);
             SetNationalCode(nationalCode, repository);
             SetBirthDate(birthDate);
+            SetPassword(password);
         }
 
 
@@ -54,6 +56,15 @@ namespace QuizSystem.Domain.Models
             if (string.IsNullOrEmpty(lastName))
                 throw new StudentLastNameRequiredException();
             LastName = lastName;
+        }
+
+        private void SetPassword(string password)
+        {
+
+            if (password.Length > 6 && Regex.IsMatch(password, "[a-zA-Z]") && Regex.IsMatch(password, "[1-9]"))
+                Password = password;
+            else
+                throw new StudentPasswordInvalidException();
         }
 
         private void SetNationalCode(string nationalCode, IStudentRepository repository)

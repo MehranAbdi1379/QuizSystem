@@ -3,17 +3,20 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using OnlineQuiz.Repository.DataBase;
+using QuizSystem.Repository.DataBase;
 
 #nullable disable
 
-namespace OnlineQuiz.Repository.Migrations
+namespace QuizSystem.Repository.Migrations
 {
-    [DbContext(typeof(OnlineQuizContext))]
-    partial class OnlineQuizContextModelSnapshot : ModelSnapshot
+    [DbContext(typeof(QuizSystemContext))]
+    [Migration("20230326152712_CreateNewDataBase")]
+    partial class CreateNewDataBase
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

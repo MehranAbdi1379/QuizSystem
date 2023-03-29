@@ -17,17 +17,19 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuizSystem.Domain", "QuizSy
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Framework.Domain", "Framework.Domain\Framework.Domain.csproj", "{23D75AB3-5C3C-4A2F-B82E-5CFE707B53CB}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OnlineQuiz.Repository", "OnlineQuiz.Repository\OnlineQuiz.Repository.csproj", "{BE73F731-975E-447D-97BD-9C7C697F0261}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuizSystem.Repository", "OnlineQuiz.Repository\QuizSystem.Repository.csproj", "{BE73F731-975E-447D-97BD-9C7C697F0261}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Framework.Repository", "Framework.Repository\Framework.Repository.csproj", "{17C9698B-6A99-4DC6-B653-14AE022D4F68}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Framework.Core", "Framework.Core\Framework.Core.csproj", "{6D372DD6-C08E-4141-8C4F-EBB167328143}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OnlineQuiz.Service", "OnlineQuiz.Service\OnlineQuiz.Service.csproj", "{A99428A7-05CB-43EB-B456-8933A5B79700}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuizSystem.Service", "OnlineQuiz.Service\QuizSystem.Service.csproj", "{A99428A7-05CB-43EB-B456-8933A5B79700}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OnlineQuiz.Service.Contracts", "OnlineQuiz.Service.Contracts\OnlineQuiz.Service.Contracts.csproj", "{2C16248E-42D0-4D98-89BF-167A3CAAF6F3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuizSystem.Service.Contracts", "OnlineQuiz.Service.Contracts\QuizSystem.Service.Contracts.csproj", "{2C16248E-42D0-4D98-89BF-167A3CAAF6F3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuizSystem.Tests", "QuizSystem.Tests\QuizSystem.Tests.csproj", "{E4CE2416-31BB-418E-93E7-30F1DCE46E0B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuizSystem.Tests", "QuizSystem.Tests\QuizSystem.Tests.csproj", "{E4CE2416-31BB-418E-93E7-30F1DCE46E0B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuizSystem.Domain.Test", "QuizSystem.Domain.Test\QuizSystem.Domain.Test.csproj", "{CA910863-7448-4CF0-9054-C38EBF9100C6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -71,6 +73,10 @@ Global
 		{E4CE2416-31BB-418E-93E7-30F1DCE46E0B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E4CE2416-31BB-418E-93E7-30F1DCE46E0B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E4CE2416-31BB-418E-93E7-30F1DCE46E0B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CA910863-7448-4CF0-9054-C38EBF9100C6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA910863-7448-4CF0-9054-C38EBF9100C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CA910863-7448-4CF0-9054-C38EBF9100C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CA910863-7448-4CF0-9054-C38EBF9100C6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -83,6 +89,7 @@ Global
 		{6D372DD6-C08E-4141-8C4F-EBB167328143} = {8243EB19-8A74-4EE6-985E-6C7E1927B4E8}
 		{A99428A7-05CB-43EB-B456-8933A5B79700} = {77D70269-6D01-43E0-B734-D214128656E0}
 		{2C16248E-42D0-4D98-89BF-167A3CAAF6F3} = {77D70269-6D01-43E0-B734-D214128656E0}
+		{CA910863-7448-4CF0-9054-C38EBF9100C6} = {2173C5BE-AC7F-449D-A347-1D687071704D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3B1C8C5D-23C4-4DEC-AE44-2F31C2BC5661}
