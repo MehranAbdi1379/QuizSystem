@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace QuizSystem.Service.Contracts.DTO
 {
-    public class AcceptProfessorDTO
+    public class StudentAcceptDTO
     {
-        public string NationalCode { get; private set; }
-        public string Password { get; private set; }
+        public Guid Id { get; set; }
     }
 }
