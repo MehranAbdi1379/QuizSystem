@@ -17,17 +17,15 @@ namespace QuizSystem.Domain.Models
 
         }
 
-        public Course(string title, DateTime startTime, DateTime endTime , Professor professor , ICourseRepository repository)
+        public Course(string title, DateTime startTime, DateTime endTime , ICourseRepository repository)
         {
-            SetProfessor(professor);
             SetTitle(title, repository);
             SetTime(startTime, endTime);
         }
 
-        public string Title { get; set; }
-        public TimePeriod TimePeriod { get; set; }
-        public Professor Professor { get; set; }
-        public List<Student> Students { get; set; }
+        public string Title { get; private set; }
+        public TimePeriod TimePeriod { get; private set; }
+        public List<Student> Students { get; private set; }
 
         public void SetTitle(string title , ICourseRepository repository)
         {
@@ -40,9 +38,6 @@ namespace QuizSystem.Domain.Models
         {
             TimePeriod = new TimePeriod(startTime, endTime);
         }
-        public void SetProfessor(Professor professor)
-        {
-            Professor = professor;
-        }
+        
     }
 }

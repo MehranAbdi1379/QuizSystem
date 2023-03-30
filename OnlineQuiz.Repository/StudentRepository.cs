@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using QuizSystem.Repository.DataBase;
 
 namespace OnlineQuiz.Repository
 {
@@ -14,7 +15,7 @@ namespace OnlineQuiz.Repository
 
     public class StudentRepository : BaseRepository<Student>, IStudentRepository
     {
-        public StudentRepository(DataBaseContext context) : base(context)
+        public StudentRepository(QuizSystemContext context) : base(context)
         {
         }
 

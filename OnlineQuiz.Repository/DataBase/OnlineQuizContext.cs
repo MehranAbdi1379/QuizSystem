@@ -12,7 +12,7 @@ namespace QuizSystem.Repository.DataBase
 {
     public class QuizSystemContext : DataBaseContext
     {
-        public QuizSystemContext(DbContextOptions<QuizSystemContext> options) : base(options)
+        public QuizSystemContext(DbContextOptions options) : base(options)
         {
 
         }

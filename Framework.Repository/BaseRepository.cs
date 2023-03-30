@@ -35,5 +35,10 @@ namespace Framework.Repository
         {
             context.Set<TEntity>().Remove(entity);
         }
+
+        public TEntity GetWithId(Guid id)
+        {
+            return context.Set<TEntity>().Where(x => x.Id == id).FirstOrDefault();
+        }
     }
 }

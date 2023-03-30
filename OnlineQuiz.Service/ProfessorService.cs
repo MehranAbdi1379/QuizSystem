@@ -7,50 +7,49 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using QuizSystem.Service.Contracts.SingleDTO;
 
 namespace QuizSystem.Service
 {
-    public class ProfessorService : IProfessorService
-    {
-        protected readonly IProfessorRepository repository;
+    //public class ProfessorService : IProfessorService
+    //{
+    //    protected readonly IProfessorRepository repository;
 
-        public ProfessorService(IProfessorRepository repository)
-        {
-            this.repository = repository;
-        }
+    //    public ProfessorService(IProfessorRepository repository)
+    //    {
+    //        this.repository = repository;
+    //    }
 
-        public Professor CreateStudent(ProfessorDTO dto)
-        {
-            var professor = new Professor(dto.FirstName,
-                dto.LastName,
-                dto.NationalCode,
-                dto.Password,
-                dto.BirthDate,
-                repository);
+    //    public Professor CreateProfessor(ProfessorDTO dto)
+    //    {
+    //        var professor = new Professor(dto.FirstName,
+    //            dto.LastName,
+    //            dto.NationalCode,
+    //            dto.Password,
+    //            dto.BirthDate,
+    //            repository);
 
-            repository.Create(professor);
-            repository.Save();
+    //        repository.Create(professor);
+    //        repository.Save();
 
-            return professor;
-        }
+    //        return professor;
+    //    }
 
-        public void RemoveStudent(ProfessorDTO dto)
-        {
-            Professor professor = repository.GetProfessorFromNationalCodeAndPassword(dto.NationalCode, dto.Password);
+    //    public void RemoveProfessor(ProfessorDTO dto)
+    //    {
+    //        Professor professor = repository.GetProfessorFromNationalCodeAndPassword(dto.NationalCode, dto.Password);
 
-            repository.Delete(professor);
-        }
+    //        repository.Delete(professor);
+    //    }
 
-        public Professor AcceptStudent(ProfessorDTO dto)
-        {
-            Professor professor = repository.GetProfessorFromNationalCodeAndPassword(dto.NationalCode, dto.Password);
+    //    public Professor AcceptProfessor(ProfessorDTO dto)
+    //    {
+    //        Professor professor = repository.GetProfessorFromNationalCodeAndPassword(dto.NationalCode, dto.Password);
 
-            professor.Accepted = true;
+    //        professor.Accepted = true;
 
-            repository.Update(professor);
+    //        repository.Update(professor);
 
-            return professor;
-        }
-    }
+    //        return professor;
+    //    }
+    //}
 }

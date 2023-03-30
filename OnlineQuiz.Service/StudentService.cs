@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using QuizSystem.Service.Contracts.SingleDTO;
 
 namespace QuizSystem.Service
 {
@@ -19,7 +18,7 @@ namespace QuizSystem.Service
             this.repository = repository;
         }
 
-        public Student CreateStudent(StudentDTO dto)
+        public Student CreateStudent(CreateStudentDTO dto)
         {
             var student = new Student(dto.FirstName,
                 dto.LastName,
@@ -34,16 +33,9 @@ namespace QuizSystem.Service
             return student;
         }
 
-        public void RemoveStudent(StudentDTO dto)
+        public Student AcceptStudent(StudentAcceptDTO dto)
         {
-            Student student = new Student(dto.FirstName,dto.LastName,dto.NationalCode,dto.Password,dto.BirthDate,repository);
-
-            repository.Delete(student);
-        }
-
-        public Student AcceptStudent(StudentDTO dto)
-        {
-            Student student = repository.GetStudentFromNationalCodeAndPassword(dto.NationalCode, dto.Password);
+            Student student = repository.GetWithId(dto.Id);
 
             student.Accepted = true;
 
