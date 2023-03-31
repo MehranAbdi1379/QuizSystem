@@ -151,6 +151,15 @@ namespace QuizSystem.Domain.Exceptions {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Student NationalCode is invalid.
+        /// </summary>
+        public static string StudentNationalCodeInvalidException {
+            get {
+                return ResourceManager.GetString("StudentNationalCodeInvalidException", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No match for this national code and password.
         /// </summary>
         public static string StudentNoMatchForNationalCodeAndPasswordExceptionMessage {

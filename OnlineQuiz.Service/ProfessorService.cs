@@ -12,44 +12,90 @@ namespace QuizSystem.Service
 {
     public class ProfessorService : IProfessorService
     {
-    //    protected readonly IProfessorRepository repository;
+        protected readonly IProfessorRepository repository;
+        protected readonly IStudentRepository studentRepository;
 
-    //    public ProfessorService(IProfessorRepository repository)
-    //    {
-    //        this.repository = repository;
-    //    }
+        public ProfessorService(IProfessorRepository repository , IStudentRepository studentRepository)
+        {
+            this.repository = repository;
+            this.studentRepository = studentRepository;
+        }
 
-    //    public Professor CreateProfessor(ProfessorDTO dto)
-    //    {
-    //        var professor = new Professor(dto.FirstName,
-    //            dto.LastName,
-    //            dto.NationalCode,
-    //            dto.Password,
-    //            dto.BirthDate,
-    //            repository);
+        public Professor CreateProfessor(StudentAndProfessorCreateDTO dto)
+        {
+            var professor = new Professor(dto.FirstName,
+                dto.LastName,
+                dto.NationalCode,
+                dto.Password,
+                dto.BirthDate,
+                repository);
 
-    //        repository.Create(professor);
-    //        repository.Save();
+            repository.Create(professor);
+            repository.Save();
 
-    //        return professor;
-    //    }
+            return professor;
+        }
 
-    //    public void RemoveProfessor(ProfessorDTO dto)
-    //    {
-    //        Professor professor = repository.GetProfessorFromNationalCodeAndPassword(dto.NationalCode, dto.Password);
+        public Professor UpdateProfessor(StudentAndProfessorUpdateDTO dto)
+        {
+            var professor = repository.GetWithId(dto.Id);
+            professor.SetFirstName(dto.FirstName);
+            professor.SetLastName(dto.LastName);
+            professor.SetBirthDate(dto.BirthDate);
+            professor.SetPassword(dto.Password);
 
-    //        repository.Delete(professor);
-    //    }
+            repository.Update(professor);
+            repository.Save();
 
-    //    public Professor AcceptProfessor(ProfessorDTO dto)
-    //    {
-    //        Professor professor = repository.GetProfessorFromNationalCodeAndPassword(dto.NationalCode, dto.Password);
+            return professor;
+        }
 
-    //        professor.Accepted = true;
+        public Professor RemoveProfessor(StudentAndProfessorIdDTO dto)
+        {
+            Professor professor = repository.GetWithId(dto.Id);
 
-    //        repository.Update(professor);
+            repository.Delete(professor);
+            repository.Save();
 
-    //        return professor;
-    //    }
+            return professor;
+        }
+
+        public Professor AcceptProfessor(StudentAndProfessorIdDTO dto)
+        {
+            Professor professor = repository.GetWithId(dto.Id);
+
+            professor.SetAccepted(true);
+
+            repository.Update(professor);
+            repository.Save();
+
+            return professor;
+        }
+
+        public Professor UnAcceptProfessor(StudentAndProfessorIdDTO dto)
+        {
+            Professor professor = repository.GetWithId(dto.Id);
+
+            professor.SetAccepted(false);
+
+            repository.Update(professor);
+            repository.Save();
+
+            return professor;
+        }
+
+        public Student ChangeProfessorToStudent(StudentAndProfessorIdDTO dto)
+        {
+            Professor professor = repository.GetWithId(dto.Id);
+            Student student = new Student(professor.FirstName, professor.LastName, professor.NationalCode, professor.Password, professor.BirthDate, studentRepository);
+
+            studentRepository.Create(student);
+            studentRepository.Save();
+
+            repository.Delete(professor);
+            repository.Save();
+
+            return student;
+        }
     }
 }

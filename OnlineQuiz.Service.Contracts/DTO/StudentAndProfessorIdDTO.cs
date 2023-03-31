@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace QuizSystem.Service.Contracts.DTO
 {
-    public class StudentIdDTO
+    public class StudentAndProfessorIdDTO
     {
         public Guid Id { get; set; }
     }

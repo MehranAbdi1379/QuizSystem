@@ -25,7 +25,7 @@ namespace QuizSystem.Domain.Models
             string password,
             DateTime birthDate,
             IStudentRepository repository,
-            bool accepted = false)  : base(firstName,lastName,password,birthDate)
+            bool accepted = false) : base(firstName, lastName, password, birthDate)
         {
             SetNationalCode(nationalCode, repository);
             SetAccepted(accepted);
@@ -40,6 +40,8 @@ namespace QuizSystem.Domain.Models
         {
             if (repository.NationalCodeExists(nationalCode))
                 throw new StudentNationalCodeExistsException();
+            if (nationalCode.Length != 10 || Regex.IsMatch(nationalCode, "\\D"))
+                throw new StudentNationalCodeInvalidException();
             NationalCode = nationalCode;
         }
 

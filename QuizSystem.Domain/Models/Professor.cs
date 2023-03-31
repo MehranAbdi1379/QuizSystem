@@ -30,7 +30,7 @@ namespace QuizSystem.Domain.Models
 
 
         public string NationalCode { get; private set; }
-        public bool Accepted { get; set; } = false;
+        public bool Accepted { get; private set; } = false;
 
         public List<Course> Courses { get; set; }
 

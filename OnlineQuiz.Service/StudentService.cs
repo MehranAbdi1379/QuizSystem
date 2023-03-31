@@ -20,7 +20,7 @@ namespace QuizSystem.Service
             this.professorRepository = professorRepository;
         }
 
-        public Student CreateStudent(StudentCreateDTO dto)
+        public Student CreateStudent(StudentAndProfessorCreateDTO dto)
         {
             var student = new Student(dto.FirstName,
                 dto.LastName,
@@ -37,7 +37,7 @@ namespace QuizSystem.Service
 
         
 
-        public Student DeleteStudent(StudentIdDTO dto)
+        public Student RemoveStudent(StudentAndProfessorIdDTO dto)
         {
             Student student = repository.GetWithId(dto.Id);
 
@@ -47,7 +47,7 @@ namespace QuizSystem.Service
             return student;
         }
 
-        public Student UpdateStudent(StudentUpdateDTO dto)
+        public Student UpdateStudent(StudentAndProfessorUpdateDTO dto)
         {
             Student student = repository.GetWithId(dto.Id);
 
@@ -62,7 +62,7 @@ namespace QuizSystem.Service
             return student;
         }
 
-        public Student AcceptStudent(StudentAcceptDTO dto)
+        public Student AcceptStudent(StudentAndProfessorIdDTO dto)
         {
             Student student = repository.GetWithId(dto.Id);
 
@@ -74,7 +74,7 @@ namespace QuizSystem.Service
             return student;
         }
 
-        public Student UnAcceptStudent(StudentAcceptDTO dto)
+        public Student UnAcceptStudent(StudentAndProfessorIdDTO dto)
         {
             Student student = repository.GetWithId(dto.Id);
 
@@ -86,7 +86,7 @@ namespace QuizSystem.Service
             return student;
         }
 
-        public Professor ChangeStudentToProfessor(StudentIdDTO dto)
+        public Professor ChangeStudentToProfessor(StudentAndProfessorIdDTO dto)
         {
             Student student = repository.GetWithId(dto.Id);
 

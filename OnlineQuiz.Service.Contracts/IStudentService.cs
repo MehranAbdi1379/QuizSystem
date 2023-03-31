@@ -5,11 +5,11 @@ namespace QuizSystem.Service
 {
     public interface IStudentService
     {
-        public Student CreateStudent(StudentCreateDTO dto);
-        public Student UpdateStudent(StudentUpdateDTO dto);
-        public Student AcceptStudent(StudentAcceptDTO dto);
-        public Student UnAcceptStudent(StudentAcceptDTO dto);
-        public Professor ChangeStudentToProfessor(StudentIdDTO dto);
-        public Student DeleteStudent(StudentIdDTO dto);
+        public Student CreateStudent(StudentAndProfessorCreateDTO dto);
+        public Student UpdateStudent(StudentAndProfessorUpdateDTO dto);
+        public Student AcceptStudent(StudentAndProfessorIdDTO dto);
+        public Student UnAcceptStudent(StudentAndProfessorIdDTO dto);
+        public Professor ChangeStudentToProfessor(StudentAndProfessorIdDTO dto);
+        public Student RemoveStudent(StudentAndProfessorIdDTO dto);
     }
 }

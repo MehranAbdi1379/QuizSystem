@@ -5,8 +5,12 @@ namespace QuizSystem.Service
 {
     public interface IProfessorService
     {
-    //    Professor AcceptProfessor(ProfessorDTO dto);
-    //    Professor CreateProfessor(ProfessorDTO dto);
-    //    void RemoveProfessor(ProfessorDTO dto);
+        public Professor CreateProfessor(StudentAndProfessorCreateDTO dto);
+        public Professor UpdateProfessor(StudentAndProfessorUpdateDTO dto);
+        public Professor RemoveProfessor(StudentAndProfessorIdDTO dto);
+        public Professor AcceptProfessor(StudentAndProfessorIdDTO dto);
+        public Professor UnAcceptProfessor(StudentAndProfessorIdDTO dto);
+        public Student ChangeProfessorToStudent(StudentAndProfessorIdDTO dto);
+
     }
 }
