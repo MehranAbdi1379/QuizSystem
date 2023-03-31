@@ -10,8 +10,8 @@ using System.Threading.Tasks;
 
 namespace QuizSystem.Service
 {
-    //public class ProfessorService : IProfessorService
-    //{
+    public class ProfessorService : IProfessorService
+    {
     //    protected readonly IProfessorRepository repository;
 
     //    public ProfessorService(IProfessorRepository repository)
@@ -51,5 +51,5 @@ namespace QuizSystem.Service
 
     //        return professor;
     //    }
-    //}
+    }
 }

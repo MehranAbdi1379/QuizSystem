@@ -7,12 +7,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using QuizSystem.Repository.DataBase;
 
 namespace OnlineQuiz.Repository
 {
     public class ProfessorRepository : BaseRepository<Professor>, IProfessorRepository
     {
-        public ProfessorRepository(DataBaseContext context) : base(context)
+        public ProfessorRepository(QuizSystemContext context) : base(context)
         {
         }
 

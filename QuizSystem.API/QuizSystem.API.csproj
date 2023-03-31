@@ -31,8 +31,4 @@
     <ProjectReference Include="..\QuizSystem.Domain\QuizSystem.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Extensions\" />
-  </ItemGroup>
-
 </Project>

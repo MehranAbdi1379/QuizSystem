@@ -6,6 +6,7 @@ using QuizSystem.Domain.Repository;
 using OnlineQuiz.Repository;
 using QuizSystem.Service;
 using QuizSystem.Domain.Models;
+using QuizSystem.API.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,8 +20,9 @@ builder.Services.AddControllers();
 builder.Services.AddDbContext<QuizSystemContext>(option
     => option.UseSqlServer(builder.Configuration.GetConnectionString("SQLServer")));
 
-builder.Services.AddScoped<IStudentService,StudentService>();
-builder.Services.AddScoped<IStudentRepository,StudentRepository>();
+
+builder.AddDIForRepositoryClasses();
+builder.AddDIForServiceClasses();
 
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
