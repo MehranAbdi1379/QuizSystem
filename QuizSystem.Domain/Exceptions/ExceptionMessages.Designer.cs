@@ -61,6 +61,15 @@ namespace QuizSystem.Domain.Exceptions {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Student already exists and can not be added to the course.
+        /// </summary>
+        public static string CourseAddStudentAlreadyExistsExceptionMessage {
+            get {
+                return ResourceManager.GetString("CourseAddStudentAlreadyExistsExceptionMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to End time for the course is before start time.
         /// </summary>
         public static string CourseEndTimeIsBeforeStartTimeExceptionMessage {

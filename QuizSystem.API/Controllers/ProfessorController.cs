@@ -22,14 +22,14 @@ namespace QuizSystem.API.Controllers
             return Ok(professorService.CreateProfessor(dto));
         }
 
-        [HttpPost]
+        [HttpPatch]
         [Route("Accept-Professor")]
         public IActionResult AcceptStudent(StudentAndProfessorIdDTO dto)
         {
             return Ok(professorService.AcceptProfessor(dto));
         }
 
-        [HttpPost]
+        [HttpPut]
         [Route("Update-Professor")]
         public IActionResult UpdateStudent(StudentAndProfessorUpdateDTO dto)
         {
@@ -43,14 +43,14 @@ namespace QuizSystem.API.Controllers
             return Ok(professorService.ChangeProfessorToStudent(dto));
         }
 
-        [HttpPost]
+        [HttpPatch]
         [Route("UnAccept-Professor")]
         public IActionResult UnAcceptStudent(StudentAndProfessorIdDTO dto)
         {
             return Ok(professorService.UnAcceptProfessor(dto));
         }
 
-        [HttpPost]
+        [HttpDelete]
         [Route("Delete-Professor")]
         public IActionResult DeleteStudent(StudentAndProfessorIdDTO dto)
         {

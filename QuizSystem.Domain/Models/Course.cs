@@ -34,7 +34,7 @@ namespace QuizSystem.Domain.Models
         public string Title { get; private set; }
         public TimePeriod TimePeriod { get; private set; }
         public List<Student> Students { get; private set; }
-        public Guid ProfessorId { get; set; }
+        public Guid ProfessorId { get; private set; }
 
         public void SetTitle(string title , ICourseRepository repository)
         {
@@ -64,6 +64,8 @@ namespace QuizSystem.Domain.Models
         {
             if (studentRepository.GetWithId(student.Id) == null)
                 throw new CourseStudentAddNotExistException();
+            if (studentRepository.GetWithId(student.Id) == student)
+                throw new CourseAddStudentAlreadyExistsException();
             Students.Add(student);
         }
     }

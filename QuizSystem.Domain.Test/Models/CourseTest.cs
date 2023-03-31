@@ -17,7 +17,7 @@ public class CourseTest
     {
         courseRepositoryMock.Setup(c => c.CourseTitleExists(It.IsAny<string>())).Returns(false);
         professorRepositoryMock.Setup(c => c.GetWithId(It.IsAny<Guid>())).Returns(new Professor());
-        studentRepositoryMock.Setup(c => c.GetWithId(It.IsAny<Guid>())).Returns(new Student());
+        //studentRepositoryMock.Setup(c => c.GetWithId(It.IsAny<Guid>())).Returns(new Student());
     }
 
     [TestMethod]
@@ -66,13 +66,24 @@ public class CourseTest
     }
 
     [TestMethod]
-    public void SetStudent_AddStudent()
+    public void AddStudent_StudentDoesNotExist_ThrowException()
     {
         var student = new Student("mehran","abdi","5050062330","mehran1234" , DateTime.Now.AddYears(-20) , studentRepositoryMock.Object);
-        var course = InitialCourse();
-        course.AddStudent(student,studentRepositoryMock.Object);
+        Assert.ThrowsException<CourseStudentAddNotExistException>(() => InitialCourse().AddStudent(student,studentRepositoryMock.Object));
+    }
 
-        Assert.AreEqual(student, course.Students.FirstOrDefault(student));
+    [TestMethod]
+    public void AddStudent_StudentAlreadyExists_ThrowException()
+    {
+        
+        List<Student> students = new List<Student>();
+        var student = new Student("mehran", "abdi", "5050062330", "mehran1234", DateTime.Now.AddYears(-20), studentRepositoryMock.Object);
+        students.Add(student);
+        studentRepositoryMock.Setup(c => c.GetWithId(It.IsAny<Guid>())).Returns(student);
+        var course = InitialCourse();
+        course.SetStudents(students);
+        
+        Assert.ThrowsException<CourseAddStudentAlreadyExistsException>(() => course.AddStudent(student,studentRepositoryMock.Object));
     }
 
     private Course InitialCourse(

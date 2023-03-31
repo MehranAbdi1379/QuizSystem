@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using QuizSystem.Domain.Models;
 using QuizSystem.Domain.Repository;
+using QuizSystem.Repository.DataBase;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +13,7 @@ namespace QuizSystem.Repository
 {
     public class CourseRepository : BaseRepository<Course> , ICourseRepository
     {
-        public CourseRepository(DataBaseContext context) : base(context)
+        public CourseRepository(QuizSystemContext context) : base(context)
         {
 
         }
