@@ -60,7 +60,7 @@ namespace QuizSystem.Domain.Models
 
         public void SetBirthDate(DateTime birthDate)
         {
-            if (DateTime.Now.Year - birthDate.Year < 15 || DateTime.Now.Year - birthDate.Year > 100)
+            if (DateTime.Now.Year - birthDate.Year < 15 || DateTime.Now.Year - birthDate.Year > 150)
                 throw new UserBirthDateInvalidValueException();
             BirthDate = birthDate;
         }

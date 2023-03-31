@@ -90,7 +90,7 @@ namespace QuizSystem.Service
         {
             Student student = repository.GetWithId(dto.Id);
 
-            Professor professor = new Professor(student.FirstName,student.LastName,student.NationalCode,student.Password,student.BirthDate,professorRepository);
+            Professor professor = new Professor(student.FirstName,student.LastName,student.NationalCode,student.Password,student.BirthDate,professorRepository , student.Accepted);
 
             repository.Delete(student);
             repository.Save();

@@ -87,7 +87,7 @@ namespace QuizSystem.Service
         public Student ChangeProfessorToStudent(StudentAndProfessorIdDTO dto)
         {
             Professor professor = repository.GetWithId(dto.Id);
-            Student student = new Student(professor.FirstName, professor.LastName, professor.NationalCode, professor.Password, professor.BirthDate, studentRepository);
+            Student student = new Student(professor.FirstName, professor.LastName, professor.NationalCode, professor.Password, professor.BirthDate, studentRepository , professor.Accepted);
 
             studentRepository.Create(student);
             studentRepository.Save();

@@ -70,6 +70,15 @@ namespace QuizSystem.Domain.Exceptions {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Professor is null for course.
+        /// </summary>
+        public static string CourseProfessorNullExceptionMessage {
+            get {
+                return ResourceManager.GetString("CourseProfessorNullExceptionMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Time period is too short for a course.
         /// </summary>
         public static string CourseShortPeriodExceptionMessage {
@@ -84,6 +93,15 @@ namespace QuizSystem.Domain.Exceptions {
         public static string CourseStartTimeInThePastExceptionMessage {
             get {
                 return ResourceManager.GetString("CourseStartTimeInThePastExceptionMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Student is null for adding to course.
+        /// </summary>
+        public static string CourseStudentAddNullExceptionMessage {
+            get {
+                return ResourceManager.GetString("CourseStudentAddNullExceptionMessage", resourceCulture);
             }
         }
         

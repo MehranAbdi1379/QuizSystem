@@ -17,15 +17,24 @@ namespace QuizSystem.Domain.Models
 
         }
 
-        public Course(string title, DateTime startTime, DateTime endTime , ICourseRepository repository)
+        public Course(string title, 
+            DateTime startTime,
+            DateTime endTime ,
+            ICourseRepository repository ,
+            List<Student> students ,
+            Guid professorId ,
+            IProfessorRepository professorRepository)
         {
             SetTitle(title, repository);
             SetTime(startTime, endTime);
+            SetProfessor(professorId,professorRepository);
+            SetStudents(students);
         }
 
         public string Title { get; private set; }
         public TimePeriod TimePeriod { get; private set; }
         public List<Student> Students { get; private set; }
+        public Guid ProfessorId { get; set; }
 
         public void SetTitle(string title , ICourseRepository repository)
         {
@@ -38,6 +47,24 @@ namespace QuizSystem.Domain.Models
         {
             TimePeriod = new TimePeriod(startTime, endTime);
         }
-        
+
+        public void SetProfessor(Guid professorId , IProfessorRepository professorRepository)
+        {
+            if (professorRepository.GetWithId(professorId) == null)
+                throw new CourseProfessorNullException();
+            ProfessorId = professorId;
+        }
+
+        public void SetStudents(List<Student> students)
+        {
+            Students = students;
+        }
+
+        public void AddStudent(Student student, IStudentRepository studentRepository)
+        {
+            if (studentRepository.GetWithId(student.Id) == null)
+                throw new CourseStudentAddNotExistException();
+            Students.Add(student);
+        }
     }
 }
