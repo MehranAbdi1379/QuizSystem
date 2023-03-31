@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 
 namespace QuizSystem.Service.Contracts.DTO
 {
-    public class StudentCreateDTO
+    public class StudentAndProfessorSearchDTO
     {
+        public Type Type { get; set; }
+        public Guid Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string NationalCode { get; set; }
