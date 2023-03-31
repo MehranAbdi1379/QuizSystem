@@ -1,5 +1,4 @@
 ﻿using Framework.Repository;
-using QuizSystem.Repository.Exceptions;
 using QuizSystem.Domain.Models;
 using QuizSystem.Domain.Repository;
 using System;
@@ -22,19 +21,6 @@ namespace OnlineQuiz.Repository
         public bool NationalCodeExists(string nationalCode)
         {
             return context.Set<Student>().Any(s => s.NationalCode == nationalCode);
-        }
-
-        public Student GetStudentFromNationalCodeAndPassword(string nationalCode , string password)
-        {
-            try
-            {
-                return context.Set<Student>().Where(s => s.Password == password && s.NationalCode == nationalCode).First();
-            }
-            catch (StudentNoMatchForNationalCodeAndPasswordException ex)
-            {
-                throw ex;
-            }
-            
         }
     }
 }

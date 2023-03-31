@@ -142,33 +142,6 @@ namespace QuizSystem.Domain.Exceptions {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The birthdate is too old or too young.
-        /// </summary>
-        public static string StudentBirthDateInvalidValueExceptionMessage {
-            get {
-                return ResourceManager.GetString("StudentBirthDateInvalidValueExceptionMessage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to FirstName is Required for Student.
-        /// </summary>
-        public static string StudentFirstNameRequiredExceptionMessage {
-            get {
-                return ResourceManager.GetString("StudentFirstNameRequiredExceptionMessage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to LastName is Required for Student.
-        /// </summary>
-        public static string StudentLastNameRequiredExceptionMessage {
-            get {
-                return ResourceManager.GetString("StudentLastNameRequiredExceptionMessage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to National Code already exists.
         /// </summary>
         public static string StudentNationalCodeExistsExceptionMessage {
@@ -187,11 +160,38 @@ namespace QuizSystem.Domain.Exceptions {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Password for student isn&apos;t sufficient.
+        ///   Looks up a localized string similar to The birthdate is too old or too young.
         /// </summary>
-        public static string StudentPasswordInvalidExceptionMessage {
+        public static string UserBirthDateInvalidValueExceptionMessage {
             get {
-                return ResourceManager.GetString("StudentPasswordInvalidExceptionMessage", resourceCulture);
+                return ResourceManager.GetString("UserBirthDateInvalidValueExceptionMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to FirstName is Required for User.
+        /// </summary>
+        public static string UserFirstNameRequiredExceptionMessage {
+            get {
+                return ResourceManager.GetString("UserFirstNameRequiredExceptionMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to LastName is Required for User.
+        /// </summary>
+        public static string UserLastNameRequiredExceptionMessage {
+            get {
+                return ResourceManager.GetString("UserLastNameRequiredExceptionMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Password for User isn&apos;t sufficient.
+        /// </summary>
+        public static string UserPasswordInvalidExceptionMessage {
+            get {
+                return ResourceManager.GetString("UserPasswordInvalidExceptionMessage", resourceCulture);
             }
         }
     }

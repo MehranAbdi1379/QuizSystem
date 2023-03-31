@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace QuizSystem.Domain.Exceptions
 {
-    public class StudentPasswordInvalidException : DomainException
+    public class UserLastNameRequiredException : DomainException
     {
-        public override string Message => ExceptionMessages.StudentPasswordInvalidExceptionMessage;
+        public override string Message => ExceptionMessages.UserLastNameRequiredExceptionMessage;
     }
 }

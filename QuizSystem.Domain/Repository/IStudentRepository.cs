@@ -11,7 +11,5 @@ namespace QuizSystem.Domain.Repository
     public interface IStudentRepository : IBaseRepository<Student>
     {
         bool NationalCodeExists(string nationalCode);
-
-        Student GetStudentFromNationalCodeAndPassword(string nationalCode, string password);
     }
 }

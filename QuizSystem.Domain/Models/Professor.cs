@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace QuizSystem.Domain.Models
 {
-    public class Professor : BaseEntity
+    public class Professor : User
     {
         public Professor()
         {
@@ -22,51 +22,27 @@ namespace QuizSystem.Domain.Models
             string password,
             DateTime birthDate
             , IProfessorRepository repository
-            )
+            ,bool accepted = false
+            ) : base(firstName,lastName,password,birthDate)
         {
-            SetFirstName(firstName);
-            SetLastName(lastName);
             SetNationalCode(nationalCode, repository);
-            SetBirthDate(birthDate);
         }
 
 
-        public string FirstName { get; private set; }
-        public string LastName { get; private set; }
         public string NationalCode { get; private set; }
-        public string Password { get; private set; }
-        public DateTime BirthDate { get; private set; }
         public bool Accepted { get; set; } = false;
 
         public List<Course> Courses { get; set; }
-
-        private void SetFirstName(string firstName)
-        {
-            if (string.IsNullOrEmpty(firstName))
-                throw new ProfessorFirstNameRequiredException();
-            FirstName = firstName;
-        }
-
-        private void SetLastName(string lastName)
-        {
-            if (string.IsNullOrEmpty(lastName))
-                throw new ProfessorLastNameRequiredException();
-            LastName = lastName;
-        }
 
         private void SetNationalCode(string nationalCode, IProfessorRepository repository)
         {
             if (repository.NationalCodeExists(nationalCode))
                 throw new ProfessorNationalCodeExistsException();
             NationalCode = nationalCode;
-
         }
-
-        private void SetBirthDate(DateTime birthDate)
+        public void SetAccepted(bool accepted)
         {
-            if (DateTime.Now.Year - birthDate.Year < 22 || DateTime.Now.Year - birthDate.Year > 100)
-                throw new ProfessorBirthDateInvalidValueException();
-            BirthDate = birthDate;
+            Accepted = accepted;
         }
     }
 }

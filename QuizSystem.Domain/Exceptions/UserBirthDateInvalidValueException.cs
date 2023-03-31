@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace QuizSystem.Domain.Exceptions
 {
-    public class StudentBirthDateInvalidValueException : DomainException
+    public class UserBirthDateInvalidValueException : DomainException
     {
-        public override string Message => ExceptionMessages.StudentBirthDateInvalidValueExceptionMessage;
+        public override string Message => ExceptionMessages.UserBirthDateInvalidValueExceptionMessage;
     }
 }

@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace QuizSystem.Domain.Models
 {
-    public class Student : BaseEntity
+    public class Student : User
     {
         public Student()
         {
@@ -23,63 +23,29 @@ namespace QuizSystem.Domain.Models
             string lastName,
             string nationalCode,
             string password,
-            DateTime birthDate
-            , IStudentRepository repository
-            )
+            DateTime birthDate,
+            IStudentRepository repository,
+            bool accepted = false)  : base(firstName,lastName,password,birthDate)
         {
-            SetFirstName(firstName);
-            SetLastName(lastName);
             SetNationalCode(nationalCode, repository);
-            SetBirthDate(birthDate);
-            SetPassword(password);
+            SetAccepted(accepted);
         }
 
-
-        public string FirstName { get; private set; }
-        public string LastName { get; private set; }
+        public bool Accepted { get; private set; } = false;
         public string NationalCode { get; private set; }
-        public string Password { get; private set; }
-        public DateTime BirthDate { get; private set; }
-        public bool Accepted { get; set; } = false;
 
         public List<Course> Courses { get; set; }
 
-        private void SetFirstName(string firstName)
-        {
-            if (string.IsNullOrEmpty(firstName))
-                throw new StudentFirstNameRequiredException();
-            FirstName = firstName;
-        }
-
-        private void SetLastName(string lastName)
-        {
-            if (string.IsNullOrEmpty(lastName))
-                throw new StudentLastNameRequiredException();
-            LastName = lastName;
-        }
-
-        private void SetPassword(string password)
-        {
-
-            if (password.Length > 6 && Regex.IsMatch(password, "[a-zA-Z]") && Regex.IsMatch(password, "[0-9]"))
-                Password = password;
-            else
-                throw new StudentPasswordInvalidException();
-        }
-
-        private void SetNationalCode(string nationalCode, IStudentRepository repository)
+        public void SetNationalCode(string nationalCode, IStudentRepository repository)
         {
             if (repository.NationalCodeExists(nationalCode))
                 throw new StudentNationalCodeExistsException();
             NationalCode = nationalCode;
-
         }
 
-        private void SetBirthDate(DateTime birthDate)
+        public void SetAccepted(bool accepted)
         {
-            if (DateTime.Now.Year - birthDate.Year < 15 || DateTime.Now.Year - birthDate.Year > 100)
-                throw new StudentBirthDateInvalidValueException();
-            BirthDate = birthDate;
+            Accepted = accepted;
         }
     }
 }
