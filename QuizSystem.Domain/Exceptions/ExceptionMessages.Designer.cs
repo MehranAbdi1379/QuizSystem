@@ -133,11 +133,11 @@ namespace QuizSystem.Domain.Exceptions {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to No match for this national code and password.
+        ///   Looks up a localized string similar to Professor NationalCode is invalid.
         /// </summary>
-        public static string ProfessorNoMatchForNationalCodeAndPasswordExceptionMessage {
+        public static string ProfessorNationalCodeInvalidExceptionMessage {
             get {
-                return ResourceManager.GetString("ProfessorNoMatchForNationalCodeAndPasswordExceptionMessage", resourceCulture);
+                return ResourceManager.GetString("ProfessorNationalCodeInvalidExceptionMessage", resourceCulture);
             }
         }
         
@@ -156,15 +156,6 @@ namespace QuizSystem.Domain.Exceptions {
         public static string StudentNationalCodeInvalidException {
             get {
                 return ResourceManager.GetString("StudentNationalCodeInvalidException", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to No match for this national code and password.
-        /// </summary>
-        public static string StudentNoMatchForNationalCodeAndPasswordExceptionMessage {
-            get {
-                return ResourceManager.GetString("StudentNoMatchForNationalCodeAndPasswordExceptionMessage", resourceCulture);
             }
         }
         

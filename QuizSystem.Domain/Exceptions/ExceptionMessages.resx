@@ -141,17 +141,14 @@
   <data name="ProfessorNationalCodeExistsExceptionMessage" xml:space="preserve">
     <value>National Code already exists</value>
   </data>
-  <data name="ProfessorNoMatchForNationalCodeAndPasswordExceptionMessage" xml:space="preserve">
-    <value>No match for this national code and password</value>
+  <data name="ProfessorNationalCodeInvalidExceptionMessage" xml:space="preserve">
+    <value>Professor NationalCode is invalid</value>
   </data>
   <data name="StudentNationalCodeExistsExceptionMessage" xml:space="preserve">
     <value>National Code already exists</value>
   </data>
   <data name="StudentNationalCodeInvalidException" xml:space="preserve">
     <value>Student NationalCode is invalid</value>
-  </data>
-  <data name="StudentNoMatchForNationalCodeAndPasswordExceptionMessage" xml:space="preserve">
-    <value>No match for this national code and password</value>
   </data>
   <data name="UserBirthDateInvalidValueExceptionMessage" xml:space="preserve">
     <value>The birthdate is too old or too young</value>
