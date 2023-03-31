@@ -12,13 +12,15 @@ namespace QuizSystem.Service
     public class StudentService : IStudentService
     {
         protected readonly IStudentRepository repository;
+        protected readonly IProfessorRepository professorRepository;
 
-        public StudentService(IStudentRepository repository)
+        public StudentService(IStudentRepository repository , IProfessorRepository professorRepository)
         {
             this.repository = repository;
+            this.professorRepository = professorRepository;
         }
 
-        public Student CreateStudent(CreateStudentDTO dto)
+        public Student CreateStudent(StudentCreateDTO dto)
         {
             var student = new Student(dto.FirstName,
                 dto.LastName,
@@ -33,15 +35,70 @@ namespace QuizSystem.Service
             return student;
         }
 
+        
+
+        public Student DeleteStudent(StudentIdDTO dto)
+        {
+            Student student = repository.GetWithId(dto.Id);
+
+            repository.Delete(student);
+            repository.Save();
+
+            return student;
+        }
+
+        public Student UpdateStudent(StudentUpdateDTO dto)
+        {
+            Student student = repository.GetWithId(dto.Id);
+
+            student.SetFirstName(dto.FirstName);
+            student.SetLastName(dto.LastName);
+            student.SetNationalCode(dto.NationalCode,repository);
+            student.SetBirthDate(dto.BirthDate);
+
+            repository.Update(student);
+            repository.Save();
+
+            return student;
+        }
+
         public Student AcceptStudent(StudentAcceptDTO dto)
         {
             Student student = repository.GetWithId(dto.Id);
 
-            student.Accepted = true;
+            student.SetAccepted(true);
 
             repository.Update(student);
+            repository.Save();
 
             return student;
+        }
+
+        public Student UnAcceptStudent(StudentAcceptDTO dto)
+        {
+            Student student = repository.GetWithId(dto.Id);
+
+            student.SetAccepted(false);
+
+            repository.Update(student);
+            repository.Save();
+
+            return student;
+        }
+
+        public Professor ChangeStudentToProfessor(StudentIdDTO dto)
+        {
+            Student student = repository.GetWithId(dto.Id);
+
+            Professor professor = new Professor(student.FirstName,student.LastName,student.NationalCode,student.Password,student.BirthDate,professorRepository);
+
+            repository.Delete(student);
+            repository.Save();
+
+            professorRepository.Create(professor);
+            professorRepository.Save();
+
+            return professor;
         }
     }
 }
