@@ -5,8 +5,8 @@ namespace QuizSystem.Service
 {
     public interface ICourseService
     {
-        Course AddStudentToCourse(CourseAndStudentIdDTO dto);
-        Course CreateCourse(CourseCreateDTO dto);
-        Course UpdateCourse(CourseUpdateDTO dto);
+        Guid AddStudentToCourse(CourseAndStudentIdDTO dto);
+        Guid CreateCourse(CourseCreateDTO dto);
+        Guid UpdateCourse(CourseUpdateDTO dto);
     }
 }

@@ -22,7 +22,7 @@ namespace QuizSystem.Service
             this.studentRepository = studentRepository;
         }
 
-        public Course CreateCourse(CourseCreateDTO dto)
+        public Guid CreateCourse(CourseCreateDTO dto)
         {
             List<Student> students = new List<Student>();
 
@@ -42,10 +42,10 @@ namespace QuizSystem.Service
             repository.Create(course);
             repository.Save();
 
-            return course;
+            return course.Id;
         }
 
-        public Course UpdateCourse(CourseUpdateDTO dto)
+        public Guid UpdateCourse(CourseUpdateDTO dto)
         {
             List<Student> students = new List<Student>();
 
@@ -58,16 +58,16 @@ namespace QuizSystem.Service
 
             course.SetTime(dto.StartTime, dto.EndTime);
             course.SetTitle(dto.Title, repository);
-            course.SetStudents(students);
+            course.SetStudents(new List<Student>());
             course.SetProfessor(dto.ProfessorId, professorRepository);
 
             repository.Update(course);
             repository.Save();
 
-            return course;
+            return course.Id;
         }
 
-        public Course AddStudentToCourse(CourseAndStudentIdDTO dto)
+        public Guid AddStudentToCourse(CourseAndStudentIdDTO dto)
         {
             Student student = studentRepository.GetWithId(dto.StudentId);
             Course course = repository.GetWithId(dto.CourseId);
@@ -77,7 +77,7 @@ namespace QuizSystem.Service
             repository.Update(course);
             repository.Save();
 
-            return course;
+            return course.Id;
         }
     }
 }

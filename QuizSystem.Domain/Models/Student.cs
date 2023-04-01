@@ -34,7 +34,7 @@ namespace QuizSystem.Domain.Models
         public bool Accepted { get; private set; } = false;
         public string NationalCode { get; private set; }
 
-        public List<Course> Courses { get; set; }
+        public List<Course> Courses { get; private set; }
 
         public void SetNationalCode(string nationalCode, IStudentRepository repository)
         {
@@ -49,5 +49,6 @@ namespace QuizSystem.Domain.Models
         {
             Accepted = accepted;
         }
+
     }
 }

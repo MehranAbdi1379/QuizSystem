@@ -64,7 +64,7 @@ namespace QuizSystem.Domain.Models
         {
             if (studentRepository.GetWithId(student.Id) == null)
                 throw new CourseStudentAddNotExistException();
-            if (studentRepository.GetWithId(student.Id) == student)
+            if (Students.Any(x => x.Id ==student.Id))
                 throw new CourseAddStudentAlreadyExistsException();
             Students.Add(student);
         }

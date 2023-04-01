@@ -34,7 +34,7 @@ namespace QuizSystem.Repository.Migrations
 
                     b.HasIndex("StudentsId");
 
-                    b.ToTable("CourseStudent");
+                    b.ToTable("CourseStudent", (string)null);
                 });
 
             modelBuilder.Entity("QuizSystem.Domain.Models.Course", b =>
@@ -55,7 +55,7 @@ namespace QuizSystem.Repository.Migrations
 
                     b.HasIndex("ProfessorId");
 
-                    b.ToTable("Courses");
+                    b.ToTable("Courses", (string)null);
                 });
 
             modelBuilder.Entity("QuizSystem.Domain.Models.Professor", b =>
@@ -92,7 +92,7 @@ namespace QuizSystem.Repository.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Professors");
+                    b.ToTable("Professors", (string)null);
                 });
 
             modelBuilder.Entity("QuizSystem.Domain.Models.Student", b =>
@@ -129,7 +129,7 @@ namespace QuizSystem.Repository.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Students");
+                    b.ToTable("Students", (string)null);
                 });
 
             modelBuilder.Entity("CourseStudent", b =>
@@ -155,7 +155,7 @@ namespace QuizSystem.Repository.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.OwnsOne("QuizSystem.Domain.Value_Object.TimePeriod", "TimePeriod", b1 =>
+                    b.OwnsOne("QuizSystem.Domain.Models.Course.TimePeriod#QuizSystem.Domain.Value_Object.TimePeriod", "TimePeriod", b1 =>
                         {
                             b1.Property<Guid>("CourseId")
                                 .HasColumnType("uniqueidentifier");
@@ -168,7 +168,7 @@ namespace QuizSystem.Repository.Migrations
 
                             b1.HasKey("CourseId");
 
-                            b1.ToTable("Courses");
+                            b1.ToTable("Courses", (string)null);
 
                             b1.WithOwner()
                                 .HasForeignKey("CourseId");
