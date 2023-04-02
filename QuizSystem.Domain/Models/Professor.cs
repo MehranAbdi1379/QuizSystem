@@ -27,15 +27,14 @@ namespace QuizSystem.Domain.Models
             ) : base(firstName,lastName,password,birthDate)
         {
             SetNationalCode(nationalCode, repository);
+            SetAccepted(accepted);
         }
 
 
         public string NationalCode { get; private set; }
         public bool Accepted { get; private set; } = false;
 
-        public List<Course> Courses { get; set; }
-
-        private void SetNationalCode(string nationalCode, IProfessorRepository repository)
+        public void SetNationalCode(string nationalCode, IProfessorRepository repository)
         {
             if (repository.NationalCodeExists(nationalCode))
                 throw new ProfessorNationalCodeExistsException();

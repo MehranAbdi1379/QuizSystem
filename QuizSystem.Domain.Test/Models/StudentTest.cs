@@ -15,15 +15,17 @@ namespace QuizSystem.Domain.Test.Models
     public class StudentTest
     {
         private readonly Mock<IStudentRepository> studentRepositoryMock;
+        private readonly Mock<ICourseRepository> courseRepositoryMock;
         public StudentTest()
         {
             studentRepositoryMock = new Mock<IStudentRepository>();
+            courseRepositoryMock = new Mock<ICourseRepository>();
         }
 
         [TestMethod]
         public void SetNationalCode_Retrieve()
         {
-            var student = InitialStudent("5050062330");
+            var student = InitialStudent();
             var nationalCode = "5050062330";
             Assert.AreEqual(nationalCode, student.NationalCode);
         }
@@ -41,13 +43,13 @@ namespace QuizSystem.Domain.Test.Models
         public void SetNationalCode_NationalCodeExists_ThrowException()
         {
             studentRepositoryMock.Setup(c => c.NationalCodeExists(It.IsAny<string>())).Returns(true);
-            Assert.ThrowsException<StudentNationalCodeExistsException>(() => InitialStudent("5050062330"));
+            Assert.ThrowsException<StudentNationalCodeExistsException>(() => InitialStudent());
         }
 
         [TestMethod]
         public void SetAccepted_Retrieve()
         {
-            var student = InitialStudent("5050062330");
+            var student = InitialStudent();
             var accepted = false;
             Assert.AreEqual(accepted, student.Accepted);
         }
@@ -55,12 +57,13 @@ namespace QuizSystem.Domain.Test.Models
         [TestMethod]
         public void SetAccepted_SetAcceptedMethod()
         {
-            var student = InitialStudent("5050062330");
+            var student = InitialStudent();
             student.SetAccepted(true);
             Assert.AreEqual(true, student.Accepted);
         }
 
-        public Student InitialStudent(string nationalCode)
+
+        public Student InitialStudent(string nationalCode = "5050062330")
         {
             return new Student("mehran", "abdi", nationalCode, "mehran1234", DateTime.Now.AddYears(-20),studentRepositoryMock.Object);
         }
