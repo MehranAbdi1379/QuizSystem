@@ -33,6 +33,7 @@ namespace QuizSystem.Domain.Models
 
         public string NationalCode { get; private set; }
         public bool Accepted { get; private set; } = false;
+        public List<Course> Courses { get; private set; }
 
         public void SetNationalCode(string nationalCode, IProfessorRepository repository)
         {

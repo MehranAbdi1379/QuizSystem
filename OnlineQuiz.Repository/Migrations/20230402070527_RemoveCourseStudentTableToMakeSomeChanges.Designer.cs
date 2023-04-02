@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using QuizSystem.Repository.DataBase;
 
@@ -11,9 +12,11 @@ using QuizSystem.Repository.DataBase;
 namespace QuizSystem.Repository.Migrations
 {
     [DbContext(typeof(QuizSystemContext))]
-    partial class QuizSystemContextModelSnapshot : ModelSnapshot
+    [Migration("20230402070527_RemoveCourseStudentTableToMakeSomeChanges")]
+    partial class RemoveCourseStudentTableToMakeSomeChanges
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -41,23 +44,6 @@ namespace QuizSystem.Repository.Migrations
                     b.HasIndex("ProfessorId");
 
                     b.ToTable("Courses");
-                });
-
-            modelBuilder.Entity("QuizSystem.Domain.Models.CourseStudent", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("CourseId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("StudentId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("CourseStudent");
                 });
 
             modelBuilder.Entity("QuizSystem.Domain.Models.Professor", b =>

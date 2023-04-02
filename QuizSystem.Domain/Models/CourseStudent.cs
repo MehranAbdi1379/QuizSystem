@@ -23,8 +23,8 @@ namespace QuizSystem.Domain.Models
             SetCourseId(courseId, courseRepository);
         }
 
-        public Guid StudentId { get; set; }
-        public Guid CourseId { get; set; }
+        public Guid StudentId { get; private set; }
+        public Guid CourseId { get; private set; }
 
         public void SetStudentId(Guid studentId, IStudentRepository studentRepository)
         {
@@ -35,7 +35,7 @@ namespace QuizSystem.Domain.Models
 
         public void SetCourseId(Guid courseId , ICourseRepository courseRepository)
         {
-            if (!courseRepository.IsExist(courseId))
+            if (courseRepository.IsExist(courseId)==false)
                 throw new CourseStudentCourseIdNotExistException();
             CourseId = courseId;
         }

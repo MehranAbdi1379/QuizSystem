@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using QuizSystem.Repository.DataBase;
 
@@ -11,9 +12,11 @@ using QuizSystem.Repository.DataBase;
 namespace QuizSystem.Repository.Migrations
 {
     [DbContext(typeof(QuizSystemContext))]
-    partial class QuizSystemContextModelSnapshot : ModelSnapshot
+    [Migration("20230402052015_AddingNewConnectionModelsToDB")]
+    partial class AddingNewConnectionModelsToDB
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -38,9 +41,24 @@ namespace QuizSystem.Repository.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ProfessorId");
-
                     b.ToTable("Courses");
+                });
+
+            modelBuilder.Entity("QuizSystem.Domain.Models.CourseProfessor", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CourseId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ProfessorId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("CourseProfessor");
                 });
 
             modelBuilder.Entity("QuizSystem.Domain.Models.CourseStudent", b =>
@@ -136,12 +154,6 @@ namespace QuizSystem.Repository.Migrations
 
             modelBuilder.Entity("QuizSystem.Domain.Models.Course", b =>
                 {
-                    b.HasOne("QuizSystem.Domain.Models.Professor", "Professor")
-                        .WithMany("Courses")
-                        .HasForeignKey("ProfessorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.OwnsOne("QuizSystem.Domain.Value_Object.TimePeriod", "TimePeriod", b1 =>
                         {
                             b1.Property<Guid>("CourseId")
@@ -161,15 +173,8 @@ namespace QuizSystem.Repository.Migrations
                                 .HasForeignKey("CourseId");
                         });
 
-                    b.Navigation("Professor");
-
                     b.Navigation("TimePeriod")
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("QuizSystem.Domain.Models.Professor", b =>
-                {
-                    b.Navigation("Courses");
                 });
 #pragma warning restore 612, 618
         }

@@ -79,11 +79,29 @@ namespace QuizSystem.Domain.Exceptions {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Course Id doesn&apos;t exist to add to CourseProfessor model.
+        /// </summary>
+        public static string CourseProfessorCourseIdNotExistExceptionMessage {
+            get {
+                return ResourceManager.GetString("CourseProfessorCourseIdNotExistExceptionMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Professor is null for course.
         /// </summary>
         public static string CourseProfessorNotExistExceptionMessage {
             get {
                 return ResourceManager.GetString("CourseProfessorNotExistExceptionMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Professor Id doesn&apos;t exist to add to CourseProfessor model.
+        /// </summary>
+        public static string CourseProfessorProfessorIdNotExistExceptionMessage {
+            get {
+                return ResourceManager.GetString("CourseProfessorProfessorIdNotExistExceptionMessage", resourceCulture);
             }
         }
         

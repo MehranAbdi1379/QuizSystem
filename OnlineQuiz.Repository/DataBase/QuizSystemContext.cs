@@ -41,9 +41,9 @@ namespace QuizSystem.Repository.DataBase
             model.Entity<Course>().Property(c => c.Id).IsRequired();
             model.Entity<Course>().Property(c => c.Title).IsRequired().HasMaxLength(150);
             model.Entity<Course>().OwnsOne(c => c.TimePeriod);
-            model.Entity<Course>().Ignore(c => c.StudentIds);
+            //model.Entity<Course>().Ignore(c => c.StudentIds);
 
-            model.Entity<CourseStudent>().HasNoKey();
+            model.Entity<CourseStudent>().HasKey(cs => cs.Id);
             model.Entity<CourseStudent>().Property(cs => cs.StudentId).IsRequired();
             model.Entity<CourseStudent>().Property(cs => cs.CourseId).IsRequired();
 

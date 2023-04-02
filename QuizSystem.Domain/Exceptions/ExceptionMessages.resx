@@ -123,8 +123,14 @@
   <data name="CourseEndTimeIsBeforeStartTimeExceptionMessage" xml:space="preserve">
     <value>End time for the course is before start time</value>
   </data>
+  <data name="CourseProfessorCourseIdNotExistExceptionMessage" xml:space="preserve">
+    <value>Course Id doesn't exist to add to CourseProfessor model</value>
+  </data>
   <data name="CourseProfessorNotExistExceptionMessage" xml:space="preserve">
     <value>Professor is null for course</value>
+  </data>
+  <data name="CourseProfessorProfessorIdNotExistExceptionMessage" xml:space="preserve">
+    <value>Professor Id doesn't exist to add to CourseProfessor model</value>
   </data>
   <data name="CourseShortPeriodExceptionMessage" xml:space="preserve">
     <value>Time period is too short for a course</value>
