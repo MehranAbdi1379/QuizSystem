@@ -81,9 +81,9 @@ namespace QuizSystem.Domain.Exceptions {
         /// <summary>
         ///   Looks up a localized string similar to Professor is null for course.
         /// </summary>
-        public static string CourseProfessorNullExceptionMessage {
+        public static string CourseProfessorNotExistExceptionMessage {
             get {
-                return ResourceManager.GetString("CourseProfessorNullExceptionMessage", resourceCulture);
+                return ResourceManager.GetString("CourseProfessorNotExistExceptionMessage", resourceCulture);
             }
         }
         
@@ -115,11 +115,38 @@ namespace QuizSystem.Domain.Exceptions {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Course Id doesn&apos;t exist to add to CourseStudent model.
+        /// </summary>
+        public static string CourseStudentCourseIdNotExistExceptionMessage {
+            get {
+                return ResourceManager.GetString("CourseStudentCourseIdNotExistExceptionMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Student Id doesn&apos;t exist to add to CourseStudent model.
+        /// </summary>
+        public static string CourseStudentStudentIdNotExistExceptionMessage {
+            get {
+                return ResourceManager.GetString("CourseStudentStudentIdNotExistExceptionMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Title already exists.
         /// </summary>
         public static string CourseTitleExistsExceptionMessage {
             get {
                 return ResourceManager.GetString("CourseTitleExistsExceptionMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Course does not exist to add to Professor.
+        /// </summary>
+        public static string ProfessorAddCourseNotExistExceptionMessage {
+            get {
+                return ResourceManager.GetString("ProfessorAddCourseNotExistExceptionMessage", resourceCulture);
             }
         }
         

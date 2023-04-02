@@ -40,5 +40,10 @@ namespace Framework.Repository
         {
             return context.Set<TEntity>().Where(x => x.Id == id).FirstOrDefault();
         }
+
+        public bool IsExist(Guid id)
+        {
+            return context.Set<TEntity>().Any(x => x.Id == id);
+        }
     }
 }

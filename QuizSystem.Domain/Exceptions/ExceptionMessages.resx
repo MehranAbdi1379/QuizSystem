@@ -123,7 +123,7 @@
   <data name="CourseEndTimeIsBeforeStartTimeExceptionMessage" xml:space="preserve">
     <value>End time for the course is before start time</value>
   </data>
-  <data name="CourseProfessorNullExceptionMessage" xml:space="preserve">
+  <data name="CourseProfessorNotExistExceptionMessage" xml:space="preserve">
     <value>Professor is null for course</value>
   </data>
   <data name="CourseShortPeriodExceptionMessage" xml:space="preserve">
@@ -135,8 +135,17 @@
   <data name="CourseStudentAddNullExceptionMessage" xml:space="preserve">
     <value>Student is null for adding to course</value>
   </data>
+  <data name="CourseStudentCourseIdNotExistExceptionMessage" xml:space="preserve">
+    <value>Course Id doesn't exist to add to CourseStudent model</value>
+  </data>
+  <data name="CourseStudentStudentIdNotExistExceptionMessage" xml:space="preserve">
+    <value>Student Id doesn't exist to add to CourseStudent model</value>
+  </data>
   <data name="CourseTitleExistsExceptionMessage" xml:space="preserve">
     <value>Title already exists</value>
+  </data>
+  <data name="ProfessorAddCourseNotExistExceptionMessage" xml:space="preserve">
+    <value>Course does not exist to add to Professor</value>
   </data>
   <data name="ProfessorBirthDateInvalidValueExceptionMessage" xml:space="preserve">
     <value>The birthdate is too old or too young</value>

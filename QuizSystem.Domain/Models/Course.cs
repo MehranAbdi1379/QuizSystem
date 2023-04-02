@@ -21,19 +21,20 @@ namespace QuizSystem.Domain.Models
             DateTime startTime,
             DateTime endTime ,
             ICourseRepository repository ,
-            List<Student> students ,
+            List<Guid> studentIds ,
             Guid professorId ,
-            IProfessorRepository professorRepository)
+            IProfessorRepository professorRepository,
+            IStudentRepository studentRepository)
         {
             SetTitle(title, repository);
             SetTime(startTime, endTime);
             SetProfessor(professorId,professorRepository);
-            SetStudents(students);
+            SetStudents(studentIds , studentRepository);
         }
 
         public string Title { get; private set; }
         public TimePeriod TimePeriod { get; private set; }
-        public List<Student> Students { get; private set; }
+        public List<Guid> StudentIds { get; private set; }
         public Guid ProfessorId { get; private set; }
 
         public void SetTitle(string title , ICourseRepository repository)
@@ -50,23 +51,28 @@ namespace QuizSystem.Domain.Models
 
         public void SetProfessor(Guid professorId , IProfessorRepository professorRepository)
         {
-            if (professorRepository.GetWithId(professorId) == null)
-                throw new CourseProfessorNullException();
+            if (professorRepository.IsExist(professorId) == true)
+                throw new CourseProfessorNotExistException();
             ProfessorId = professorId;
         }
 
-        public void SetStudents(List<Student> students)
+        public void SetStudents(List<Guid> studentIds , IStudentRepository studentRepository)
         {
-            Students = students;
+            foreach (var item in studentIds)
+            {
+                if(studentRepository.IsExist(item))
+                    throw new CourseStudentAddNotExistException();
+            }
+            StudentIds = studentIds;
         }
 
-        public void AddStudent(Student student, IStudentRepository studentRepository)
+        public void AddStudent(Guid studentId, IStudentRepository studentRepository)
         {
-            if (studentRepository.GetWithId(student.Id) == null)
+            if (studentRepository.IsExist(studentId) == false)
                 throw new CourseStudentAddNotExistException();
-            if (Students.Any(x => x.Id ==student.Id))
+            if (StudentIds.Any(x => x == studentId))
                 throw new CourseAddStudentAlreadyExistsException();
-            Students.Add(student);
+            StudentIds.Add(studentId);
         }
     }
 }

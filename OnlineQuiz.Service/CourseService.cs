@@ -14,8 +14,12 @@ namespace QuizSystem.Service
         protected readonly ICourseRepository repository;
         protected readonly IProfessorRepository professorRepository;
         protected readonly IStudentRepository studentRepository;
+        protected readonly ICourseStudentRepository courseStudentRepository;
 
-        public CourseService(ICourseRepository repository, IProfessorRepository professorRepository, IStudentRepository studentRepository)
+        public CourseService(ICourseRepository repository,
+            IProfessorRepository professorRepository,
+            IStudentRepository studentRepository,
+            ICourseStudentRepository courseStudentRepository)
         {
             this.repository = repository;
             this.professorRepository = professorRepository;
@@ -24,21 +28,22 @@ namespace QuizSystem.Service
 
         public Guid CreateCourse(CourseCreateDTO dto)
         {
-            List<Student> students = new List<Student>();
-
-            foreach (var item in dto.StudentIds)
-            {
-                students.Add(studentRepository.GetWithId(item));
-            }
-
             var course = new Course(dto.Title,
                 dto.StartTime,
                 dto.EndTime,
                 repository,
-                students,
+                dto.StudentIds,
                 dto.ProfessorId,
-                professorRepository);
+                professorRepository
+                ,studentRepository);
 
+            foreach (var studentId in dto.StudentIds)
+            {
+                CourseStudent courseStudent = new CourseStudent(studentId,course.Id,repository,studentRepository);
+                courseStudentRepository.Create(courseStudent);
+            }
+
+            courseStudentRepository.Save();
             repository.Create(course);
             repository.Save();
 
@@ -47,18 +52,11 @@ namespace QuizSystem.Service
 
         public Guid UpdateCourse(CourseUpdateDTO dto)
         {
-            List<Student> students = new List<Student>();
-
-            foreach (var item in dto.StudentIds)
-            {
-                students.Add(studentRepository.GetWithId(item));
-            }
-
             Course course = repository.GetWithId(dto.Id);
 
             course.SetTime(dto.StartTime, dto.EndTime);
             course.SetTitle(dto.Title, repository);
-            course.SetStudents(new List<Student>());
+            course.SetStudents(dto.StudentIds,studentRepository);
             course.SetProfessor(dto.ProfessorId, professorRepository);
 
             repository.Update(course);
@@ -69,10 +67,9 @@ namespace QuizSystem.Service
 
         public Guid AddStudentToCourse(CourseAndStudentIdDTO dto)
         {
-            Student student = studentRepository.GetWithId(dto.StudentId);
             Course course = repository.GetWithId(dto.CourseId);
 
-            course.AddStudent(student, studentRepository);
+            course.AddStudent(dto.StudentId, studentRepository);
 
             repository.Update(course);
             repository.Save();
