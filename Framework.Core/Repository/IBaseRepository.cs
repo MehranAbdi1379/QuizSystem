@@ -8,6 +8,7 @@ namespace Framework.Repository
         void Delete(TEntity entity);
         void Save();
         void Update(TEntity entity);
-        public TEntity GetWithId(Guid id);  
+        TEntity GetWithId(Guid id);  
+        bool IsExist(Guid id);
     }
 }
