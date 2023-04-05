@@ -97,5 +97,12 @@ namespace QuizSystem.Service
 
             return student;
         }
+
+        public List<Professor> SearchProfessor(StudentProfessorSearchDTO dto)
+        {
+            List<Professor> professors = repository.Filter(dto.FirstName,dto.LastName,dto.NationalCode);
+
+            return professors;
+        }
     }
 }

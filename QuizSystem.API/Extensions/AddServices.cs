@@ -2,6 +2,7 @@
 using QuizSystem.Domain.Repository;
 using QuizSystem.Repository;
 using QuizSystem.Service;
+using QuizSystem.Service.Contracts;
 
 namespace QuizSystem.API.Extensions
 {
@@ -12,6 +13,7 @@ namespace QuizSystem.API.Extensions
             builder.Services.AddScoped<IStudentService, StudentService>();
             builder.Services.AddScoped<IProfessorService, ProfessorService>();
             builder.Services.AddScoped<ICourseService, CourseService>();
+            builder.Services.AddScoped<IUserSearchService,UserSearchService>();
         }
 
         public static void AddDIForRepositoryClasses(this WebApplicationBuilder builder)

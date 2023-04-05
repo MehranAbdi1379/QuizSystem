@@ -266,5 +266,14 @@ namespace QuizSystem.Domain.Exceptions {
                 return ResourceManager.GetString("UserPasswordInvalidExceptionMessage", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User search type is invalid.
+        /// </summary>
+        public static string UserSearchTypeInvalidExceptionMessage {
+            get {
+                return ResourceManager.GetString("UserSearchTypeInvalidExceptionMessage", resourceCulture);
+            }
+        }
     }
 }

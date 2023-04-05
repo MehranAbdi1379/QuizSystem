@@ -86,6 +86,4 @@ public class CourseService : ICourseService
 
         return dto.CourseId;
     }
-
-
 }

@@ -7,6 +7,7 @@ using OnlineQuiz.Repository;
 using QuizSystem.Service;
 using QuizSystem.Domain.Models;
 using QuizSystem.API.Extensions;
+using Microsoft.AspNetCore.Builder;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,10 +17,16 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 
-
 builder.Services.AddDbContext<QuizSystemContext>(option
     => option.UseSqlServer(builder.Configuration.GetConnectionString("SQLServer")));
 
+builder.Services.AddCors(options =>
+{
+    var frontendURL = builder.Configuration.GetValue<string>("frontend_url");
+
+    options.AddDefaultPolicy(builder =>
+    builder.WithOrigins(frontendURL).AllowAnyMethod().AllowAnyHeader());
+});
 
 builder.AddDIForRepositoryClasses();
 builder.AddDIForServiceClasses();
@@ -39,6 +46,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseCors();
 
 app.UseHttpsRedirection();
 

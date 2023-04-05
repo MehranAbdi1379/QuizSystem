@@ -186,4 +186,7 @@
   <data name="UserPasswordInvalidExceptionMessage" xml:space="preserve">
     <value>Password for User isn't sufficient</value>
   </data>
+  <data name="UserSearchTypeInvalidExceptionMessage" xml:space="preserve">
+    <value>User search type is invalid</value>
+  </data>
 </root>

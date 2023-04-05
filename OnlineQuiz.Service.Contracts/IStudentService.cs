@@ -11,5 +11,6 @@ namespace QuizSystem.Service
         public Student UnAcceptStudent(StudentAndProfessorIdDTO dto);
         public Professor ChangeStudentToProfessor(StudentAndProfessorIdDTO dto);
         public Student RemoveStudent(StudentAndProfessorIdDTO dto);
+        public List<Student> SearchStudent(StudentProfessorSearchDTO dto);
     }
 }

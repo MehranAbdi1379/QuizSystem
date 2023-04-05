@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using QuizSystem.Repository.DataBase;
+using System.Text.RegularExpressions;
 
 namespace OnlineQuiz.Repository
 {
@@ -21,5 +22,10 @@ namespace OnlineQuiz.Repository
             return context.Set<Professor>().Any(s => s.NationalCode == nationalCode);
         }
 
+        public List<Professor> Filter(string firstName, string lastName, string nationalCode)
+        {
+            return context.Set<Professor>().Where(s => s.FirstName.ToLower().Contains(firstName.ToLower()) &&
+            s.LastName.ToLower().Contains(lastName.ToLower()) && s.NationalCode.Contains(nationalCode)).ToList();
+        }
     }
 }

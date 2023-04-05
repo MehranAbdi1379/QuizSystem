@@ -7,7 +7,7 @@ namespace QuizSystem.API.Controllers
 {
     [ApiController]
     [Route("api/Course")]
-    public class CourseController : Controller
+    public class CourseController : ControllerBase
     {
         private readonly ICourseService courseService;
 
