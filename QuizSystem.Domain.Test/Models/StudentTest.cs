@@ -14,11 +14,11 @@ namespace QuizSystem.Domain.Test.Models
     [TestClass]
     public class StudentTest
     {
-        private readonly Mock<IStudentRepository> studentRepositoryMock;
+        private readonly Mock<IUserRepository<Student>> studentRepositoryMock;
         private readonly Mock<ICourseRepository> courseRepositoryMock;
         public StudentTest()
         {
-            studentRepositoryMock = new Mock<IStudentRepository>();
+            studentRepositoryMock = new Mock<IUserRepository<Student>>();
             courseRepositoryMock = new Mock<ICourseRepository>();
         }
 

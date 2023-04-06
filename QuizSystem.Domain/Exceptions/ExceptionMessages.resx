@@ -117,6 +117,12 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AdminNationalCodeExistsExceptionMessage" xml:space="preserve">
+    <value>Admin National Code already exists</value>
+  </data>
+  <data name="AdminNationalCodeInvalidExceptionMessage" xml:space="preserve">
+    <value>Admin NationalCode is invalid</value>
+  </data>
   <data name="CourseAddStudentAlreadyExistsExceptionMessage" xml:space="preserve">
     <value>Student already exists and can not be added to the course</value>
   </data>
@@ -163,7 +169,7 @@
     <value>LastName is Required for Professor</value>
   </data>
   <data name="ProfessorNationalCodeExistsExceptionMessage" xml:space="preserve">
-    <value>National Code already exists</value>
+    <value>Professor National Code already exists</value>
   </data>
   <data name="ProfessorNationalCodeInvalidExceptionMessage" xml:space="preserve">
     <value>Professor NationalCode is invalid</value>

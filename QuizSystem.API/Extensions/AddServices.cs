@@ -1,6 +1,6 @@
-﻿using OnlineQuiz.Repository;
+﻿using QuizSystem.Repository;
+using QuizSystem.Domain.Models;
 using QuizSystem.Domain.Repository;
-using QuizSystem.Repository;
 using QuizSystem.Service;
 using QuizSystem.Service.Contracts;
 
@@ -18,8 +18,8 @@ namespace QuizSystem.API.Extensions
 
         public static void AddDIForRepositoryClasses(this WebApplicationBuilder builder)
         {
-            builder.Services.AddScoped<IStudentRepository, StudentRepository>();
-            builder.Services.AddScoped<IProfessorRepository, ProfessorRepository>();
+            builder.Services.AddScoped<IUserRepository<Student>, UserRepository<Student>>();
+            builder.Services.AddScoped<IUserRepository<Professor> , UserRepository<Professor>>();
             builder.Services.AddScoped<ICourseRepository, CourseRepository>();
             builder.Services.AddScoped<ICourseStudentRepository, CourseStudentRepository>();
         }

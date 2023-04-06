@@ -22,5 +22,10 @@ namespace QuizSystem.Repository
         {
             return context.Set<TEntity>().Any(s => s.NationalCode == nationalCode);
         }
+        public List<TEntity> Filter(string firstName, string lastName, string nationalCode)
+        {
+            return context.Set<TEntity>().Where(s => s.FirstName.ToLower().Contains(firstName.ToLower()) &&
+            s.LastName.ToLower().Contains(lastName.ToLower()) && s.NationalCode.Contains(nationalCode)).ToList();
+        }
     }
 }

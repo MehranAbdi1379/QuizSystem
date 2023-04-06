@@ -61,6 +61,24 @@ namespace QuizSystem.Domain.Exceptions {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Admin National Code already exists.
+        /// </summary>
+        public static string AdminNationalCodeExistsExceptionMessage {
+            get {
+                return ResourceManager.GetString("AdminNationalCodeExistsExceptionMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Admin NationalCode is invalid.
+        /// </summary>
+        public static string AdminNationalCodeInvalidExceptionMessage {
+            get {
+                return ResourceManager.GetString("AdminNationalCodeInvalidExceptionMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Student already exists and can not be added to the course.
         /// </summary>
         public static string CourseAddStudentAlreadyExistsExceptionMessage {
@@ -196,7 +214,7 @@ namespace QuizSystem.Domain.Exceptions {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to National Code already exists.
+        ///   Looks up a localized string similar to Professor National Code already exists.
         /// </summary>
         public static string ProfessorNationalCodeExistsExceptionMessage {
             get {

@@ -12,10 +12,10 @@ namespace QuizSystem.Service
 {
     public class ProfessorService : IProfessorService
     {
-        protected readonly IProfessorRepository repository;
-        protected readonly IStudentRepository studentRepository;
+        protected readonly IUserRepository<Professor> repository;
+        protected readonly IUserRepository<Student> studentRepository;
 
-        public ProfessorService(IProfessorRepository repository , IStudentRepository studentRepository)
+        public ProfessorService(IUserRepository<Professor> repository , IUserRepository<Student> studentRepository)
         {
             this.repository = repository;
             this.studentRepository = studentRepository;

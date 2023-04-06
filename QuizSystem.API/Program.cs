@@ -3,7 +3,6 @@ using Microsoft.Extensions.Configuration;
 using QuizSystem.Repository.DataBase;
 using Framework.Repository;
 using QuizSystem.Domain.Repository;
-using OnlineQuiz.Repository;
 using QuizSystem.Service;
 using QuizSystem.Domain.Models;
 using QuizSystem.API.Extensions;

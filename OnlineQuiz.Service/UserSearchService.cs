@@ -12,9 +12,9 @@ namespace QuizSystem.Service
 {
     public class UserSearchService : IUserSearchService
     {
-        private readonly IStudentRepository studentRepository;
-        private readonly IProfessorRepository professorRepository;
-        public UserSearchService(IStudentRepository studentRepository, IProfessorRepository professorRepository)
+        private readonly IUserRepository<Student> studentRepository;
+        private readonly IUserRepository<Professor> professorRepository;
+        public UserSearchService(IUserRepository<Student> studentRepository, IUserRepository<Professor> professorRepository)
         {
             this.studentRepository = studentRepository;
             this.professorRepository = professorRepository;

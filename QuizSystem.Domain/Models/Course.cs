@@ -23,8 +23,8 @@ namespace QuizSystem.Domain.Models
             ICourseRepository repository ,
             List<Guid> studentIds ,
             Guid professorId ,
-            IProfessorRepository professorRepository,
-            IStudentRepository studentRepository)
+            IUserRepository<Professor> professorRepository,
+            IUserRepository<Student> studentRepository)
         {
             SetTitle(title, repository);
             SetTime(startTime, endTime);
@@ -47,7 +47,7 @@ namespace QuizSystem.Domain.Models
             TimePeriod = new TimePeriod(startTime, endTime);
         }
 
-        public void SetProfessor(Guid professorId , IProfessorRepository professorRepository)
+        public void SetProfessor(Guid professorId , IUserRepository<Professor> professorRepository)
         {
             if (professorRepository.IsExist(professorId) == false)
                 throw new CourseProfessorNotExistException();

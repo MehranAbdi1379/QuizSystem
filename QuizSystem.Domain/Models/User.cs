@@ -34,7 +34,8 @@ namespace QuizSystem.Domain.Models
         public string LastName { get; private set; }
         public string Password { get; private set; }
         public DateTime BirthDate { get; private set; }
-        
+        public string NationalCode { get; protected set; }
+
 
         public void SetFirstName(string firstName)
         {

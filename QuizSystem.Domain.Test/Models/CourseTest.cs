@@ -10,8 +10,8 @@ namespace QuizSystem.Domain.Test.Models;
 public class CourseTest
 {
     private readonly Mock<ICourseRepository> courseRepositoryMock = new Mock<ICourseRepository>();
-    private readonly Mock<IProfessorRepository> professorRepositoryMock = new Mock<IProfessorRepository>();
-    private readonly Mock<IStudentRepository> studentRepositoryMock = new Mock<IStudentRepository>();
+    private readonly Mock<IUserRepository<Professor>> professorRepositoryMock = new Mock<IUserRepository<Professor>>();
+    private readonly Mock<IUserRepository<Student>> studentRepositoryMock = new Mock<IUserRepository<Student>>();
 
     public CourseTest()
     {
