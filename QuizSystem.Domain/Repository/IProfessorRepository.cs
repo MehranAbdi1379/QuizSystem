@@ -8,9 +8,8 @@ using System.Threading.Tasks;
 
 namespace QuizSystem.Domain.Repository
 {
-    public interface IProfessorRepository : IBaseRepository<Professor>
+    public interface IProfessorRepository : IUserRepository<Professor>
     {
-        bool NationalCodeExists(string nationalCode);
         public List<Professor> Filter(string firstName, string lastName, string nationalCode);
     }
 }

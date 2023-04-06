@@ -8,18 +8,14 @@ using System.Text;
 using System.Threading.Tasks;
 using QuizSystem.Repository.DataBase;
 using System.Text.RegularExpressions;
+using QuizSystem.Repository;
 
 namespace OnlineQuiz.Repository
 {
-    public class ProfessorRepository : BaseRepository<Professor>, IProfessorRepository
+    public class ProfessorRepository : UserRepository<Professor>, IProfessorRepository
     {
         public ProfessorRepository(QuizSystemContext context) : base(context)
         {
-        }
-
-        public bool NationalCodeExists(string nationalCode)
-        {
-            return context.Set<Professor>().Any(s => s.NationalCode == nationalCode);
         }
 
         public List<Professor> Filter(string firstName, string lastName, string nationalCode)

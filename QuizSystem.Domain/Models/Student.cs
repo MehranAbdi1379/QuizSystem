@@ -24,28 +24,26 @@ namespace QuizSystem.Domain.Models
             string nationalCode,
             string password,
             DateTime birthDate,
-            IStudentRepository repository,
+            IUserRepository<Student> repository,
             bool accepted = false) : base(firstName, lastName, password, birthDate)
         {
-            SetNationalCode(nationalCode, repository);
             SetAccepted(accepted);
         }
 
         public bool Accepted { get; private set; } = false;
         public string NationalCode { get; private set; }
 
-        public void SetNationalCode(string nationalCode, IStudentRepository repository)
+        public void SetAccepted(bool accepted)
+        {
+            Accepted = accepted;
+        }
+        public void SetNationalCode(string nationalCode, IUserRepository<User> repository)
         {
             if (repository.NationalCodeExists(nationalCode))
                 throw new StudentNationalCodeExistsException();
             if (nationalCode.Length != 10 || Regex.IsMatch(nationalCode, "\\D"))
                 throw new StudentNationalCodeInvalidException();
             NationalCode = nationalCode;
-        }
-
-        public void SetAccepted(bool accepted)
-        {
-            Accepted = accepted;
         }
     }
 }

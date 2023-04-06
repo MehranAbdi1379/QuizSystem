@@ -22,7 +22,7 @@ namespace QuizSystem.Domain.Models
             string nationalCode,
             string password,
             DateTime birthDate
-            , IProfessorRepository repository
+            , IUserRepository<Professor> repository
             ,bool accepted = false
             ) : base(firstName,lastName,password,birthDate)
         {
@@ -35,7 +35,7 @@ namespace QuizSystem.Domain.Models
         public bool Accepted { get; private set; } = false;
         public List<Course> Courses { get; private set; }
 
-        public void SetNationalCode(string nationalCode, IProfessorRepository repository)
+        public void SetNationalCode(string nationalCode, IUserRepository<Professor> repository)
         {
             if (repository.NationalCodeExists(nationalCode))
                 throw new ProfessorNationalCodeExistsException();

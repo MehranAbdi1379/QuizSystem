@@ -11,8 +11,9 @@ using System.Threading.Tasks;
 
 namespace QuizSystem.Domain.Models
 {
-    public class User :BaseEntity
+    public class User : BaseEntity 
     {
+
         public User()
         {
 
@@ -29,11 +30,11 @@ namespace QuizSystem.Domain.Models
             SetPassword(password);
         }
 
-
         public string FirstName { get; private set; }
         public string LastName { get; private set; }
         public string Password { get; private set; }
         public DateTime BirthDate { get; private set; }
+        
 
         public void SetFirstName(string firstName)
         {
@@ -64,5 +65,6 @@ namespace QuizSystem.Domain.Models
                 throw new UserBirthDateInvalidValueException();
             BirthDate = birthDate;
         }
+
     }
 }
