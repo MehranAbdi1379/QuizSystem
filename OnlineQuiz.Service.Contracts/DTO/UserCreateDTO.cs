@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace QuizSystem.Service.Contracts.DTO
 {
-    public class StudentAndProfessorCreateDTO
+    public class UserCreateDTO
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace QuizSystem.Service
 {
-    public class AdminService
+    public class AdminService : IAdminService, IAdminService
     {
         protected readonly IUserRepository<Admin> repository;
 
@@ -18,7 +18,7 @@ namespace QuizSystem.Service
             this.repository = repository;
         }
 
-        public Admin CreateAdmin(StudentAndProfessorCreateDTO dto)
+        public Admin CreateAdmin(UserCreateDTO dto)
         {
             var admin = new Admin(dto.FirstName,
                 dto.LastName,
@@ -35,29 +35,29 @@ namespace QuizSystem.Service
 
 
 
-        public Admin RemoveAdmin(StudentAndProfessorIdDTO dto)
+        public Admin RemoveAdmin(UserIdDTO dto)
         {
-            Admin student = repository.GetWithId(dto.Id);
+            Admin admin = repository.GetWithId(dto.Id);
 
-            repository.Delete(student);
+            repository.Delete(admin);
             repository.Save();
 
-            return student;
+            return admin;
         }
 
-        public Admin UpdateAdmin(StudentAndProfessorUpdateDTO dto)
+        public Admin UpdateAdmin(UserUpdateDTO dto)
         {
-            Admin student = repository.GetWithId(dto.Id);
+            Admin admin = repository.GetWithId(dto.Id);
 
-            student.SetFirstName(dto.FirstName);
-            student.SetLastName(dto.LastName);
-            student.SetNationalCode(dto.NationalCode, repository);
-            student.SetBirthDate(dto.BirthDate);
+            admin.SetFirstName(dto.FirstName);
+            admin.SetLastName(dto.LastName);
+            admin.SetNationalCode(dto.NationalCode, repository);
+            admin.SetBirthDate(dto.BirthDate);
 
-            repository.Update(student);
+            repository.Update(admin);
             repository.Save();
 
-            return student;
+            return admin;
         }
     }
 }

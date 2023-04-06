@@ -17,14 +17,14 @@ namespace QuizSystem.API.Controllers
         }
 
         [HttpPost]
-        [Route("Create-Course")]
+        [Route("Create")]
         public IActionResult CreateCourse(CourseCreateDTO dto)
         {
             return Ok(courseService.CreateCourse(dto));
         }
 
         [HttpPut]
-        [Route("Update-Course")]
+        [Route("Update")]
         public IActionResult UpdateCourse(CourseUpdateDTO dto)
         {
             return Ok(courseService.UpdateCourse(dto));

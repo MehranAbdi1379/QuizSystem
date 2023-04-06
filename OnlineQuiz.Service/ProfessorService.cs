@@ -21,7 +21,7 @@ namespace QuizSystem.Service
             this.studentRepository = studentRepository;
         }
 
-        public Professor CreateProfessor(StudentAndProfessorCreateDTO dto)
+        public Professor CreateProfessor(UserCreateDTO dto)
         {
             var professor = new Professor(dto.FirstName,
                 dto.LastName,
@@ -36,7 +36,7 @@ namespace QuizSystem.Service
             return professor;
         }
 
-        public Professor UpdateProfessor(StudentAndProfessorUpdateDTO dto)
+        public Professor UpdateProfessor(UserUpdateDTO dto)
         {
             var professor = repository.GetWithId(dto.Id);
             professor.SetFirstName(dto.FirstName);
@@ -50,7 +50,7 @@ namespace QuizSystem.Service
             return professor;
         }
 
-        public Professor RemoveProfessor(StudentAndProfessorIdDTO dto)
+        public Professor RemoveProfessor(UserIdDTO dto)
         {
             Professor professor = repository.GetWithId(dto.Id);
 
@@ -60,7 +60,7 @@ namespace QuizSystem.Service
             return professor;
         }
 
-        public Professor AcceptProfessor(StudentAndProfessorIdDTO dto)
+        public Professor AcceptProfessor(UserIdDTO dto)
         {
             Professor professor = repository.GetWithId(dto.Id);
 
@@ -72,7 +72,7 @@ namespace QuizSystem.Service
             return professor;
         }
 
-        public Professor UnAcceptProfessor(StudentAndProfessorIdDTO dto)
+        public Professor UnAcceptProfessor(UserIdDTO dto)
         {
             Professor professor = repository.GetWithId(dto.Id);
 
@@ -84,7 +84,7 @@ namespace QuizSystem.Service
             return professor;
         }
 
-        public Student ChangeProfessorToStudent(StudentAndProfessorIdDTO dto)
+        public Student ChangeProfessorToStudent(UserIdDTO dto)
         {
             Professor professor = repository.GetWithId(dto.Id);
             Student student = new Student(professor.FirstName, professor.LastName, professor.NationalCode, professor.Password, professor.BirthDate, studentRepository , professor.Accepted);

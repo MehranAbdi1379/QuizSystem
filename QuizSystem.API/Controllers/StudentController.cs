@@ -16,43 +16,43 @@ namespace QuizSystem.API.Controllers
         }
 
         [HttpPost]
-        [Route("Create-Student")]
-        public IActionResult CreateStudent(StudentAndProfessorCreateDTO dto)
+        [Route("Create")]
+        public IActionResult CreateStudent(UserCreateDTO dto)
         {
             return Ok(studentService.CreateStudent(dto));
         }
 
         [HttpPatch]
-        [Route("Accept-Student")]
-        public IActionResult AcceptStudent(StudentAndProfessorIdDTO dto)
+        [Route("Accept")]
+        public IActionResult AcceptStudent(UserIdDTO dto)
         {
             return Ok(studentService.AcceptStudent(dto));
         }
 
         [HttpPut]
-        [Route("Update-Student")]
-        public IActionResult UpdateStudent(StudentAndProfessorUpdateDTO dto)
+        [Route("Update")]
+        public IActionResult UpdateStudent(UserUpdateDTO dto)
         {
             return Ok(studentService.UpdateStudent(dto));
         }
 
         [HttpPost]
         [Route("Change-Student-To-Professor")]
-        public IActionResult ChangeStudentToProfessor(StudentAndProfessorIdDTO dto)
+        public IActionResult ChangeStudentToProfessor(UserIdDTO dto)
         {
             return Ok(studentService.ChangeStudentToProfessor(dto));
         }
 
         [HttpPatch]
-        [Route("UnAccept-Student")]
-        public IActionResult UnAcceptStudent(StudentAndProfessorIdDTO dto)
+        [Route("UnAccept")]
+        public IActionResult UnAcceptStudent(UserIdDTO dto)
         {
             return Ok(studentService.UnAcceptStudent(dto));
         }
 
         [HttpDelete]
-        [Route("Delete-Student")]
-        public IActionResult DeleteStudent(StudentAndProfessorIdDTO dto)
+        [Route("Delete")]
+        public IActionResult DeleteStudent(UserIdDTO dto)
         {
             return Ok(studentService.RemoveStudent(dto));
         }

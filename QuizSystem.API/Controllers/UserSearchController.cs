@@ -6,18 +6,14 @@ using QuizSystem.Service.Contracts.DTO;
 namespace QuizSystem.API.Controllers
 {
     [ApiController]
-    [Route("api/user-search")]
+    [Route("api/User-Search")]
     public class UserSearchController : ControllerBase
     {
         private readonly IUserSearchService userSearchService;
-        private readonly IStudentService studentService;
-        private readonly IProfessorService professorRepository;
 
-        public UserSearchController(IUserSearchService userSearchService, IStudentService studentService, IProfessorService professorService)
+        public UserSearchController(IUserSearchService userSearchService)
         {
             this.userSearchService = userSearchService;
-            this.studentService = studentService;
-            this.professorRepository = professorService;
         }
 
         [HttpPost]
