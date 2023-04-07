@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace QuizSystem.Service
 {
-    public class AdminService : IAdminService, IAdminService
+    public class AdminService : IAdminService
     {
         protected readonly IUserRepository<Admin> repository;
 
