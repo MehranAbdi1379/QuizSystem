@@ -8,5 +8,6 @@ namespace QuizSystem.Service
         Admin CreateAdmin(UserCreateDTO dto);
         Admin RemoveAdmin(UserIdDTO dto);
         Admin UpdateAdmin(UserUpdateDTO dto);
+        public AdminSignedInDTO AdminSignIn(UserSignInDTO dto)
     }
 }

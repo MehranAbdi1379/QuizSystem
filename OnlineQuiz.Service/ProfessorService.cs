@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using QuizSystem.Service.Exceptions;
 
 namespace QuizSystem.Service
 {
@@ -14,11 +15,13 @@ namespace QuizSystem.Service
     {
         protected readonly IUserRepository<Professor> repository;
         protected readonly IUserRepository<Student> studentRepository;
+        protected readonly ICourseRepository courseRepository;
 
-        public ProfessorService(IUserRepository<Professor> repository , IUserRepository<Student> studentRepository)
+        public ProfessorService(IUserRepository<Professor> repository , IUserRepository<Student> studentRepository, ICourseRepository courseRepository)
         {
             this.repository = repository;
             this.studentRepository = studentRepository;
+            this.courseRepository = courseRepository;
         }
 
         public Professor CreateProfessor(UserCreateDTO dto)
@@ -34,6 +37,27 @@ namespace QuizSystem.Service
             repository.Save();
 
             return professor;
+        }
+
+        public StudentAndProfessorSignedInDTO ProfessorSignIn(UserSignInDTO dto)
+        {
+            try
+            {
+                var professor = repository.GetWithNationalCodeAndPassword(dto.NationalCode, dto.Password);
+                return new StudentAndProfessorSignedInDTO()
+                {
+                    FirstName = professor.FirstName,
+                    LastName = professor.LastName,
+                    NationalCode = professor.NationalCode,
+                    Password = professor.Password,
+                    BirthDate = professor.BirthDate,
+                    Courses = courseRepository.GetWithProfessorId(professor.Id)
+                };
+            }
+            catch (StudentSignInWrongNationalCodeOrPasswordException ex)
+            {
+                throw ex;
+            }
         }
 
         public Professor UpdateProfessor(UserUpdateDTO dto)

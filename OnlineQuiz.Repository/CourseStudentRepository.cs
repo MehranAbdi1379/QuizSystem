@@ -17,14 +17,14 @@ namespace QuizSystem.Repository
 
         }
 
-        public List<CourseStudent> GetCourseIds(Guid studentId)
+        public List<Guid> GetCourseIds(Guid studentId)
         {
-            return context.Set<CourseStudent>().Where(x => x.StudentId == studentId).ToList();
+            return context.Set<CourseStudent>().Where(x => x.StudentId == studentId).Select(x => x.CourseId).ToList();
         }
 
-        public List<CourseStudent> GetStudentIds(Guid courseId)
+        public List<Guid> GetStudentIds(Guid courseId)
         {
-            return context.Set<CourseStudent>().Where(x=>x.CourseId==courseId).ToList();
+            return context.Set<CourseStudent>().Where(x=>x.CourseId==courseId).Select(x => x.StudentId).ToList();
         }
     }
 }

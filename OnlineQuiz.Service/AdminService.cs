@@ -1,6 +1,7 @@
 ﻿using QuizSystem.Domain.Models;
 using QuizSystem.Domain.Repository;
 using QuizSystem.Service.Contracts.DTO;
+using QuizSystem.Service.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,7 +34,24 @@ namespace QuizSystem.Service
             return admin;
         }
 
-
+        public AdminSignedInDTO AdminSignIn(UserSignInDTO dto)
+        {
+            try
+            {
+                var admin = repository.GetWithNationalCodeAndPassword(dto.NationalCode, dto.Password);
+                return new AdminSignedInDTO() { 
+                    FirstName = admin.FirstName,
+                    LastName = admin.LastName,
+                    NationalCode = admin.NationalCode,
+                    Password = admin.Password,
+                    BirthDate = admin.BirthDate,
+                };
+            }
+            catch (AdminSignInWrongNationalCodeOrPasswordException ex)
+            {
+                throw ex;
+            }
+        }
 
         public Admin RemoveAdmin(UserIdDTO dto)
         {

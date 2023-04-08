@@ -61,6 +61,15 @@ namespace QuizSystem.Service.Exceptions {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Admin sign in national code or password is wrong.
+        /// </summary>
+        internal static string AdminSignInWrongNationalCodeOrPasswordExceptionMessage {
+            get {
+                return ResourceManager.GetString("AdminSignInWrongNationalCodeOrPasswordExceptionMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Professor sign in national code or password is wrong.
         /// </summary>
         internal static string ProfessorSignInWrongNationalCodeOrPasswordExceptionMessage {
