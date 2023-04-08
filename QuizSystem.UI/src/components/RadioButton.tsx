@@ -10,6 +10,7 @@ const RadioButton = ({ name, group, onClick }: Props) => {
   return (
     <>
       <input
+        required
         type="radio"
         name={group}
         id={name}
