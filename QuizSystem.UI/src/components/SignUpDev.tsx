@@ -14,26 +14,43 @@ const SignUpDev = () => {
   const [password, setPassword] = useState("");
 
   function onSubmit() {
-    axios.post("");
+    const user = {
+      radioChoice,
+      firstName,
+      lastName,
+      nationalCode,
+      birthDate,
+      password,
+    };
+    console.log(user);
+    console.log(radioChoice);
+    if (radioChoice === "Student")
+      axios
+        .post("https://localhost:7031/api/Students/Create", user)
+        .then((response) => console.log(response.data));
+    if (radioChoice === "Professor")
+      axios
+        .post("https://localhost:7031/api/Professor/Create", user)
+        .then((response) => console.log(response));
   }
 
   return (
     <div>
       <form>
         <Label>First Name: </Label>
-        <Input required type="text"></Input>
+        <Input onChange={setFirstName} required type="text"></Input>
         <br></br>
         <Label>Last Name: </Label>
-        <Input required type="text"></Input>
+        <Input onChange={setLastName} required type="text"></Input>
         <br></br>
         <Label>National Code: </Label>
-        <Input required type="text"></Input>
+        <Input onChange={setNationalCode} required type="number"></Input>
         <br></br>
         <Label>Birth Date: </Label>
-        <Input required type="date"></Input>
+        <Input onChange={setBirthDate} required type="date"></Input>
         <br></br>
         <Label>Password: </Label>
-        <Input required type="password"></Input>
+        <Input onChange={setPassword} required type="password"></Input>
         <br></br>
         <RadioButtonGroup
           onClick={setRadioChoice}
