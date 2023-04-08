@@ -22,6 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Framework.api\Framework.api.csproj" />
     <ProjectReference Include="..\Framework.Core\Framework.Core.csproj" />
     <ProjectReference Include="..\Framework.Domain\Framework.Domain.csproj" />
     <ProjectReference Include="..\Framework.Repository\Framework.Repository.csproj" />
@@ -29,6 +30,21 @@
     <ProjectReference Include="..\OnlineQuiz.Service.Contracts\QuizSystem.Service.Contracts.csproj" />
     <ProjectReference Include="..\OnlineQuiz.Service\QuizSystem.Service.csproj" />
     <ProjectReference Include="..\QuizSystem.Domain\QuizSystem.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Exceptions\apiExceptionMessages.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>apiExceptionMessages.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Exceptions\apiExceptionMessages.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>apiExceptionMessages.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
 
 </Project>

@@ -12,7 +12,7 @@ namespace QuizSystem.Service
         public Professor UnAcceptProfessor(UserIdDTO dto);
         public Student ChangeProfessorToStudent(UserIdDTO dto);
         public List<Professor> SearchProfessor(StudentProfessorSearchDTO dto);
-        public StudentAndProfessorSignedInDTO ProfessorSignIn(UserSignInDTO dto)
+        public StudentAndProfessorSignedInDTO ProfessorSignIn(UserSignInDTO dto);
 
     }
 }

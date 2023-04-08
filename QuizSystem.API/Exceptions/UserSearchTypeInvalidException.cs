@@ -1,10 +1,12 @@
-﻿using QuizSystem.Domain.Exceptions;
+﻿using Framework.api;
+using QuizSystem.API.Exceptions;
+using QuizSystem.Domain.Exceptions;
 using System.Runtime.Serialization;
 
 namespace QuizSystem.API.Controllers
 {
-    public class UserSearchTypeInvalidException : Exception
+    public class UserSearchTypeInvalidException : apiException
     {
-        public override string Message => ExceptionMessages.UserSearchTypeInvalidExceptionMessage;
+        public override string Message => apiExceptionMessages.UserSearchTypeInvalidExceptionMessage;
     }
 }

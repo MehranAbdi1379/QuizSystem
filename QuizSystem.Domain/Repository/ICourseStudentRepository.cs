@@ -10,7 +10,7 @@ namespace QuizSystem.Domain.Repository
 {
     public interface ICourseStudentRepository : IBaseRepository<CourseStudent> 
     {
-        List<Guid> GetStudentIds(Guid courseId);
-        List<Guid> GetCourseIds(Guid studentId);
+        List<CourseStudent> GetStudentIds(Guid courseId);
+        List<CourseStudent> GetCourseIds(Guid studentId);
     }
 }

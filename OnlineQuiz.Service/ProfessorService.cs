@@ -46,6 +46,7 @@ namespace QuizSystem.Service
                 var professor = repository.GetWithNationalCodeAndPassword(dto.NationalCode, dto.Password);
                 return new StudentAndProfessorSignedInDTO()
                 {
+                    Id = professor.Id,
                     FirstName = professor.FirstName,
                     LastName = professor.LastName,
                     NationalCode = professor.NationalCode,
@@ -54,9 +55,9 @@ namespace QuizSystem.Service
                     Courses = courseRepository.GetWithProfessorId(professor.Id)
                 };
             }
-            catch (StudentSignInWrongNationalCodeOrPasswordException ex)
+            catch (Exception ex)
             {
-                throw ex;
+                throw new ProfessorSignInWrongNationalCodeOrPasswordException();
             }
         }
 

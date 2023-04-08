@@ -31,6 +31,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuizSystem.Domain.Test", "Q
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Framework.Service", "Framework.Service\Framework.Service.csproj", "{78F86A2A-AD89-4764-86C1-42284E32030F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Framework.api", "Framework.api\Framework.api.csproj", "{6A69628F-8C7E-43BC-A134-52B9993EFE0E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -77,6 +79,10 @@ Global
 		{78F86A2A-AD89-4764-86C1-42284E32030F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{78F86A2A-AD89-4764-86C1-42284E32030F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{78F86A2A-AD89-4764-86C1-42284E32030F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6A69628F-8C7E-43BC-A134-52B9993EFE0E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6A69628F-8C7E-43BC-A134-52B9993EFE0E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6A69628F-8C7E-43BC-A134-52B9993EFE0E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6A69628F-8C7E-43BC-A134-52B9993EFE0E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -91,6 +97,7 @@ Global
 		{2C16248E-42D0-4D98-89BF-167A3CAAF6F3} = {77D70269-6D01-43E0-B734-D214128656E0}
 		{CA910863-7448-4CF0-9054-C38EBF9100C6} = {2173C5BE-AC7F-449D-A347-1D687071704D}
 		{78F86A2A-AD89-4764-86C1-42284E32030F} = {8243EB19-8A74-4EE6-985E-6C7E1927B4E8}
+		{6A69628F-8C7E-43BC-A134-52B9993EFE0E} = {8243EB19-8A74-4EE6-985E-6C7E1927B4E8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3B1C8C5D-23C4-4DEC-AE44-2F31C2BC5661}

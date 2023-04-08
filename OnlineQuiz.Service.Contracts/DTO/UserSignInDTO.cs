@@ -8,6 +8,7 @@ namespace QuizSystem.Service.Contracts.DTO
 {
     public class UserSignInDTO
     {
+        public string Type { get; set; }
         public string NationalCode { get; set; }
         public string Password { get; set; }
     }

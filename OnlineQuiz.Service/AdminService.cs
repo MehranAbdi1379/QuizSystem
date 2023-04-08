@@ -40,6 +40,7 @@ namespace QuizSystem.Service
             {
                 var admin = repository.GetWithNationalCodeAndPassword(dto.NationalCode, dto.Password);
                 return new AdminSignedInDTO() { 
+                    Id = admin.Id,
                     FirstName = admin.FirstName,
                     LastName = admin.LastName,
                     NationalCode = admin.NationalCode,
@@ -47,9 +48,9 @@ namespace QuizSystem.Service
                     BirthDate = admin.BirthDate,
                 };
             }
-            catch (AdminSignInWrongNationalCodeOrPasswordException ex)
+            catch (Exception ex)
             {
-                throw ex;
+                throw new AdminSignInWrongNationalCodeOrPasswordException();
             }
         }
 

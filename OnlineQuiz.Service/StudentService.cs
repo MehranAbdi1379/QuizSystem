@@ -43,19 +43,25 @@ namespace QuizSystem.Service
             try
             {
                 var student = repository.GetWithNationalCodeAndPassword(dto.NationalCode , dto.Password);
+                List<Guid> courses = new List<Guid>();
+                foreach (var item in courseStudentRepository.GetCourseIds(student.Id))
+                {
+                    courses.Add(item.CourseId);
+                }
                 return new StudentAndProfessorSignedInDTO()
                 {
+                    Id = student.Id,
                     FirstName = student.FirstName,
                     LastName = student.LastName,
                     NationalCode = student.NationalCode,
                     Password = student.Password,
                     BirthDate = student.BirthDate,
-                    Courses = courseStudentRepository.GetCourseIds(student.Id)
+                    Courses = courses
                 };
             }
-            catch (StudentSignInWrongNationalCodeOrPasswordException ex)
+            catch (Exception ex)
             {
-                throw ex;
+                throw new StudentSignInWrongNationalCodeOrPasswordException();
             }
         }
 

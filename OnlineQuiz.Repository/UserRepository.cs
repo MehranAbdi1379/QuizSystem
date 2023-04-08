@@ -27,7 +27,7 @@ namespace QuizSystem.Repository
             return context.Set<TEntity>().Where(s => s.FirstName.ToLower().Contains(firstName.ToLower()) &&
             s.LastName.ToLower().Contains(lastName.ToLower()) && s.NationalCode.Contains(nationalCode)).ToList();
         }
-        public TEntity GetWithNationalCode(string nationalCode , string password)
+        public TEntity GetWithNationalCodeAndPassword(string nationalCode , string password)
         {
             return context.Set<TEntity>().Where(t => t.NationalCode == nationalCode && t.Password==password).First();
         }
