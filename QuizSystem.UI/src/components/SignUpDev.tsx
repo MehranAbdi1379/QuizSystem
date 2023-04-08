@@ -4,6 +4,7 @@ import axios from "axios";
 import Label from "./Label";
 import RadioButtonGroup from "./RadioButtonGroup";
 import Input from "./Input";
+import Form from "./Form";
 
 const SignUpDev = () => {
   const [radioChoice, setRadioChoice] = useState("");
@@ -54,7 +55,7 @@ const SignUpDev = () => {
         <br></br>
         <RadioButtonGroup
           onClick={setRadioChoice}
-          groupName="student-professor"
+          groupName="User"
           buttonNames={["Student", "Professor"]}
         ></RadioButtonGroup>
         <Button name="Sign Up" onClick={onSubmit}></Button>
