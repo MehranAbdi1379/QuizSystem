@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace QuizSystem.Repository
 {
-    public class CourseStudentRepository : BaseRepository<CourseStudent> , ICourseStudentRepository
+    public class CourseStudentRepository : BaseRepository<CourseStudent,ApiUser> , ICourseStudentRepository
     {
         public CourseStudentRepository(QuizSystemContext context) : base(context)
         {

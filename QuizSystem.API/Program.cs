@@ -7,6 +7,7 @@ using QuizSystem.Service;
 using QuizSystem.Domain.Models;
 using QuizSystem.API.Extensions;
 using Microsoft.AspNetCore.Builder;
+using AutoMapper;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,6 +27,9 @@ builder.Services.AddCors(options =>
     options.AddDefaultPolicy(builder =>
     builder.WithOrigins(frontendURL).AllowAnyMethod().AllowAnyHeader());
 });
+
+builder.Services.AddAuthentication();
+builder.Services.ConfigureIdentity();
 
 builder.AddDIForRepositoryClasses();
 builder.AddDIForServiceClasses();

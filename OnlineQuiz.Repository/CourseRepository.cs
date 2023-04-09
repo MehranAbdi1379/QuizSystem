@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace QuizSystem.Repository
 {
-    public class CourseRepository : BaseRepository<Course> , ICourseRepository
+    public class CourseRepository : BaseRepository<Course,ApiUser> , ICourseRepository
     {
         public CourseRepository(QuizSystemContext context) : base(context)
         {

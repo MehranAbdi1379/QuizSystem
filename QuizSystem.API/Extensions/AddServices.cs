@@ -3,6 +3,9 @@ using QuizSystem.Domain.Models;
 using QuizSystem.Domain.Repository;
 using QuizSystem.Service;
 using QuizSystem.Service.Contracts;
+using Microsoft.EntityFrameworkCore.Diagnostics;
+using Microsoft.AspNetCore.Identity;
+using QuizSystem.Repository.DataBase;
 
 namespace QuizSystem.API.Extensions
 {
@@ -24,6 +27,17 @@ namespace QuizSystem.API.Extensions
             builder.Services.AddScoped<IUserRepository<Admin>, UserRepository<Admin>>();
             builder.Services.AddScoped<ICourseRepository, CourseRepository>();
             builder.Services.AddScoped<ICourseStudentRepository, CourseStudentRepository>();
+        }
+
+        public static void ConfigureIdentity(this IServiceCollection services)
+        {
+            var builder = services.AddIdentityCore<ApiUser>(options =>
+            {
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
+            });
+            builder = new IdentityBuilder(builder.UserType , typeof(IdentityRole) , services);
+            builder.AddEntityFrameworkStores<QuizSystemContext>().AddDefaultTokenProviders();
         }
     }
 }

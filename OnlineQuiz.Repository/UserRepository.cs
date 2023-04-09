@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace QuizSystem.Repository
 {
-    public class UserRepository<TEntity> : BaseRepository<TEntity>, IUserRepository<TEntity> where TEntity : User
+    public class UserRepository<TEntity> : BaseRepository<TEntity, ApiUser>, IUserRepository<TEntity> where TEntity : User
     {
         public UserRepository(QuizSystemContext context) : base(context)
         {

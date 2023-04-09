@@ -1,4 +1,5 @@
 ﻿using Framework.Core.Domain;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace Framework.Repository
 {
-    public class BaseRepository<TEntity> : IBaseRepository<TEntity> where TEntity : BaseEntity
+    public class BaseRepository<TEntity , UEntity> : IBaseRepository<TEntity> where TEntity : BaseEntity where UEntity: IdentityUser
     {
-        protected readonly DataBaseContext context;
+        protected readonly DataBaseContext<UEntity> context;
 
-        public BaseRepository(DataBaseContext context)
+        public BaseRepository(DataBaseContext<UEntity> context)
         {
             this.context = context;
         }
