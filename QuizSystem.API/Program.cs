@@ -8,6 +8,7 @@ using QuizSystem.Domain.Models;
 using QuizSystem.API.Extensions;
 using Microsoft.AspNetCore.Builder;
 using AutoMapper;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -30,6 +31,11 @@ builder.Services.AddCors(options =>
 
 builder.Services.AddAuthentication();
 builder.Services.ConfigureIdentity();
+builder.Services.ConfigureJWT(builder.Configuration);
+
+Log.Logger = new LoggerConfiguration()
+    .WriteTo.Seq("http://localhost:5341")
+    .CreateLogger();
 
 builder.AddDIForRepositoryClasses();
 builder.AddDIForServiceClasses();

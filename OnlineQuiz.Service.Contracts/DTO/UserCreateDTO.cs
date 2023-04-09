@@ -13,5 +13,6 @@ namespace QuizSystem.Service.Contracts.DTO
         public string NationalCode { get; set; }
         public string Password { get; set; }
         public DateTime BirthDate { get; set; }
+        public ICollection<string> Roles { get; set; }
     }
 }

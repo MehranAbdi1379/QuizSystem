@@ -6,6 +6,11 @@ using QuizSystem.Service.Contracts;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.AspNetCore.Identity;
 using QuizSystem.Repository.DataBase;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using Microsoft.IdentityModel.Logging;
+using Serilog;
 
 namespace QuizSystem.API.Extensions
 {
@@ -39,5 +44,29 @@ namespace QuizSystem.API.Extensions
             builder = new IdentityBuilder(builder.UserType , typeof(IdentityRole) , services);
             builder.AddEntityFrameworkStores<QuizSystemContext>().AddDefaultTokenProviders();
         }
+
+        public static void ConfigureJWT(this IServiceCollection service, IConfiguration configuration)
+        {
+            var jwtSettings = configuration.GetSection("Jwt");
+            var key = Environment.GetEnvironmentVariable("KEY");
+            service.AddAuthentication(o =>
+            {
+                o.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                o.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+                .AddJwtBearer(o =>
+                {
+                    o.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidateLifetime = true,
+                        ValidateIssuerSigningKey = true,
+                        ValidIssuer = jwtSettings.GetSection("Issuer").Value,
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key))
+                    };
+                });
+        }
+
+
     }
 }
