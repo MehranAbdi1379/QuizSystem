@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using QuizSystem.Repository.DataBase;
 
@@ -11,9 +12,11 @@ using QuizSystem.Repository.DataBase;
 namespace QuizSystem.Repository.Migrations
 {
     [DbContext(typeof(QuizSystemContext))]
-    partial class QuizSystemContextModelSnapshot : ModelSnapshot
+    [Migration("20230409122627_AddIdentityToDb")]
+    partial class AddIdentityToDb
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -47,29 +50,6 @@ namespace QuizSystem.Repository.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "eb8c9c94-cd50-476f-b019-21608c210649",
-                            ConcurrencyStamp = "8aafdd59-776d-411b-a2cc-defdeb284600",
-                            Name = "Student",
-                            NormalizedName = "STUDENT"
-                        },
-                        new
-                        {
-                            Id = "ab14f91f-519e-45d6-a754-81f22ca3eb78",
-                            ConcurrencyStamp = "990cac3b-470f-49af-a420-29771bfae3c8",
-                            Name = "Professor",
-                            NormalizedName = "PROFESSOR"
-                        },
-                        new
-                        {
-                            Id = "ca0621d4-f904-408b-b941-4b3f711ea330",
-                            ConcurrencyStamp = "fe37f3da-572e-4e41-8041-24d236f27111",
-                            Name = "Admin",
-                            NormalizedName = "ADMIN"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

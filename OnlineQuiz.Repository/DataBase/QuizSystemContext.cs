@@ -1,4 +1,5 @@
 ﻿using Framework.Repository;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using QuizSystem.Domain.Exceptions;
 using QuizSystem.Domain.Models;
@@ -11,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace QuizSystem.Repository.DataBase
 {
-    public class QuizSystemContext : DataBaseContext
+    public class QuizSystemContext : DataBaseContext<ApiUser>
     {
         public QuizSystemContext(DbContextOptions options) : base(options)
         {
@@ -19,33 +20,15 @@ namespace QuizSystem.Repository.DataBase
         }
 
 
-        protected override void OnModelCreating(ModelBuilder model)
+        protected override void OnModelCreating(ModelBuilder builder)
         {
-            model.Entity<Student>().HasKey(s => s.Id);
-            model.Entity<Student>().Property(s => s.Id).IsRequired();
-            model.Entity<Student>().Property(s => s.Password).IsRequired().HasMaxLength(50);
-            model.Entity<Student>().Property(s => s.FirstName).IsRequired().HasMaxLength(50);
-            model.Entity<Student>().Property(s => s.LastName).IsRequired().HasMaxLength(50);
-            model.Entity<Student>().Property(s => s.NationalCode).IsRequired().HasMaxLength(10);
-            model.Entity<Student>().Property(s => s.BirthDate).IsRequired();
+            base.OnModelCreating(builder);
 
-            model.Entity<Professor>().HasKey(p => p.Id);
-            model.Entity<Professor>().Property(p => p.Id).IsRequired();
-            model.Entity<Professor>().Property(p => p.Password).IsRequired().HasMaxLength(50);
-            model.Entity<Professor>().Property(p => p.FirstName).IsRequired().HasMaxLength(50);
-            model.Entity<Professor>().Property(p => p.LastName).IsRequired().HasMaxLength(50);
-            model.Entity<Professor>().Property(p => p.NationalCode).IsRequired().HasMaxLength(10);
-            model.Entity<Professor>().Property(p => p.BirthDate).IsRequired();
-
-            model.Entity<Course>().HasKey(c => c.Id);
-            model.Entity<Course>().Property(c => c.Id).IsRequired();
-            model.Entity<Course>().Property(c => c.Title).IsRequired().HasMaxLength(150);
-            model.Entity<Course>().OwnsOne(c => c.TimePeriod);
-            //model.Entity<Course>().Ignore(c => c.StudentIds);
-
-            model.Entity<CourseStudent>().HasKey(cs => cs.Id);
-            model.Entity<CourseStudent>().Property(cs => cs.StudentId).IsRequired();
-            model.Entity<CourseStudent>().Property(cs => cs.CourseId).IsRequired();
+            builder.ApplyConfiguration(new RoleConfiguration());
+            builder.ApplyConfiguration(new StudentConfiguration());
+            builder.ApplyConfiguration(new ProfessorConfiguration());
+            builder.ApplyConfiguration(new CourseConfiguration());
+            builder.ApplyConfiguration(new CourseStudentConfiguration());
 
         }
 
