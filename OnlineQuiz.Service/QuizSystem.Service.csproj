@@ -7,7 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="12.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Framework.Service\Framework.Service.csproj" />
+    <ProjectReference Include="..\OnlineQuiz.Repository\QuizSystem.Repository.csproj" />
     <ProjectReference Include="..\OnlineQuiz.Service.Contracts\QuizSystem.Service.Contracts.csproj" />
     <ProjectReference Include="..\QuizSystem.Domain\QuizSystem.Domain.csproj" />
   </ItemGroup>

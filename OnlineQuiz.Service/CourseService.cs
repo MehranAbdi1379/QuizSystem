@@ -59,7 +59,7 @@ public class CourseService : ICourseService
         course.SetTitle(dto.Title, repository);
         course.SetProfessor(dto.ProfessorId, professorRepository);
 
-        foreach (var item in courseStudentRepository.GetStudentIds(course.Id))
+        foreach (var item in courseStudentRepository.GetWithCourseId(course.Id))
         {
             courseStudentRepository.Delete(item);
         }

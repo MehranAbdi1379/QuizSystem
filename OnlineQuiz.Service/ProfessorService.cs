@@ -8,68 +8,28 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using QuizSystem.Service.Exceptions;
+using QuizSystem.Repository;
 
 namespace QuizSystem.Service
 {
     public class ProfessorService : IProfessorService
     {
-        protected readonly IUserRepository<Professor> repository;
-        protected readonly IUserRepository<Student> studentRepository;
+        protected readonly IProfessorRepository repository;
         protected readonly ICourseRepository courseRepository;
+        protected readonly IStudentRepository studentRepository;
 
-        public ProfessorService(IUserRepository<Professor> repository , IUserRepository<Student> studentRepository, ICourseRepository courseRepository)
+        public ProfessorService(IProfessorRepository repository, ICourseRepository courseRepository, IStudentRepository studentRepository)
         {
             this.repository = repository;
-            this.studentRepository = studentRepository;
             this.courseRepository = courseRepository;
+            this.studentRepository = studentRepository;
         }
 
-        public Professor CreateProfessor(UserCreateDTO dto)
+        public Professor CreateProfessor(Guid id)
         {
-            var professor = new Professor(dto.FirstName,
-                dto.LastName,
-                dto.NationalCode,
-                dto.Password,
-                dto.BirthDate,
-                repository);
+            var professor = new Professor(id);
 
             repository.Create(professor);
-            repository.Save();
-
-            return professor;
-        }
-
-        public StudentAndProfessorSignedInDTO ProfessorSignIn(UserSignInDTO dto)
-        {
-            try
-            {
-                var professor = repository.GetWithNationalCodeAndPassword(dto.NationalCode, dto.Password);
-                return new StudentAndProfessorSignedInDTO()
-                {
-                    Id = professor.Id,
-                    FirstName = professor.FirstName,
-                    LastName = professor.LastName,
-                    NationalCode = professor.NationalCode,
-                    Password = professor.Password,
-                    BirthDate = professor.BirthDate,
-                    Courses = courseRepository.GetWithProfessorId(professor.Id)
-                };
-            }
-            catch (Exception ex)
-            {
-                throw new ProfessorSignInWrongNationalCodeOrPasswordException();
-            }
-        }
-
-        public Professor UpdateProfessor(UserUpdateDTO dto)
-        {
-            var professor = repository.GetWithId(dto.Id);
-            professor.SetFirstName(dto.FirstName);
-            professor.SetLastName(dto.LastName);
-            professor.SetBirthDate(dto.BirthDate);
-            professor.SetPassword(dto.Password);
-
-            repository.Update(professor);
             repository.Save();
 
             return professor;
@@ -109,25 +69,16 @@ namespace QuizSystem.Service
             return professor;
         }
 
-        public Student ChangeProfessorToStudent(UserIdDTO dto)
+        public void ChangeProfessorToStudent(UserIdDTO dto)
         {
-            Professor professor = repository.GetWithId(dto.Id);
-            Student student = new Student(professor.FirstName, professor.LastName, professor.NationalCode, professor.Password, professor.BirthDate, studentRepository , professor.Accepted);
+                Professor professor = repository.GetWithId(dto.Id);
+                Student student = new Student(dto.Id);
 
             studentRepository.Create(student);
             studentRepository.Save();
 
-            repository.Delete(professor);
-            repository.Save();
-
-            return student;
-        }
-
-        public List<Professor> SearchProfessor(StudentProfessorSearchDTO dto)
-        {
-            List<Professor> professors = repository.Filter(dto.FirstName,dto.LastName,dto.NationalCode);
-
-            return professors;
+                repository.Delete(professor);
+                repository.Save();
         }
     }
 }

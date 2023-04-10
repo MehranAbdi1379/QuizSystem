@@ -7,30 +7,27 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using QuizSystem.Service.Exceptions;
+using QuizSystem.Repository;
+using QuizSystem.Repository.DataBase;
 
 namespace QuizSystem.Service
 {
     public class StudentService : IStudentService
     {
-        protected readonly IUserRepository<Student> repository;
-        protected readonly IUserRepository<Professor> professorRepository;
         protected readonly ICourseStudentRepository courseStudentRepository;
+        protected readonly IStudentRepository repository;
+        protected readonly IProfessorRepository professorRepository;
 
-        public StudentService(IUserRepository<Student> repository , IUserRepository<Professor> professorRepository, ICourseStudentRepository courseStudentRepository)
+        public StudentService(ICourseStudentRepository courseStudentRepository , IStudentRepository studentRepository, IProfessorRepository professorRepository)
         {
-            this.repository = repository;
-            this.professorRepository = professorRepository;
             this.courseStudentRepository = courseStudentRepository;
+            repository = studentRepository;
+            this.professorRepository = professorRepository;
         }
 
-        public Student CreateStudent(UserCreateDTO dto)
+        public Student CreateStudent(Guid id)
         {
-            var student = new Student(dto.FirstName,
-                dto.LastName,
-                dto.NationalCode,
-                dto.Password,
-                dto.BirthDate,
-                repository);
+            var student = new Student(id);
 
             repository.Create(student);
             repository.Save();
@@ -38,56 +35,18 @@ namespace QuizSystem.Service
             return student;
         }
 
-        public StudentAndProfessorSignedInDTO StudentSignIn(UserSignInDTO dto)
-        {
-            try
-            {
-                var student = repository.GetWithNationalCodeAndPassword(dto.NationalCode , dto.Password);
-                List<Guid> courses = new List<Guid>();
-                foreach (var item in courseStudentRepository.GetCourseIds(student.Id))
-                {
-                    courses.Add(item.CourseId);
-                }
-                return new StudentAndProfessorSignedInDTO()
-                {
-                    Id = student.Id,
-                    FirstName = student.FirstName,
-                    LastName = student.LastName,
-                    NationalCode = student.NationalCode,
-                    Password = student.Password,
-                    BirthDate = student.BirthDate,
-                    Courses = courses
-                };
-            }
-            catch (Exception ex)
-            {
-                throw new StudentSignInWrongNationalCodeOrPasswordException();
-            }
-        }
-
-        public Student RemoveStudent(UserIdDTO dto)
+        public void RemoveStudent(UserIdDTO dto)
         {
             Student student = repository.GetWithId(dto.Id);
 
+            foreach (var item in courseStudentRepository.GetWithStudentId(dto.Id))
+            {
+                courseStudentRepository.Delete(item);
+            }
+
+            courseStudentRepository.Save();
             repository.Delete(student);
             repository.Save();
-
-            return student;
-        }
-
-        public Student UpdateStudent(UserUpdateDTO dto)
-        {
-            Student student = repository.GetWithId(dto.Id);
-
-            student.SetFirstName(dto.FirstName);
-            student.SetLastName(dto.LastName);
-            student.SetNationalCode(dto.NationalCode,repository);
-            student.SetBirthDate(dto.BirthDate);
-
-            repository.Update(student);
-            repository.Save();
-
-            return student;
         }
 
         public Student AcceptStudent(UserIdDTO dto)
@@ -114,26 +73,23 @@ namespace QuizSystem.Service
             return student;
         }
 
-        public Professor ChangeStudentToProfessor(UserIdDTO dto)
+        public void ChangeStudentToProfessor(UserIdDTO dto)
         {
             Student student = repository.GetWithId(dto.Id);
-
-            Professor professor = new Professor(student.FirstName,student.LastName,student.NationalCode,student.Password,student.BirthDate,professorRepository , student.Accepted);
-
-            repository.Delete(student);
-            repository.Save();
+            var professor = new Professor(dto.Id);
 
             professorRepository.Create(professor);
             professorRepository.Save();
 
-            return professor;
-        }
+            repository.Delete(student);
+            repository.Save();
 
-        public List<Student> SearchStudent(StudentProfessorSearchDTO dto)
-        {
-            List<Student> students = repository.Filter(dto.FirstName, dto.LastName, dto.NationalCode);
+            foreach (var item in courseStudentRepository.GetWithStudentId(dto.Id))
+            {
+                courseStudentRepository.Delete(item);
+            }
 
-            return students;
+            courseStudentRepository.Save();
         }
     }
 }
