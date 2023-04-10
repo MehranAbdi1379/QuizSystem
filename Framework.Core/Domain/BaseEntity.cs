@@ -8,6 +8,10 @@ namespace Framework.Core.Domain
 {
     public class BaseEntity
     {
+        public BaseEntity(Guid id)
+        {
+            this.Id = id;
+        }
         public BaseEntity()
         {
             Id = Guid.NewGuid();

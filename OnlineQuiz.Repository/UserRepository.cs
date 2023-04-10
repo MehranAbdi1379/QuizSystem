@@ -1,5 +1,9 @@
 ﻿using Framework.Core.Domain;
 using Framework.Repository;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 using QuizSystem.Domain.Models;
 using QuizSystem.Domain.Repository;
 using QuizSystem.Repository.DataBase;
@@ -11,25 +15,38 @@ using System.Threading.Tasks;
 
 namespace QuizSystem.Repository
 {
-    public class UserRepository<TEntity> : BaseRepository<TEntity, ApiUser>, IUserRepository<TEntity> where TEntity : User
+    public class UserRepository 
     {
-        public UserRepository(QuizSystemContext context) : base(context)
-        {
 
+        private readonly UserManager<ApiUser> userManager;
+        public UserRepository(UserManager<ApiUser> userManager)
+        {
+            this.userManager = userManager;
         }
 
-        public bool NationalCodeExists(string nationalCode)
+        public List<ApiUser> Filter(string firstName, string lastName, string nationalCode , string role)
         {
-            return context.Set<TEntity>().Any(s => s.NationalCode == nationalCode);
-        }
-        public List<TEntity> Filter(string firstName, string lastName, string nationalCode)
-        {
-            return context.Set<TEntity>().Where(s => s.FirstName.ToLower().Contains(firstName.ToLower()) &&
+            var result= new List<ApiUser>();
+            var users = userManager.Users.Where(s => s.FirstName.ToLower().Contains(firstName.ToLower()) &&
             s.LastName.ToLower().Contains(lastName.ToLower()) && s.NationalCode.Contains(nationalCode)).ToList();
+            foreach (var item in users)
+            {
+                if (userManager.IsInRoleAsync(item,role).Result)
+                {
+                    result.Add(item);
+                }
+            }
+            if (role.IsNullOrEmpty())
+            {
+                return users;
+            }
+
+            return result;
         }
-        public TEntity GetWithNationalCodeAndPassword(string nationalCode , string password)
+
+        public List<string> GetUserRoles(string userName)
         {
-            return context.Set<TEntity>().Where(t => t.NationalCode == nationalCode && t.Password==password).First();
+            return userManager.GetRolesAsync(userManager.FindByNameAsync(userName).Result).Result.ToList();
         }
     }
 }
