@@ -22,11 +22,11 @@ namespace QuizSystem.Service
 
         public List<UserSearchResultDTO> SearchForUser(StudentProfessorSearchDTO dto)
         {
-            var userList = userRepository.Filter(dto.FirstName, dto.LastName, dto.NationalCode, dto.Role);
+            var userList = userRepository.Filter(dto.FirstName, dto.LastName, dto.NationalCode, dto.Role).Result;
             var result = new List<UserSearchResultDTO>();
             foreach (var item in userList)
             {
-                result.Add(new UserSearchResultDTO { NationalCode = item.NationalCode });
+                result.Add(new UserSearchResultDTO { NationalCode = item.NationalCode , Role = userRepository.GetUserRole(item.NationalCode)});
             }
             return result;
         }
@@ -41,12 +41,12 @@ namespace QuizSystem.Service
 
             if (result.Succeeded)
             {
-                await userManager.AddToRolesAsync(user, dto.Roles);
-                if (dto.Roles.Contains("student"))
+                await userManager.AddToRoleAsync(user, dto.Role);
+                if (dto.Role.ToLower() == "student")
                 {
                     studentService.CreateStudent(Guid.Parse(user.Id));
                 }
-                if(dto.Roles.Contains("professor"))
+                if(dto.Role.ToLower() == "professor")
                 {
                     professorService.CreateProfessor(Guid.Parse(user.Id));
                 }

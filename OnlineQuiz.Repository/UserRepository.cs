@@ -10,6 +10,7 @@ using QuizSystem.Repository.DataBase;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -24,29 +25,32 @@ namespace QuizSystem.Repository
             this.userManager = userManager;
         }
 
-        public List<ApiUser> Filter(string firstName, string lastName, string nationalCode , string role)
+        public async Task<List<ApiUser>> Filter(string firstName, string lastName, string nationalCode , string role)
         {
             var result= new List<ApiUser>();
             var users = userManager.Users.Where(s => s.FirstName.ToLower().Contains(firstName.ToLower()) &&
             s.LastName.ToLower().Contains(lastName.ToLower()) && s.NationalCode.Contains(nationalCode)).ToList();
-            foreach (var item in users)
-            {
-                if (userManager.IsInRoleAsync(item,role).Result)
-                {
-                    result.Add(item);
-                }
-            }
             if (role.IsNullOrEmpty())
             {
                 return users;
             }
 
+            foreach (var item in users)
+            {
+                bool isInRole = await userManager.IsInRoleAsync(item, role);
+                if (isInRole)
+                {
+                    result.Add(item);
+                }
+            }
+            
+
             return result;
         }
 
-        public List<string> GetUserRoles(string userName)
+        public string GetUserRole(string userName)
         {
-            return userManager.GetRolesAsync(userManager.FindByNameAsync(userName).Result).Result.ToList();
+            return userManager.GetRolesAsync(userManager.FindByNameAsync(userName).Result).Result.ToList().First();
         }
     }
 }

@@ -37,7 +37,7 @@ namespace QuizSystem.API.Controllers
 
             if (task.Succeeded)
                 return Ok(task);
-            return BadRequest(ModelState);
+            return BadRequest(task);
         }
 
         [HttpPost]
