@@ -21,7 +21,7 @@ namespace QuizSystem.API.Extensions
             builder.Services.AddScoped<IStudentService, StudentService>();
             builder.Services.AddScoped<IProfessorService, ProfessorService>();
             builder.Services.AddScoped<ICourseService, CourseService>();
-            builder.Services.AddScoped<IUserSearchService,UserSearchService>();
+            builder.Services.AddScoped<IUserService,UserService>();
             builder.Services.AddScoped<IAdminService, AdminService>();
         }
 
@@ -66,7 +66,5 @@ namespace QuizSystem.API.Extensions
                     };
                 });
         }
-
-
     }
 }

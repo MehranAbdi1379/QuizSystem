@@ -15,18 +15,12 @@ namespace QuizSystem.API.Controllers
     [Route("api/User")]
     public class UserController : ControllerBase
     {
-        private readonly IUserSearchService userSearchService;
-        private readonly IStudentService studentService;
-        private readonly IProfessorService professorService;
-        private readonly IAdminService adminService;
+        private readonly IUserService userService;
         private readonly UserManager<ApiUser> userManager;
 
-        public UserController(IUserSearchService userSearchService , IStudentService studentService , IProfessorService professorService , IAdminService adminService , UserManager<ApiUser> userManager)
+        public UserController(IUserService userSearchService ,UserManager<ApiUser> userManager)
         {
-            this.userSearchService = userSearchService;
-            this.studentService = studentService;
-            this.professorService = professorService;
-            this.adminService = adminService;
+            this.userService = userSearchService;
             this.userManager = userManager;
         }
 
@@ -39,54 +33,19 @@ namespace QuizSystem.API.Controllers
                 return BadRequest(ModelState);
             }
 
-            var mappercongif = new MapperConfiguration(config => config.CreateMap<UserCreateDTO, ApiUser>());
-            var mapper = mappercongif.CreateMapper();
-            var user = mapper.Map<ApiUser>(dto);
-            user.UserName = dto.NationalCode;
+            var task = await userService.SignUp(dto , userManager);
 
-            var result = await userManager.CreateAsync(user, dto.Password);
-
-            if (result.Succeeded)
-            {
-                await userManager.AddToRolesAsync(user, dto.Roles);
-            }
-
-            return Ok(result);
+            if (task.Succeeded)
+                return Ok(task);
+            return BadRequest(ModelState);
         }
 
         [HttpPost]
         [Route("Search")]
         public IActionResult SearchUser(StudentProfessorSearchDTO dto)
         {
-            switch (dto.Type.ToLower())
-            {
-                case "student":
-                    Log.Information("Search successful for student");
-                    return Ok(userSearchService.SearchForUser(dto).Students);
-                case "professor":
-                    return Ok(userSearchService.SearchForUser(dto).Professors);
-                case "all":
-                    return Ok(userSearchService.SearchForUser(dto));
-                default:
-                    throw new UserSearchTypeInvalidException(); 
-            }
-        }
-
-        [HttpPost]
-        [Route("Sign-In")]
-        public IActionResult SignUserIn(UserSignInDTO dto)
-        {
-            switch(dto.Type.ToLower())
-            {
-                case "student":
-                    return Ok(studentService.StudentSignIn(dto));
-                case "professor":
-                    return Ok(professorService.ProfessorSignIn(dto));
-                case "admin":
-                    return Ok(adminService.AdminSignIn(dto));
-                default:
-                    throw new UserSearchTypeInvalidException(); 
-            }
+            return Ok(userService.SearchForUser(dto));
+            
         }
     }
 }
