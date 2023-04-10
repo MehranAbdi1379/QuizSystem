@@ -7,7 +7,7 @@ import Input from "./Input";
 import Form from "./Form";
 
 const SignUpDev = () => {
-  const [radioChoice, setRadioChoice] = useState("");
+  const [role, setrole] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [nationalCode, setNationalCode] = useState("");
@@ -16,7 +16,7 @@ const SignUpDev = () => {
 
   function onSubmit() {
     const user = {
-      radioChoice,
+      role,
       firstName,
       lastName,
       nationalCode,
@@ -24,15 +24,11 @@ const SignUpDev = () => {
       password,
     };
     console.log(user);
-    console.log(radioChoice);
-    if (radioChoice === "Student")
-      axios
-        .post("https://localhost:7031/api/Students/Create", user)
-        .then((response) => console.log(response.data));
-    if (radioChoice === "Professor")
-      axios
-        .post("https://localhost:7031/api/Professor/Create", user)
-        .then((response) => console.log(response));
+    console.log(role);
+
+    axios
+      .post("https://localhost:7031/api/User/Sign-Up", user)
+      .then((response) => console.log(response.data));
   }
 
   return (
@@ -54,7 +50,7 @@ const SignUpDev = () => {
         <Input onChange={setPassword} required type="password"></Input>
         <br></br>
         <RadioButtonGroup
-          onClick={setRadioChoice}
+          onClick={setrole}
           groupName="User"
           buttonNames={["Student", "Professor"]}
         ></RadioButtonGroup>
