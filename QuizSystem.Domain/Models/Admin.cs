@@ -1,4 +1,5 @@
-﻿using QuizSystem.Domain.Exceptions;
+﻿using Framework.Core.Domain;
+using QuizSystem.Domain.Exceptions;
 using QuizSystem.Domain.Repository;
 using System;
 using System.Collections.Generic;
@@ -10,21 +11,11 @@ using System.Threading.Tasks;
 
 namespace QuizSystem.Domain.Models
 {
-    public class Admin : User
+    public class Admin : BaseEntity
     {
-        public Admin(string firstName, string lastName, string password,string nationalCode, DateTime birthdate , IUserRepository<Admin> repository) :
-            base(firstName, lastName,password,birthdate)
+        public Admin()
         {
-            SetNationalCode(nationalCode, repository);
-        }
 
-        public void SetNationalCode(string nationalCode, IUserRepository<Admin> repository)
-        {
-            if (repository.NationalCodeExists(nationalCode))
-                throw new AdminNationalCodeExistsException();
-            if (nationalCode.Length != 10 || Regex.IsMatch(nationalCode, "\\D"))
-                throw new AdminNationalCodeInvalidException();
-            NationalCode = nationalCode;
         }
     }
 }

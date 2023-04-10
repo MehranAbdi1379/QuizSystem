@@ -10,39 +10,27 @@ using System.Threading.Tasks;
 
 namespace QuizSystem.Domain.Models
 {
-    public class Professor : User
+    public class Professor : BaseEntity
     {
         public Professor()
         {
 
         }
 
-        public Professor(string firstName,
-            string lastName,
-            string nationalCode,
-            string password,
-            DateTime birthDate
-            , IUserRepository<Professor> repository
-            ,bool accepted = false
-            ) : base(firstName,lastName,password,birthDate)
+        public Professor(bool accepted = false
+            ) 
         {
-            SetNationalCode(nationalCode, repository);
             SetAccepted(accepted);
         }
 
+        public Professor(Guid id) : base(id)
+        {
 
-        public string NationalCode { get; private set; }
+        }
+
         public bool Accepted { get; private set; } = false;
         public List<Course> Courses { get; private set; }
 
-        public void SetNationalCode(string nationalCode, IUserRepository<Professor> repository)
-        {
-            if (repository.NationalCodeExists(nationalCode))
-                throw new ProfessorNationalCodeExistsException();
-            if (nationalCode.Length != 10 || Regex.IsMatch(nationalCode, "\\D"))
-                throw new ProfessorNationalCodeInvalidException();
-            NationalCode = nationalCode;
-        }
         public void SetAccepted(bool accepted)
         {
             Accepted = accepted;

@@ -8,9 +8,8 @@ using System.Threading.Tasks;
 
 namespace QuizSystem.Domain.Repository
 {
-    public interface ICourseStudentRepository : IBaseRepository<CourseStudent> 
+    public interface IStudentRepository : IBaseRepository<Student>
     {
-        List<CourseStudent> GetWithCourseId(Guid courseId);
-        List<CourseStudent> GetWithStudentId(Guid studentId);
+
     }
 }

@@ -12,23 +12,17 @@ using System.Threading.Tasks;
 
 namespace QuizSystem.Domain.Models
 {
-    public class Student : User
+    public class Student : BaseEntity
     {
         public Student()
         {
 
         }
 
-        public Student(string firstName,
-            string lastName,
-            string nationalCode,
-            string password,
-            DateTime birthDate,
-            IUserRepository<Student> repository,
-            bool accepted = false) : base(firstName, lastName, password, birthDate)
-        {
+        public Student(Guid id,
+            bool accepted = false) : base(id)
+         {
             SetAccepted(accepted);
-            SetNationalCode(nationalCode, repository);
         }
 
         public bool Accepted { get; private set; } = false;
@@ -37,14 +31,6 @@ namespace QuizSystem.Domain.Models
         public void SetAccepted(bool accepted)
         {
             Accepted = accepted;
-        }
-        public void SetNationalCode(string nationalCode, IUserRepository<Student> repository)
-        {
-            if (repository.NationalCodeExists(nationalCode))
-                throw new StudentNationalCodeExistsException();
-            if (nationalCode.Length != 10 || Regex.IsMatch(nationalCode, "\\D"))
-                throw new StudentNationalCodeInvalidException();
-            NationalCode = nationalCode;
         }
     }
 }
