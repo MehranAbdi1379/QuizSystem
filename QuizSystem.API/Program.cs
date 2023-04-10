@@ -39,13 +39,14 @@ Log.Logger = new LoggerConfiguration()
 
 builder.AddDIForRepositoryClasses();
 builder.AddDIForServiceClasses();
+builder.Services.AddScoped<IAuthManager, AuthManager>();
 
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-
+builder.Services.AddSwagger();
 
 var app = builder.Build();
 
@@ -60,6 +61,7 @@ app.UseCors();
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

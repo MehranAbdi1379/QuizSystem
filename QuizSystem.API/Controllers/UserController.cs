@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -8,6 +9,7 @@ using QuizSystem.Domain.Repository;
 using QuizSystem.Service;
 using QuizSystem.Service.Contracts.DTO;
 using Serilog;
+using System.Data;
 
 namespace QuizSystem.API.Controllers
 {
@@ -17,11 +19,13 @@ namespace QuizSystem.API.Controllers
     {
         private readonly IUserService userService;
         private readonly UserManager<ApiUser> userManager;
+        private readonly IAuthManager authManager;
 
-        public UserController(IUserService userSearchService ,UserManager<ApiUser> userManager)
+        public UserController(IUserService userSearchService , UserManager<ApiUser> userManager, IAuthManager authManager)
         {
             this.userService = userSearchService;
             this.userManager = userManager;
+            this.authManager = authManager;
         }
 
         [HttpPost]
@@ -40,12 +44,30 @@ namespace QuizSystem.API.Controllers
             return BadRequest(task);
         }
 
+        [Authorize]
         [HttpPost]
         [Route("Search")]
         public IActionResult SearchUser(StudentProfessorSearchDTO dto)
         {
             return Ok(userService.SearchForUser(dto));
             
+        }
+
+        [HttpPost]
+        [Route("Sign-In")]
+        public async Task<IActionResult> SignIn(UserSignInDTO dto)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            if(!await authManager.ValidateUser(dto))
+            {
+                return Unauthorized();
+            }
+
+            return Accepted(new { Token = await authManager.CreateToken() });
         }
     }
 }

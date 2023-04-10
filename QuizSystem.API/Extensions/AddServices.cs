@@ -11,6 +11,8 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.IdentityModel.Logging;
 using Serilog;
+using System.Runtime.CompilerServices;
+using Microsoft.OpenApi.Models;
 
 namespace QuizSystem.API.Extensions
 {
@@ -46,7 +48,7 @@ namespace QuizSystem.API.Extensions
         public static void ConfigureJWT(this IServiceCollection service, IConfiguration configuration)
         {
             var jwtSettings = configuration.GetSection("Jwt");
-            var key = Environment.GetEnvironmentVariable("KEY");
+            var key = jwtSettings.GetSection("Key").Value;
             service.AddAuthentication(o =>
             {
                 o.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;

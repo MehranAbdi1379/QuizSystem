@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using QuizSystem.Domain.Repository;
 using QuizSystem.Service;
 using QuizSystem.Service.Contracts.DTO;
@@ -16,6 +17,7 @@ namespace QuizSystem.API.Controllers
             this.courseService= courseService;
         }
 
+        
         [HttpPost]
         [Route("Create")]
         public IActionResult CreateCourse(CourseCreateDTO dto)
