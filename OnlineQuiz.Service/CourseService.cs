@@ -12,13 +12,13 @@ namespace QuizSystem.Service;
 public class CourseService : ICourseService
 {
     protected readonly ICourseRepository repository;
-    protected readonly IUserRepository<Professor> professorRepository;
-    protected readonly IUserRepository<Student> studentRepository;
+    protected readonly IProfessorRepository professorRepository;
+    protected readonly IStudentRepository studentRepository;
     protected readonly ICourseStudentRepository courseStudentRepository;
 
     public CourseService(ICourseRepository repository,
-        IUserRepository<Professor> professorRepository,
-        IUserRepository<Student> studentRepository,
+        IProfessorRepository professorRepository,
+        IStudentRepository studentRepository,
         ICourseStudentRepository courseStudentRepository)
     {
         this.repository = repository;
@@ -33,10 +33,8 @@ public class CourseService : ICourseService
             dto.StartTime,
             dto.EndTime,
             repository,
-            dto.StudentIds,
             dto.ProfessorId,
-            professorRepository
-            ,studentRepository);
+            professorRepository);
 
         repository.Create(course);
         repository.Save();

@@ -14,38 +14,12 @@ namespace QuizSystem.Domain.Test.Models
     [TestClass]
     public class ProfessorTest
     {
-        private readonly Mock<IUserRepository<Professor>> professorRepositoryMock;
+        private readonly Mock<IProfessorRepository> professorRepositoryMock;
         private readonly Mock<ICourseRepository> courseRepositoryMock;
         public ProfessorTest()
         {
-            professorRepositoryMock = new Mock<IUserRepository<Professor>>();
+            professorRepositoryMock = new Mock<IProfessorRepository>();
             courseRepositoryMock = new Mock<ICourseRepository>();
-        }
-
-        [TestMethod]
-        public void SetNationalCode_Retrieve()
-        {
-            var professor = InitialProfessor();
-            var nationalCode = "5050062330";
-            Assert.AreEqual(nationalCode, professor.NationalCode);
-        }
-
-        [TestMethod]
-        [DataRow("125050062330")]
-        [DataRow("m505006233")]
-        [DataRow("")]
-        public void SetNationalCode_NationalCodeIsInvalid_ThrowException(string nationalCode)
-        {
-            var professor = InitialProfessor();
-            Assert.ThrowsException<ProfessorNationalCodeInvalidException>(() => professor.SetNationalCode(nationalCode, professorRepositoryMock.Object));
-        }
-
-        [TestMethod]
-        public void SetNationalCode_NationalCodeExists_ThrowException()
-        {
-            var professor = InitialProfessor();
-            professorRepositoryMock.Setup(c => c.NationalCodeExists(It.IsAny<string>())).Returns(true);
-            Assert.ThrowsException<ProfessorNationalCodeExistsException>(() => professor.SetNationalCode("5050062330",professorRepositoryMock.Object));
         }
 
         [TestMethod]
@@ -64,9 +38,9 @@ namespace QuizSystem.Domain.Test.Models
             Assert.AreEqual(true, professor.Accepted);
         }
 
-        public Professor InitialProfessor(string nationalCode = "5050062330")
+        public Professor InitialProfessor()
         {
-            return new Professor("mehran", "abdi", nationalCode, "mehran1234", DateTime.Now.AddYears(-20), professorRepositoryMock.Object);
+            return new Professor();
         }
     }
 }

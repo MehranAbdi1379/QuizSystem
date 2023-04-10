@@ -22,14 +22,12 @@ namespace QuizSystem.API.Extensions
             builder.Services.AddScoped<IProfessorService, ProfessorService>();
             builder.Services.AddScoped<ICourseService, CourseService>();
             builder.Services.AddScoped<IUserService,UserService>();
-            builder.Services.AddScoped<IAdminService, AdminService>();
         }
 
         public static void AddDIForRepositoryClasses(this WebApplicationBuilder builder)
         {
-            builder.Services.AddScoped<IUserRepository<Student>, UserRepository<Student>>();
-            builder.Services.AddScoped<IUserRepository<Professor> , UserRepository<Professor>>();
-            builder.Services.AddScoped<IUserRepository<Admin>, UserRepository<Admin>>();
+            builder.Services.AddScoped<IStudentRepository, StudentRepository>();
+            builder.Services.AddScoped<IProfessorRepository , ProfessorRepository>();
             builder.Services.AddScoped<ICourseRepository, CourseRepository>();
             builder.Services.AddScoped<ICourseStudentRepository, CourseStudentRepository>();
         }
