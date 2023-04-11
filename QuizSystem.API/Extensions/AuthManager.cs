@@ -36,6 +36,7 @@ List<Claim> claims)
             var tokenOptions = new JwtSecurityToken
             (
             issuer: jwtSettings["Issuer"],
+            audience: jwtSettings["Audience"],
             claims: claims,
             expires: DateTime.Now.AddMinutes(15),
             signingCredentials: signingCredentials

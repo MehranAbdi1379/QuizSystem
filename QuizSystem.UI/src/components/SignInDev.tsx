@@ -5,20 +5,47 @@ import Label from "./Label";
 import Input from "./Input";
 import RadioButtonGroup from "./RadioButtonGroup";
 
-const SignInDev = () => {
+interface Props {
+  accessToken: string;
+  setAccessToken: (token: string) => void;
+}
+
+const SignInDev = ({ setAccessToken, accessToken }: Props) => {
   const [nationalCode, setNationalCode] = useState("");
   const [password, setPassword] = useState("");
-  const [type, settype] = useState("");
+
+  function onSearch() {
+    const data = {
+      role: "",
+      firstName: "",
+      lastName: "",
+    };
+
+    let JWTToken =
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiMSIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IlN0dWRlbnQiLCJleHAiOjE2ODEyNDM0NTIsImlzcyI6IlF1aXpTeXN0ZW0uQVBJIn0.ggIfYDKqIc3M9vTuNLl0207kOgOwNx9iHYSgWW-fU_8";
+    axios
+      .post("https://localhost:7031/api/User/Search", data, {
+        headers: {
+          authorization: `Bearer ${accessToken}`,
+        },
+      })
+      .then((res) => {
+        console.log("profile is:", res.data);
+      })
+      .catch((error) => console.log(error));
+
+    console.log(accessToken);
+    console.log("this is just a message");
+  }
 
   function onSubmit() {
     const user = {
-      type,
       nationalCode,
       password,
     };
     axios
       .post("https://localhost:7031/api/User/Sign-In", user)
-      .then((response) => console.log(response.data));
+      .then((response) => setAccessToken(response.data.token));
   }
 
   return (
@@ -29,12 +56,8 @@ const SignInDev = () => {
       <Label>Password: </Label>
       <Input onChange={setPassword} required type="password"></Input>
       <br></br>
-      <RadioButtonGroup
-        buttonNames={["Student", "Professor", "Admin"]}
-        groupName="User"
-        onClick={settype}
-      ></RadioButtonGroup>
       <Button name="Sign in" onClick={onSubmit}></Button>
+      <Button name="Search" onClick={onSearch}></Button>
     </div>
   );
 };

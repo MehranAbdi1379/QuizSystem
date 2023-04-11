@@ -3,7 +3,12 @@ import SignButton from "./Button";
 import SignUpDev from "./SignUpDev";
 import SignInDev from "./SignInDev";
 
-const SignDev = () => {
+interface Props {
+  accessToken: string;
+  setAccessToken: (accessToken: string) => void;
+}
+
+const SignDev = ({ setAccessToken, accessToken }: Props) => {
   const [signUpOrIn, setSignUpOrIn] = useState(0);
 
   function onSignUp() {
@@ -25,7 +30,12 @@ const SignDev = () => {
 
       {signUpOrIn === 1 && <SignUpDev></SignUpDev>}
 
-      {signUpOrIn === 2 && <SignInDev></SignInDev>}
+      {signUpOrIn === 2 && (
+        <SignInDev
+          accessToken={accessToken}
+          setAccessToken={setAccessToken}
+        ></SignInDev>
+      )}
     </div>
   );
 };
