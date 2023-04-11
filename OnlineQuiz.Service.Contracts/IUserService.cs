@@ -6,7 +6,7 @@ namespace QuizSystem.API.Extensions
 {
     public interface IUserService
     {
-        public List<UserSearchResultDTO> SearchForUser(StudentProfessorSearchDTO dto);
+        public Task<List<UserSearchResultDTO>> SearchForUser(StudentProfessorSearchDTO dto);
         public Task<IdentityResult> SignUp(UserCreateDTO dto, UserManager<ApiUser> userManager);
     }
 }

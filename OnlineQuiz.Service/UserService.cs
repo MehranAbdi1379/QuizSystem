@@ -20,9 +20,9 @@ namespace QuizSystem.Service
             this.professorService= professorService;
         }
 
-        public List<UserSearchResultDTO> SearchForUser(StudentProfessorSearchDTO dto)
+        public async Task<List<UserSearchResultDTO>> SearchForUser(StudentProfessorSearchDTO dto)
         {
-            var userList = userRepository.Filter(dto.FirstName, dto.LastName, dto.NationalCode, dto.Role).Result;
+            var userList = await userRepository.Filter(dto.FirstName, dto.LastName, dto.Role);
             var result = new List<UserSearchResultDTO>();
             foreach (var item in userList)
             {

@@ -36,35 +36,43 @@ namespace QuizSystem.API.Extensions
 
         public static void ConfigureIdentity(this IServiceCollection services)
         {
-            var builder = services.AddIdentityCore<ApiUser>(options =>
+            var builder = services.AddIdentity<ApiUser, IdentityRole>(o =>
             {
-                options.Password.RequireNonAlphanumeric = false;
-                options.Password.RequireUppercase = false;
-            });
-            builder = new IdentityBuilder(builder.UserType , typeof(IdentityRole) , services);
-            builder.AddEntityFrameworkStores<QuizSystemContext>().AddDefaultTokenProviders();
+                o.Password.RequireDigit = true;
+                o.Password.RequireLowercase = false;
+                o.Password.RequireUppercase = false;
+                o.Password.RequireNonAlphanumeric = false;
+                o.Password.RequiredLength = 10;
+                o.User.RequireUniqueEmail = true;
+            })
+.AddEntityFrameworkStores<QuizSystemContext>()
+.AddDefaultTokenProviders();
+
         }
 
         public static void ConfigureJWT(this IServiceCollection service, IConfiguration configuration)
         {
             var jwtSettings = configuration.GetSection("Jwt");
-            var key = jwtSettings.GetSection("Key").Value;
-            service.AddAuthentication(o =>
+            var secretKey = Environment.GetEnvironmentVariable("KEY");
+            service.AddAuthentication(opt =>
             {
-                o.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                o.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
             })
-                .AddJwtBearer(o =>
+            .AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters
                 {
-                    o.TokenValidationParameters = new TokenValidationParameters
-                    {
-                        ValidateIssuer = true,
-                        ValidateLifetime = true,
-                        ValidateIssuerSigningKey = true,
-                        ValidIssuer = jwtSettings.GetSection("Issuer").Value,
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key))
-                    };
-                });
+                    ValidateIssuer = true,
+                    ValidateAudience = false,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidIssuer = jwtSettings["Issuer"],
+                    IssuerSigningKey = new
+    SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey))
+                };
+            });
+
         }
     }
 }

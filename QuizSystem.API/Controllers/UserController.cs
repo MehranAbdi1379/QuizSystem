@@ -44,11 +44,14 @@ namespace QuizSystem.API.Controllers
             return BadRequest(task);
         }
 
-        [Authorize]
         [HttpPost]
         [Route("Search")]
+        [Authorize]
         public IActionResult SearchUser(StudentProfessorSearchDTO dto)
         {
+            if(!ModelState.IsValid)
+                return BadRequest(ModelState);
+            
             return Ok(userService.SearchForUser(dto));
             
         }

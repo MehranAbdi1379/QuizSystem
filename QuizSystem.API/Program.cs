@@ -1,14 +1,10 @@
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using QuizSystem.Repository.DataBase;
-using Framework.Repository;
-using QuizSystem.Domain.Repository;
-using QuizSystem.Service;
-using QuizSystem.Domain.Models;
 using QuizSystem.API.Extensions;
-using Microsoft.AspNetCore.Builder;
-using AutoMapper;
 using Serilog;
+using Microsoft.OpenApi.Models;
+using Microsoft.AspNetCore.Identity;
+using QuizSystem.Domain.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -44,9 +40,40 @@ builder.Services.AddScoped<IAuthManager, AuthManager>();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
 
-builder.Services.AddSwagger();
+
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1" , new OpenApiInfo
+    {
+        Title = "jwtToken_Auth_API",
+        Version = "v1"
+    });
+    c.AddSecurityDefinition("Bearer" , new OpenApiSecurityScheme
+    {
+        Name = "Authorization",
+        Type = SecuritySchemeType.ApiKey,
+        Scheme = "Bearer",
+        BearerFormat = "JWT",
+        In = ParameterLocation.Header,
+        Description = "Here Enter JWT Token with bearer format like bearer[space] token"
+    });
+    c.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            new string[]{}
+        }
+    });
+});
+
 
 var app = builder.Build();
 
