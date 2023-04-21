@@ -42,8 +42,8 @@ namespace QuizSystem.API.Extensions
                 o.Password.RequireLowercase = false;
                 o.Password.RequireUppercase = false;
                 o.Password.RequireNonAlphanumeric = false;
-                o.Password.RequiredLength = 10;
-                o.User.RequireUniqueEmail = true;
+                o.Password.RequiredLength = 6;
+                o.User.RequireUniqueEmail = false;
             })
 .AddEntityFrameworkStores<QuizSystemContext>()
 .AddDefaultTokenProviders();
@@ -74,6 +74,41 @@ namespace QuizSystem.API.Extensions
                 };
             });
 
+        }
+
+        public static void AddSwagger(this IServiceCollection service)
+        {
+            service.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Title = "jwtToken_Auth_API",
+                    Version = "v1"
+                });
+                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                {
+                    Name = "Authorization",
+                    Type = SecuritySchemeType.ApiKey,
+                    Scheme = "Bearer",
+                    BearerFormat = "JWT",
+                    In = ParameterLocation.Header,
+                    Description = "Here Enter JWT Token with bearer format like bearer[space] token"
+                });
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            new string[]{}
+        }
+    });
+            });
         }
     }
 }

@@ -34,26 +34,38 @@ namespace QuizSystem.API.Controllers
         {
             if (!ModelState.IsValid)
             {
+                Log.Error("sign up modelstate error.");
                 return BadRequest(ModelState);
             }
+            if(dto.Role.ToLower() != "admin")
+            {
+                var task = await userService.SignUp(dto, userManager);
 
-            var task = await userService.SignUp(dto , userManager);
+                if (task.Succeeded)
+                {
+                    Log.Information($"New user with national code of {dto.NationalCode} is signed up.");
+                    return Ok(task);
+                    
+                }
 
-            if (task.Succeeded)
-                return Ok(task);
-            return BadRequest(task);
+                Log.Error("User can not be signed up.");
+                return BadRequest(task);
+            }
+            Log.Error("Admin can only be added in development phase");
+            return BadRequest("Admin can only be added in development phase");
+            
         }
 
         [HttpPost]
         [Route("Search")]
-        [Authorize]
+        [Authorize(Roles = "admin")]
         public IActionResult SearchUser(StudentProfessorSearchDTO dto)
         {
             if(!ModelState.IsValid)
                 return BadRequest(ModelState);
-            
+
+            Log.Information("User search finished.");
             return Ok(userService.SearchForUser(dto));
-            
         }
 
         [HttpPost]
@@ -62,14 +74,16 @@ namespace QuizSystem.API.Controllers
         {
             if (!ModelState.IsValid)
             {
+                Log.Error("Sign in modelstate error.");
                 return BadRequest(ModelState);
             }
 
             if(!await authManager.ValidateUser(dto))
             {
+                Log.Warning("NationalCode or Password is wrong. Can not sign in.");
                 return Unauthorized();
             }
-
+            Log.Information($"User with national code of {dto.NationalCode} is signed in");
             return Accepted(new { Token = await authManager.CreateToken() });
         }
     }

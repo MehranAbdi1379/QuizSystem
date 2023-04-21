@@ -21,8 +21,6 @@ const SignInDev = ({ setAccessToken, accessToken }: Props) => {
       lastName: "",
     };
 
-    let JWTToken =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiMSIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IlN0dWRlbnQiLCJleHAiOjE2ODEyNDM0NTIsImlzcyI6IlF1aXpTeXN0ZW0uQVBJIn0.ggIfYDKqIc3M9vTuNLl0207kOgOwNx9iHYSgWW-fU_8";
     axios
       .post("https://localhost:7031/api/User/Search", data, {
         headers: {
