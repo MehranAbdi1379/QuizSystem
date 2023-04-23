@@ -1,8 +1,7 @@
 import "./App.css";
-import Parent from "./components/Parent";
 
 function App() {
-  return <Parent></Parent>;
+  return <div></div>;
 }
 
 export default App;
