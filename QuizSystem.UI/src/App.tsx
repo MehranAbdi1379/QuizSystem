@@ -5,12 +5,21 @@ import {
   createRoutesFromElements,
 } from "react-router-dom";
 import RootLayout from "./layouts/RootLayout";
-import WelcomePage from "./components/WelcomePage";
+import WelcomePage from "./pages/WelcomePage";
+import SignedInLayout from "./layouts/SignedInLayout";
+import Navbar from "./components/Navbar";
+import SignInPage from "./pages/SignInPage";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
-    <Route path="/" element={<RootLayout />}>
-      <Route index element={<WelcomePage />}></Route>
+    <Route>
+      <Route path="/" element={<RootLayout />}>
+        <Route index element={<WelcomePage />}></Route>
+        <Route path="sign-in" element={<SignInPage />}></Route>
+      </Route>
+      <Route path="/signed-in" element={<SignedInLayout />}>
+        <Route index element={<Navbar />}></Route>
+      </Route>
     </Route>
   )
 );

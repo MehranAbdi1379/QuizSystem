@@ -20,7 +20,10 @@ const WelcomePage = () => {
           Schools and universities use this app to make the educational
           experience better.
         </Text>
-        <Button>Sign In</Button>
+        <NavLink to="sign-in">
+          <Button>Sign In</Button>
+        </NavLink>
+
         <Text>
           Don't have an account?
           <NavLink to="sign-up">
