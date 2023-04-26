@@ -84,7 +84,10 @@ namespace QuizSystem.API.Controllers
                 return Unauthorized();
             }
             Log.Information($"User with national code of {dto.NationalCode} is signed in");
-            return Accepted(new { Token = await authManager.CreateToken() });
+            //var token = await authManager.CreateToken();
+            //var user = await userManager.FindByIdAsync(dto.NationalCode);
+            //var role = await userManager.GetRolesAsync(user);
+            return Accepted(new {Token = await authManager.CreateToken() ,  Role = userManager.GetRolesAsync(userManager.FindByNameAsync(dto.NationalCode).Result).Result[0] });
         }
     }
 }

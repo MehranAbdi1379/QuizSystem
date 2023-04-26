@@ -10,6 +10,7 @@ import SignedInLayout from "./layouts/SignedInLayout";
 import Navbar from "./components/NavbarRoot";
 import SignInPage from "./pages/SignInPage";
 import SignUpPage from "./pages/SignUpPage";
+import { useState } from "react";
 
 const router = createBrowserRouter(
   createRoutesFromElements(

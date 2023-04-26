@@ -12,12 +12,30 @@ import {
   useColorMode,
 } from "@chakra-ui/react";
 import React from "react";
-import { Form } from "react-router-dom";
+import { Form, useNavigate } from "react-router-dom";
+import signIn, { user } from "../services/SignIn";
+import { useForm } from "react-hook-form";
+import GetAuthToken from "../services/Auth";
 
 const SignInPage = () => {
   const { colorMode } = useColorMode();
+  const navigate = useNavigate();
+  const {
+    handleSubmit,
+    register,
+    formState: { errors },
+  } = useForm();
+
+  function onSubmit(user: user) {
+    signIn(user).then(() => navigate("/sign-up"));
+  }
+
   return (
-    <Form>
+    <Form
+      onSubmit={handleSubmit((res) =>
+        onSubmit({ nationalCode: res.nationalCode, password: res.password })
+      )}
+    >
       <Container
         marginTop={5}
         bg={colorMode == "dark" ? "gray.700" : "gray.50"}
@@ -32,11 +50,11 @@ const SignInPage = () => {
 
           <FormControl>
             <FormLabel>National Code: </FormLabel>
-            <Input type="number"></Input>
+            <Input required {...register("nationalCode")} type="number"></Input>
           </FormControl>
           <FormControl>
             <FormLabel>Password: </FormLabel>
-            <Input type="password"></Input>
+            <Input required {...register("password")} type="password"></Input>
           </FormControl>
           <FormControl>
             <Button type="submit">Submit</Button>
