@@ -1,11 +1,12 @@
 import React from "react";
-import Navbar from "../components/Navbar";
+import Navbar from "../components/NavbarRoot";
 import { Outlet } from "react-router-dom";
+import NavbarSignedIn from "../components/NavbarSignedIn";
 
 const SignedInLayout = () => {
   return (
     <>
-      <Navbar />
+      <NavbarSignedIn />
       <Outlet />
     </>
   );

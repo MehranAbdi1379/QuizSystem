@@ -1,21 +1,21 @@
 import {
-  Box,
-  Button,
   Container,
+  List,
+  Heading,
   FormControl,
   FormLabel,
-  Heading,
   Input,
-  List,
+  Button,
+  Box,
   Text,
-  VStack,
   useColorMode,
 } from "@chakra-ui/react";
 import React from "react";
 import { Form } from "react-router-dom";
 
-const SignInPage = () => {
+const SignUpPage = () => {
   const { colorMode } = useColorMode();
+  const date = new Date(1990, 1);
   return (
     <Form>
       <Container
@@ -26,10 +26,17 @@ const SignInPage = () => {
       >
         <List spacing={5}>
           <Box>
-            <Heading>Sign in</Heading>
-            <Text>to your account</Text>
+            <Heading>Sign up</Heading>
+            <Text>welcome to our website</Text>
           </Box>
-
+          <FormControl>
+            <FormLabel>First name: </FormLabel>
+            <Input type="text"></Input>
+          </FormControl>
+          <FormControl>
+            <FormLabel>Last name: </FormLabel>
+            <Input type="text"></Input>
+          </FormControl>
           <FormControl>
             <FormLabel>National Code: </FormLabel>
             <Input type="number"></Input>
@@ -37,6 +44,10 @@ const SignInPage = () => {
           <FormControl>
             <FormLabel>Password: </FormLabel>
             <Input type="password"></Input>
+          </FormControl>
+          <FormControl>
+            <FormLabel>Date of birth: </FormLabel>
+            <Input type="date"></Input>
           </FormControl>
           <FormControl>
             <Button type="submit">Submit</Button>
@@ -47,4 +58,4 @@ const SignInPage = () => {
   );
 };
 
-export default SignInPage;
+export default SignUpPage;
