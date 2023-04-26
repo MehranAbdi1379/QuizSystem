@@ -5,9 +5,14 @@ import {
   createRoutesFromElements,
 } from "react-router-dom";
 import RootLayout from "./layouts/RootLayout";
+import WelcomePage from "./components/WelcomePage";
 
 const router = createBrowserRouter(
-  createRoutesFromElements(<Route path="/" element={<RootLayout />}></Route>)
+  createRoutesFromElements(
+    <Route path="/" element={<RootLayout />}>
+      <Route index element={<WelcomePage />}></Route>
+    </Route>
+  )
 );
 
 function App() {
