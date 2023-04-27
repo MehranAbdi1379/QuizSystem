@@ -21,7 +21,11 @@ const NavbarSignedIn = ({ name }: Props) => {
 
       <HStack spacing={3}>
         <Text>Welcome Mr/Ms {name}</Text>
-        <NavButton to="/" name="Sign out"></NavButton>
+        <NavButton
+          to="/"
+          name="Sign out"
+          onClick={() => localStorage.removeItem("token")}
+        ></NavButton>
         <NavButton to="about-us" name="About Us"></NavButton>
         <HStack>
           <Switch

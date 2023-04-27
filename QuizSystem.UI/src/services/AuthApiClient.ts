@@ -1,7 +1,8 @@
 import axios from "axios"
+import GetAuthToken from "./Auth";
 
-const authApiClient = (jwtToken: string) => {
-    return axios.create({baseURL:'https://localhost:7031/api' , headers: {Authorization: 'bearer ' + jwtToken}})
+const authApiClient = () => {
+    return axios.create({baseURL:'https://localhost:7031/api' , headers: {Authorization: 'bearer ' + GetAuthToken()}})
 }
 
 export default authApiClient;

@@ -4,6 +4,7 @@ import {
   FormControl,
   FormHelperText,
   Heading,
+  Highlight,
   Link,
   Text,
 } from "@chakra-ui/react";
@@ -26,9 +27,7 @@ const WelcomePage = () => {
 
         <Text>
           Don't have an account?
-          <NavLink to="sign-up">
-            <Link> Sign up</Link>
-          </NavLink>
+          <NavLink to="sign-up"> Sign up</NavLink>
         </Text>
       </Container>
     </>

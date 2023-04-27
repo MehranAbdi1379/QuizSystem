@@ -13,6 +13,7 @@ import SignInPage from "./pages/SignInPage";
 import SignUpPage from "./pages/SignUpPage";
 import { useState } from "react";
 import AdminPage from "./pages/AdminPage";
+import { Heading } from "@chakra-ui/react";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -22,9 +23,11 @@ const router = createBrowserRouter(
         <Route path="sign-in" element={<SignInPage />}></Route>
         <Route path="sign-up" element={<SignUpPage />}></Route>
       </Route>
-      <Route path="sign-in/:id" element={<SignedInLayout />}>
-        <Route path="admin" element={<AdminPage />}></Route>
-      </Route>
+      {localStorage.getItem("token") && (
+        <Route path="sign-in/:id" element={<SignedInLayout />}>
+          <Route path="admin" element={<AdminPage />}></Route>
+        </Route>
+      )}
     </Route>
   )
 );

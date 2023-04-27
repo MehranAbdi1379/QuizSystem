@@ -5,12 +5,13 @@ import { NavLink } from "react-router-dom";
 interface Props {
   name: string;
   to: string;
+  onClick?: () => void;
 }
 
-const NavButton = ({ name, to }: Props) => {
+const NavButton = ({ name, to, onClick }: Props) => {
   return (
     <NavLink to={to}>
-      <Button>{name}</Button>
+      <Button onClick={onClick}>{name}</Button>
     </NavLink>
   );
 };
