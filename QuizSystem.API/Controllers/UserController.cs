@@ -119,7 +119,8 @@ namespace QuizSystem.API.Controllers
 
             }
             Log.Information($"Admin get by id is completed for admin: {dto.Id}");
-            return Ok(userManager.FindByIdAsync(dto.Id.ToString()).Result.FirstName);
+            var result = userManager.FindByIdAsync(dto.Id.ToString()).Result;
+            return Ok(new { FirstName = result.FirstName, LastName = result.LastName });
         }
     }
 }

@@ -12,5 +12,6 @@ namespace QuizSystem.Domain.Repository
     {
         bool CourseTitleExists(string title);
         public List<Guid> GetWithProfessorId(Guid professorID);
+        public List<Course> GetAllCourses();
     }
 }

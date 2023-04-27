@@ -38,7 +38,7 @@ List<Claim> claims)
             issuer: jwtSettings["Issuer"],
             audience: jwtSettings["Audience"],
             claims: claims,
-            expires: DateTime.Now.AddMinutes(15),
+            expires: DateTime.Now.AddMinutes(30),
             signingCredentials: signingCredentials
             );
             return tokenOptions;

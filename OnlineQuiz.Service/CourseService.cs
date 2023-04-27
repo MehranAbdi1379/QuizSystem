@@ -84,4 +84,9 @@ public class CourseService : ICourseService
 
         return dto.CourseId;
     }
+
+    public List<Course> GetAllCourses()
+    {
+        return repository.GetAllCourses();
+    }
 }

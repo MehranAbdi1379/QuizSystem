@@ -64,5 +64,19 @@ namespace QuizSystem.API.Controllers
             return Ok(courseService.AddStudentToCourse(dto));
             
         }
+
+        [HttpGet]
+        [Route("Get-All-Courses")]
+        public IActionResult GetAllCourses()
+        {
+            if(!ModelState.IsValid)
+            {
+                Log.Error("Get all courses modelstate error");
+                return BadRequest(ModelState);
+            }
+
+            Log.Information("Get all courses is successful");
+            return Ok(courseService.GetAllCourses());
+        }
     }
 }

@@ -8,5 +8,6 @@ namespace QuizSystem.Service
         Guid AddStudentToCourse(CourseAndStudentIdDTO dto);
         Guid CreateCourse(CourseCreateDTO dto);
         Guid UpdateCourse(CourseUpdateDTO dto);
+        public List<Course> GetAllCourses();
     }
 }
