@@ -1,7 +1,8 @@
 function GetAuthToken()
 {
-    if(localStorage.getItem('token'))
-    return localStorage.getItem('token')
+    const token = localStorage.getItem('token');
+    if(token)
+    return token
     else 
     return ''
 }
