@@ -11,15 +11,17 @@ import {
   VStack,
   useColorMode,
 } from "@chakra-ui/react";
-import React from "react";
-import { Form, useNavigate } from "react-router-dom";
+import React, { useState } from "react";
+import { Form, Link, Navigate, redirect, useNavigate } from "react-router-dom";
 import signIn, { user } from "../services/SignIn";
 import { useForm } from "react-hook-form";
 import GetAuthToken from "../services/Auth";
 
 const SignInPage = () => {
   const { colorMode } = useColorMode();
-  const navigate = useNavigate();
+  const [authenticated, setAuthenticated] = useState<boolean>(false);
+  const [userRole, setUserRole] = useState("");
+  const [error, setError] = useState();
   const {
     handleSubmit,
     register,
@@ -27,7 +29,29 @@ const SignInPage = () => {
   } = useForm();
 
   function onSubmit(user: user) {
-    signIn(user).then(() => navigate("/sign-up"));
+    signIn(user)
+      .then((res) => {
+        localStorage.setItem("token", res.data.token);
+        switch (res.data.role) {
+          case "Admin":
+            setUserRole(res.data.userId + "/admin");
+            break;
+          case "Student":
+            setUserRole("student");
+            break;
+          case "Professor":
+            setUserRole("professor");
+            break;
+          default:
+            break;
+        }
+      })
+      .then(() => setAuthenticated(true))
+      .catch((err) => setError(err.message));
+  }
+
+  if (authenticated == true) {
+    return <Navigate to={userRole}></Navigate>;
   }
 
   return (
@@ -47,6 +71,10 @@ const SignInPage = () => {
             <Heading>Sign in</Heading>
             <Text>to your account</Text>
           </Box>
+
+          {error && (
+            <Text color="red">National code or password is wrong.</Text>
+          )}
 
           <FormControl>
             <FormLabel>National Code: </FormLabel>

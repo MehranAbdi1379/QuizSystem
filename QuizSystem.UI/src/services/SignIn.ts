@@ -1,5 +1,6 @@
 import { useState } from "react"
 import apiClient from "./ApiClient"
+import { redirect, useNavigate } from "react-router-dom";
 
 export interface user {
     nationalCode: string,
@@ -9,10 +10,8 @@ export interface user {
 
 const signIn = (user: user  ) => {
      return apiClient.post('/User/Sign-In' , user)
-    .then(res => { localStorage.setItem('token' , res.data.token) 
-    localStorage.setItem('role' , res.data.role) 
-}
-    )
-}
+    
+      }
+    
 
 export default signIn;
