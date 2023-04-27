@@ -19,7 +19,7 @@ namespace QuizSystem.API.Controllers
 
         [HttpPatch]
         [Route("Accept")]
-        [Authorize(Roles = "admin")]
+        [Authorize(Roles = "Admin")]
         public IActionResult AcceptStudent(UserIdDTO dto)
         {
             if(!ModelState.IsValid)
@@ -35,7 +35,7 @@ namespace QuizSystem.API.Controllers
 
         [HttpPatch]
         [Route("UnAccept")]
-        [Authorize(Roles ="admin")]
+        [Authorize(Roles ="Admin")]
         public IActionResult UnAcceptStudent(UserIdDTO dto)
         {
             if(!ModelState.IsValid)

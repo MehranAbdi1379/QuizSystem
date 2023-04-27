@@ -58,14 +58,14 @@ namespace QuizSystem.API.Controllers
 
         [HttpPost]
         [Route("Search")]
-        [Authorize(Roles = "admin")]
-        public IActionResult SearchUser(StudentProfessorSearchDTO dto)
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> SearchUser(StudentProfessorSearchDTO dto)
         {
             if(!ModelState.IsValid)
                 return BadRequest(ModelState);
 
             Log.Information("User search finished.");
-            return Ok(userService.SearchForUser(dto));
+            return Ok(await userService.SearchForUser(dto));
         }
 
         [HttpPost]
@@ -84,10 +84,42 @@ namespace QuizSystem.API.Controllers
                 return Unauthorized();
             }
             Log.Information($"User with national code of {dto.NationalCode} is signed in");
-            //var token = await authManager.CreateToken();
-            //var user = await userManager.FindByIdAsync(dto.NationalCode);
-            //var role = await userManager.GetRolesAsync(user);
-            return Accepted(new {Token = await authManager.CreateToken() ,  Role = userManager.GetRolesAsync(userManager.FindByNameAsync(dto.NationalCode).Result).Result[0] });
+            var result = new
+            { Token = await authManager.CreateToken(),
+                Role = userManager.GetRolesAsync(userManager.FindByNameAsync(dto.NationalCode).Result).Result[0] , 
+            UserId= userManager.FindByNameAsync(dto.NationalCode).Result.Id
+        };
+            return Accepted(result);
+        }
+
+        [HttpPost]
+        [Route("Admin/GetById")]
+        [Authorize(Roles ="Admin")]
+        public async Task<IActionResult> GetAdminById(UserIdStringDTO dto)
+        {
+            if (!ModelState.IsValid)
+            {
+                Log.Error("Student unaccept modelstate error");
+                return BadRequest(ModelState);
+
+            }
+            Log.Information($"Admin get by id is completed for admin: {dto.Id}");
+            return Ok(await userService.GetAdminById(dto));
+        }
+
+        [HttpPost]
+        [Route("GetNameById")]
+        [Authorize]
+        public async Task<IActionResult> GetNameById(UserIdStringDTO dto)
+        {
+            if (!ModelState.IsValid)
+            {
+                Log.Error("Student unaccept modelstate error");
+                return BadRequest(ModelState);
+
+            }
+            Log.Information($"Admin get by id is completed for admin: {dto.Id}");
+            return Ok(userManager.FindByIdAsync(dto.Id.ToString()).Result.FirstName);
         }
     }
 }

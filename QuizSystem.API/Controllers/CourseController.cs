@@ -9,7 +9,7 @@ namespace QuizSystem.API.Controllers
 {
     [ApiController]
     [Route("api/Course")]
-    [Authorize(Roles = "admin")]
+    [Authorize(Roles = "Admin")]
     public class CourseController : ControllerBase
     {
         private readonly ICourseService courseService;

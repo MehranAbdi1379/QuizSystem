@@ -13,11 +13,13 @@ namespace QuizSystem.Service
         private readonly UserRepository userRepository;
         private readonly IStudentService studentService;
         private readonly IProfessorService professorService;
-        public UserService(UserManager<ApiUser> userManager, IStudentService studentService , IProfessorService professorService)
+        private readonly UserManager<ApiUser> userManager;
+        public UserService(UserManager<ApiUser> userManager, IStudentService studentService , IProfessorService professorService )
         {
             userRepository = new UserRepository(userManager);
             this.studentService = studentService;
             this.professorService= professorService;
+            this.userManager = userManager;
         }
 
         public async Task<List<UserSearchResultDTO>> SearchForUser(StudentProfessorSearchDTO dto)
@@ -53,6 +55,19 @@ namespace QuizSystem.Service
             }
 
             return result;
+        }
+
+        public async Task<AdminGetDTO> GetAdminById(UserIdStringDTO dto)
+        {
+            var data = await userManager.FindByIdAsync(dto.Id);
+            return new AdminGetDTO()
+            {
+                FirstName = data.FirstName,
+                LastName = data.LastName,
+                BirthDate = data.BirthDate,
+                Id = Guid.Parse(data.Id),
+                NationalCode = data.NationalCode,
+            };
         }
     }
 }

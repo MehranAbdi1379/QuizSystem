@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using QuizSystem.Service.Exceptions;
 using QuizSystem.Repository;
 using QuizSystem.Repository.DataBase;
+using Microsoft.AspNetCore.Identity;
 
 namespace QuizSystem.Service
 {
@@ -17,12 +18,14 @@ namespace QuizSystem.Service
         protected readonly ICourseStudentRepository courseStudentRepository;
         protected readonly IStudentRepository repository;
         protected readonly IProfessorRepository professorRepository;
+        protected readonly UserManager<ApiUser> userManager;
 
-        public StudentService(ICourseStudentRepository courseStudentRepository , IStudentRepository studentRepository, IProfessorRepository professorRepository)
+        public StudentService(ICourseStudentRepository courseStudentRepository , IStudentRepository studentRepository, IProfessorRepository professorRepository , UserManager<ApiUser> userManager)
         {
             this.courseStudentRepository = courseStudentRepository;
             repository = studentRepository;
             this.professorRepository = professorRepository;
+            this.userManager = userManager;
         }
 
         public Student CreateStudent(Guid id)
@@ -90,6 +93,27 @@ namespace QuizSystem.Service
             }
 
             courseStudentRepository.Save();
+        }
+
+        public async Task<StudentGetDTO> GetStudentById(UserIdStringDTO dto)
+        {
+            var data = await userManager.FindByIdAsync(dto.Id);
+            var courses = courseStudentRepository.GetWithStudentId(Guid.Parse(dto.Id));
+            var courseIds = new List<Guid>();
+            foreach (var item in courses)
+            {
+                courseIds.Add(item.CourseId);
+            }
+            return new StudentGetDTO()
+            {
+                FirstName = data.FirstName,
+                LastName = data.LastName,
+                Accepted = repository.GetWithId(Guid.Parse(dto.Id)).Accepted,
+                BirthDate = data.BirthDate,
+                NationalCode = data.NationalCode,
+                Id = Guid.Parse(dto.Id),
+                CourseIds = courseIds
+            };
         }
     }
 }

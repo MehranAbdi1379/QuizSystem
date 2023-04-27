@@ -10,6 +10,7 @@ public void RemoveStudent(UserIdDTO dto);
  public Student AcceptStudent(UserIdDTO dto);
 public Student UnAcceptStudent(UserIdDTO dto);
 public void ChangeStudentToProfessor(UserIdDTO dto);
-            
+        public Task<StudentGetDTO> GetStudentById(UserIdStringDTO dto);
+
     }
 }
