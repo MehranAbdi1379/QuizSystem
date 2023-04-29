@@ -9,5 +9,7 @@ namespace QuizSystem.Service
         Guid CreateCourse(CourseCreateDTO dto);
         Guid UpdateCourse(CourseUpdateDTO dto);
         public List<Course> GetAllCourses();
+        public Course GetCourseById(CourseIdStringDTO dto);
+        public List<UserIdDTO> GetStudentsByCourseId(CourseIdStringDTO dto);
     }
 }

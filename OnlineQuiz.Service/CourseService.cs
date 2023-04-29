@@ -89,4 +89,20 @@ public class CourseService : ICourseService
     {
         return repository.GetAllCourses();
     }
+
+    public Course GetCourseById(CourseIdStringDTO dto)
+    {
+        return repository.GetWithId(Guid.Parse(dto.Id));
+    }
+
+    public List<UserIdDTO> GetStudentsByCourseId(CourseIdStringDTO dto)
+    {
+        var courseStudents = courseStudentRepository.GetWithCourseId(Guid.Parse(dto.Id));
+        var studentIds = new List<UserIdDTO>();
+        foreach (var item in courseStudents)
+        {
+            studentIds.Add(new UserIdDTO{Id = item.StudentId });
+        }
+        return studentIds;
+    }
 }

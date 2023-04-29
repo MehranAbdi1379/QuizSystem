@@ -4,6 +4,7 @@ using QuizSystem.Domain.Repository;
 using QuizSystem.Service;
 using QuizSystem.Service.Contracts.DTO;
 using Serilog;
+using System.Diagnostics.Eventing.Reader;
 
 namespace QuizSystem.API.Controllers
 {
@@ -16,10 +17,10 @@ namespace QuizSystem.API.Controllers
 
         public CourseController(ICourseService courseService)
         {
-            this.courseService= courseService;
+            this.courseService = courseService;
         }
 
-        
+
         [HttpPost]
         [Route("Create")]
         public IActionResult CreateCourse(CourseCreateDTO dto)
@@ -28,48 +29,48 @@ namespace QuizSystem.API.Controllers
             {
                 Log.Error("Course create modelstate error");
                 return BadRequest(ModelState);
-                
+
             }
             Log.Information($"A new course is created with the title of {dto.Title}.");
             return Ok(courseService.CreateCourse(dto));
-            
+
         }
 
         [HttpPut]
         [Route("Update")]
         public IActionResult UpdateCourse(CourseUpdateDTO dto)
         {
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 Log.Error("Course update modelstate error.");
                 return BadRequest(ModelState);
-                
+
             }
             Log.Information($"Course with id of {dto.Id} is updated");
             return Ok(courseService.UpdateCourse(dto));
-            
+
         }
 
         [HttpPatch]
         [Route("Add-Student-To-Course")]
         public IActionResult AddStudentToCourse(CourseAndStudentIdDTO dto)
         {
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 Log.Error("Course add student modelstate error.");
                 return BadRequest(ModelState);
-                
+
             }
             Log.Information($"student with id of {dto.StudentId} added to the course with id of {dto.CourseId}");
             return Ok(courseService.AddStudentToCourse(dto));
-            
+
         }
 
         [HttpGet]
         [Route("Get-All-Courses")]
         public IActionResult GetAllCourses()
         {
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 Log.Error("Get all courses modelstate error");
                 return BadRequest(ModelState);
@@ -77,6 +78,34 @@ namespace QuizSystem.API.Controllers
 
             Log.Information("Get all courses is successful");
             return Ok(courseService.GetAllCourses());
+        }
+
+        [HttpPost]
+        [Route("Get-With-Id")]
+        public IActionResult GetWithId(CourseIdStringDTO dto)
+        {
+            if (!ModelState.IsValid)
+            {
+                Log.Error("Get course modelstate error");
+                return BadRequest(ModelState);
+            }
+
+            Log.Information($"Get course {dto.Id} is successful");
+            return Ok(courseService.GetCourseById(dto));
+        }
+
+        [HttpPost]
+        [Route("Get-Students-With-Course-Id")]
+        public IActionResult GetStudentsWithCourseId(CourseIdStringDTO dto)
+        {
+            if (!ModelState.IsValid)
+            {
+                Log.Error("Get students with course id modelstate error");
+                return BadRequest(ModelState);
+            }
+
+            Log.Information($"Get students of course {dto.Id} is successful");
+            return Ok(courseService.GetCourseById(dto));
         }
     }
 }

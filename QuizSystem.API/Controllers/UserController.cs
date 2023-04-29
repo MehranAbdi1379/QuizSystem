@@ -37,7 +37,13 @@ namespace QuizSystem.API.Controllers
                 Log.Error("sign up modelstate error.");
                 return BadRequest(ModelState);
             }
-            if(dto.Role.ToLower() != "admin")
+            if (dto.NationalCode.Length != 10)
+            {
+                var lengthError = "National code should be exactly 10 characters";
+                Log.Error(lengthError);
+                return BadRequest(lengthError);
+            }
+            if (dto.Role.ToLower() != "admin")
             {
                 var task = await userService.SignUp(dto, userManager);
 
@@ -51,8 +57,9 @@ namespace QuizSystem.API.Controllers
                 Log.Error("User can not be signed up.");
                 return BadRequest(task);
             }
-            Log.Error("Admin can only be added in development phase");
-            return BadRequest("Admin can only be added in development phase");
+            var error = "Admin can only be added in development phase";
+            Log.Error(error);
+            return BadRequest(error);
             
         }
 
@@ -80,8 +87,9 @@ namespace QuizSystem.API.Controllers
 
             if(!await authManager.ValidateUser(dto))
             {
-                Log.Warning("NationalCode or Password is wrong. Can not sign in.");
-                return Unauthorized();
+                var error = "NationalCode or Password is wrong. Can not sign in.";
+                Log.Warning(error);
+                return Unauthorized(error);
             }
             Log.Information($"User with national code of {dto.NationalCode} is signed in");
             var result = new
