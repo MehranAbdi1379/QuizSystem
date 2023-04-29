@@ -13,7 +13,7 @@ import {
 } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { Form, Link, Navigate, redirect, useNavigate } from "react-router-dom";
-import signIn, { user } from "../services/SignIn";
+import signIn, { UserSignIn } from "../services/SignIn";
 import { useForm } from "react-hook-form";
 import GetAuthToken from "../services/Auth";
 
@@ -28,7 +28,7 @@ const SignInPage = () => {
     formState: { errors },
   } = useForm();
 
-  function onSubmit(user: user) {
+  function onSubmit(user: UserSignIn) {
     signIn(user)
       .then((res) => {
         localStorage.setItem("token", res.data.token);
@@ -37,10 +37,10 @@ const SignInPage = () => {
             setUserRole(res.data.userId + "/admin");
             break;
           case "Student":
-            setUserRole("student");
+            setUserRole(res.data.userId + "/student");
             break;
           case "Professor":
-            setUserRole("professor");
+            setUserRole(res.data.userId + "/professor");
             break;
           default:
             break;

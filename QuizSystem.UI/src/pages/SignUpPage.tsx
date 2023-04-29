@@ -66,7 +66,10 @@ const SignUpPage = () => {
 
   const { SignUp } = new UserServices();
 
-  if (user) return <Navigate to="/sign"></Navigate>;
+  if (user?.role == "student")
+    return <Navigate to="../sign-in/student"></Navigate>;
+  if (user?.role == "professor")
+    return <Navigate to="../sign-in/professor"></Navigate>;
 
   return (
     <Form onSubmit={handleSubmit((data) => SignUp(data, setUser))}>
