@@ -26,7 +26,7 @@ const NavbarSignedIn = ({ name }: Props) => {
           name="Sign out"
           onClick={() => localStorage.removeItem("token")}
         ></NavButton>
-        <NavButton to="about-us" name="About Us"></NavButton>
+        <NavButton to="../about-us" name="About Us"></NavButton>
         <HStack>
           <Switch
             isChecked={colorMode === "dark"}

@@ -105,7 +105,7 @@ namespace QuizSystem.API.Controllers
             }
 
             Log.Information($"Get students of course {dto.Id} is successful");
-            return Ok(courseService.GetCourseById(dto));
+            return Ok(courseService.GetStudentsByCourseId(dto));
         }
     }
 }
