@@ -115,5 +115,32 @@ namespace QuizSystem.Service
                 CourseIds = courseIds
             };
         }
+
+        public async Task<List<StudentGetDTO>> GetAllStudents()
+        {
+            var data = await userManager.GetUsersInRoleAsync("Student");
+            var students = new List<StudentGetDTO>();
+
+            foreach (var student in data)
+            {
+                var courses = courseStudentRepository.GetWithStudentId(Guid.Parse(student.Id));
+                var courseIds = new List<Guid>();
+                foreach (var item in courses)
+                {
+                    courseIds.Add(item.CourseId);
+                }
+                students.Add(new StudentGetDTO
+                {
+                    FirstName = student.FirstName,
+                    LastName = student.LastName,
+                    Accepted = repository.GetWithId(Guid.Parse(student.Id)).Accepted,
+                    BirthDate = student.BirthDate,
+                    NationalCode = student.NationalCode,
+                    Id = Guid.Parse(student.Id),
+                    CourseIds = courseIds
+                });
+            }
+            return students;
+        }
     }
 }

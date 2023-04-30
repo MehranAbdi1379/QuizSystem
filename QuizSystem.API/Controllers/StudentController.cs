@@ -7,7 +7,7 @@ using Serilog;
 namespace QuizSystem.API.Controllers
 {
     [ApiController]
-    [Route("api/Students")]
+    [Route("api/Student")]
     public class StudentController : ControllerBase
     {
         private readonly IStudentService studentService;
@@ -51,18 +51,32 @@ namespace QuizSystem.API.Controllers
 
         [HttpPost]
         [Route("GetById")]
-        [Authorize(Roles ="Student")]
+        [Authorize(Roles ="Admin")]
         public async Task<IActionResult> GetById(UserIdStringDTO dto)
         {
             if (!ModelState.IsValid)
             {
-                Log.Error("Student unaccept modelstate error");
+                Log.Error("Student get by id modelstate error");
                 return BadRequest(ModelState);
 
             }
             Log.Information($"Student get by id is completed for student: {dto.Id}");
             return Ok(await studentService.GetStudentById(dto));
+        }
 
+        [HttpGet]
+        [Route("GetAll")]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> GetAllStudents()
+        {
+            if (!ModelState.IsValid)
+            {
+                Log.Error("Student get all modelstate error");
+                return BadRequest(ModelState);
+
+            }
+            Log.Information($"Student get all is successful");
+            return Ok(await studentService.GetAllStudents());
         }
     }
 }
