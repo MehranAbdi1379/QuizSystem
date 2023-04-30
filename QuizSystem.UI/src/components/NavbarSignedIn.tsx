@@ -10,6 +10,7 @@ import {
 import React from "react";
 import NavButton from "./NavButton";
 import { NavLink } from "react-router-dom";
+import AdminResponsiveNavbar from "./AdminResponsiveNavbar";
 
 interface Props {
   name: string;
@@ -27,23 +28,29 @@ const NavbarSignedIn = ({ name }: Props) => {
 
       <HStack spacing={3}>
         {moreThanMedium && <Text>Welcome Mr/Ms {name}</Text>}
-        <NavButton
-          to="/"
-          name="Sign out"
-          onClick={() => localStorage.removeItem("token")}
-        ></NavButton>
+        {moreThanMedium && (
+          <NavButton
+            to="/"
+            name="Sign out"
+            onClick={() => localStorage.removeItem("token")}
+          ></NavButton>
+        )}
         {moreThanMedium && (
           <NavButton to="/about-us" name="About Us"></NavButton>
         )}
 
-        <HStack>
-          <Switch
-            isChecked={colorMode === "dark"}
-            onChange={toggleColorMode}
-          ></Switch>
-          <Text>Dark Mode</Text>
-        </HStack>
+        {moreThanMedium && (
+          <HStack>
+            <Switch
+              isChecked={colorMode === "dark"}
+              onChange={toggleColorMode}
+            ></Switch>
+            <Text>Dark Mode</Text>
+          </HStack>
+        )}
       </HStack>
+
+      {!moreThanMedium && <AdminResponsiveNavbar></AdminResponsiveNavbar>}
     </Flex>
   );
 };

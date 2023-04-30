@@ -13,13 +13,14 @@ import React, { useState } from "react";
 import NavButton from "./NavButton";
 import { AddIcon, HamburgerIcon, MinusIcon } from "@chakra-ui/icons";
 
-const ResponsiveNavbar = () => {
+const ResponsiveNavbarRoot = () => {
   const { colorMode, toggleColorMode } = useColorMode();
   const [sideNavbarOn, setSideNavbar] = useState<boolean>(false);
 
   return (
     <Box>
       <VStack
+        zIndex={1}
         p={10}
         bg="blackAlpha.800"
         top={0}
@@ -74,4 +75,4 @@ const ResponsiveNavbar = () => {
   );
 };
 
-export default ResponsiveNavbar;
+export default ResponsiveNavbarRoot;

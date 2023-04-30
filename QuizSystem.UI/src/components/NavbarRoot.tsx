@@ -10,7 +10,7 @@ import {
 import React, { useState } from "react";
 import NavButton from "./NavButton";
 import { NavLink, Navigate } from "react-router-dom";
-import ResponsiveNavbar from "./ResponsiveNavbar";
+import ResponsiveNavbarRoot from "./ResponsiveNavbarRoot";
 
 const Navbar = () => {
   const { colorMode, toggleColorMode } = useColorMode();
@@ -41,7 +41,7 @@ const Navbar = () => {
           </HStack>
         )}
       </HStack>
-      {!moreThanMedium && <ResponsiveNavbar></ResponsiveNavbar>}
+      {!moreThanMedium && <ResponsiveNavbarRoot></ResponsiveNavbarRoot>}
     </Flex>
   );
 };

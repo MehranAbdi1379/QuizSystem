@@ -19,20 +19,26 @@ import AdminCoursePage from "./pages/CoursePage";
 import AboutPage from "./pages/AboutPage";
 import AdminStudentsPage from "./pages/AdminStudentsPage";
 import AdminProfessorsPage from "./pages/AdminProfessorsPage";
+import CourseCreatePage from "./pages/CourseCreatePage";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route>
-      <Route path="about-us" element={<AboutPage />}></Route>
       <Route path="*" element={<NotFoundPage />}></Route>
       <Route path="/" element={<RootLayout />}>
+        <Route path="about-us" element={<AboutPage />}></Route>
         <Route index element={<WelcomePage />}></Route>
         <Route path="sign-in" element={<SignInPage />}></Route>
         <Route path="sign-up" element={<SignUpPage />}></Route>
       </Route>
       {localStorage.getItem("token") && (
         <Route path="sign-in/:id" element={<SignedInLayout />}>
+          <Route path="about-us" element={<AboutPage />}></Route>
           <Route path="admin" element={<AdminPage />}>
+            <Route
+              path="courses/create"
+              element={<CourseCreatePage></CourseCreatePage>}
+            ></Route>
             <Route
               path="course/:courseId"
               element={<AdminCoursePage />}

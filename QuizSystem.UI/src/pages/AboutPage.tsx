@@ -6,7 +6,6 @@ import Navbar from "../components/NavbarRoot";
 const AboutPage = () => {
   return (
     <>
-      <Navbar></Navbar>
       <Box textAlign="center" alignItems={"center"} padding={10} marginTop={4}>
         <Heading textAlign="center">
           This is what you should know about us.
