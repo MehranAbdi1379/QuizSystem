@@ -10,7 +10,7 @@ import {
 import React, { useState } from "react";
 import NavButton from "./NavButton";
 import { NavLink, Navigate } from "react-router-dom";
-import SideNavbar from "./SideNavbar";
+import ResponsiveNavbar from "./ResponsiveNavbar";
 
 const Navbar = () => {
   const { colorMode, toggleColorMode } = useColorMode();
@@ -31,7 +31,7 @@ const Navbar = () => {
           <NavButton to="/about-us" name="About Us"></NavButton>
         )}
 
-        {moreThanSmall && (
+        {moreThanMedium && (
           <HStack>
             <Switch
               isChecked={colorMode === "dark"}
@@ -41,7 +41,7 @@ const Navbar = () => {
           </HStack>
         )}
       </HStack>
-      {!moreThanSmall && <SideNavbar></SideNavbar>}
+      {!moreThanMedium && <ResponsiveNavbar></ResponsiveNavbar>}
     </Flex>
   );
 };
