@@ -1,26 +1,37 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import CourseService, { Course } from "../services/CourseService";
-import { Text } from "@chakra-ui/react";
+import {
+  Box,
+  Container,
+  Heading,
+  List,
+  ListItem,
+  Text,
+} from "@chakra-ui/react";
+import { Student } from "../services/StudentService";
+import CourseStudents from "../components/CourseStudents";
 
 const AdminCoursePage = () => {
   const [course, setCourse] = useState<Course>();
+  const [courseStudents, setCourseStudents] = useState<{ id: string }[]>();
   const params = useParams();
-  console.log(course);
-  const { GetWithId, GetStudentsWithCourseId } = new CourseService();
+  const { GetById: GetWithId, GetStudentsWithCourseId } = new CourseService();
   useEffect(() => {
     GetWithId(params, setCourse);
-    GetStudentsWithCourseId(params, course, setCourse);
+    GetStudentsWithCourseId(params, setCourseStudents);
   }, []);
 
   return (
-    <div>
-      {course && (
-        <Text>
-          {course.title} {course.id}
-        </Text>
-      )}
-    </div>
+    <Box paddingLeft={5}>
+      <Heading>{course && <Text>{course.title}</Text>}</Heading>
+      <Heading fontSize={25}>Students</Heading>
+      <Box>
+        {courseStudents?.map((studentId) => (
+          <CourseStudents studentId={studentId}></CourseStudents>
+        ))}
+      </Box>
+    </Box>
   );
 };
 

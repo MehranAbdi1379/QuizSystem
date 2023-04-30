@@ -23,10 +23,10 @@ const AdminPage = () => {
   return (
     <>
       <Grid templateColumns={"repeat(6 , 1fr)"}>
-        <GridItem colSpan={{ sm: 6, md: 2, lg: 1 }} bg="blue">
+        <GridItem colSpan={{ base: 6, md: 2, lg: 1 }}>
           <AdminSidebar></AdminSidebar>
         </GridItem>
-        <GridItem colSpan={{ sm: 6, md: 4, lg: 5 }}>
+        <GridItem colSpan={{ base: 6, md: 4, lg: 5 }}>
           <Outlet></Outlet>
         </GridItem>
       </Grid>
