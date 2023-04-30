@@ -52,7 +52,7 @@ namespace QuizSystem.API.Controllers
         }
 
         [HttpPatch]
-        [Route("Add-Student-To-Course")]
+        [Route("AddStudentToCourse")]
         public IActionResult AddStudentToCourse(CourseAndStudentIdDTO dto)
         {
             if (!ModelState.IsValid)
@@ -67,7 +67,7 @@ namespace QuizSystem.API.Controllers
         }
 
         [HttpGet]
-        [Route("Get-All-Courses")]
+        [Route("GetAll")]
         public IActionResult GetAllCourses()
         {
             if (!ModelState.IsValid)
@@ -81,7 +81,7 @@ namespace QuizSystem.API.Controllers
         }
 
         [HttpPost]
-        [Route("Get-With-Id")]
+        [Route("GetById")]
         public IActionResult GetWithId(CourseIdStringDTO dto)
         {
             if (!ModelState.IsValid)
@@ -95,7 +95,7 @@ namespace QuizSystem.API.Controllers
         }
 
         [HttpPost]
-        [Route("Get-Students-With-Course-Id")]
+        [Route("GetStudentsByCourseId")]
         public IActionResult GetStudentsWithCourseId(CourseIdStringDTO dto)
         {
             if (!ModelState.IsValid)

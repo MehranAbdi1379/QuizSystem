@@ -1,4 +1,4 @@
-import { ThemeConfig, extendTheme } from "@chakra-ui/react";
+import { ThemeConfig, extendTheme, useMediaQuery } from "@chakra-ui/react";
 
 const config :ThemeConfig ={
     initialColorMode : 'dark'
@@ -7,3 +7,4 @@ const config :ThemeConfig ={
 const theme = extendTheme({config})
 
 export default theme;
+

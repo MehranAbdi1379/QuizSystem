@@ -29,7 +29,7 @@ namespace QuizSystem.API.Controllers
         }
 
         [HttpPost]
-        [Route("Sign-Up")]
+        [Route("SignUp")]
         public async Task<IActionResult> SignUp(UserCreateDTO dto)
         {
             if (!ModelState.IsValid)
@@ -76,7 +76,7 @@ namespace QuizSystem.API.Controllers
         }
 
         [HttpPost]
-        [Route("Sign-In")]
+        [Route("SignIn")]
         public async Task<IActionResult> SignIn(UserSignInDTO dto)
         {
             if (!ModelState.IsValid)

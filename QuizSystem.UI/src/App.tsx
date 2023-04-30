@@ -16,11 +16,14 @@ import AdminPage from "./pages/AdminPage";
 import { Heading } from "@chakra-ui/react";
 import NotFoundPage from "./pages/NotFoundPage";
 import AdminCoursePage from "./pages/CoursePage";
+import AboutPage from "./pages/AboutPage";
+import AdminStudentsPage from "./pages/AdminStudentsPage";
+import AdminProfessorsPage from "./pages/AdminProfessorsPage";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route>
-      <Route path="about-us" element={<NotFoundPage />}></Route>
+      <Route path="about-us" element={<AboutPage />}></Route>
       <Route path="*" element={<NotFoundPage />}></Route>
       <Route path="/" element={<RootLayout />}>
         <Route index element={<WelcomePage />}></Route>
@@ -33,6 +36,14 @@ const router = createBrowserRouter(
             <Route
               path="course/:courseId"
               element={<AdminCoursePage />}
+            ></Route>
+            <Route
+              path="student/:studentId"
+              element={<AdminStudentsPage />}
+            ></Route>
+            <Route
+              path="professor/:professorId"
+              element={<AdminProfessorsPage />}
             ></Route>
           </Route>
           <Route path="student" element={<AdminPage />}></Route>

@@ -10,6 +10,9 @@ public Professor RemoveProfessor(UserIdDTO dto);
 public Professor AcceptProfessor(UserIdDTO dto);
 public Professor UnAcceptProfessor(UserIdDTO dto);
 public void ChangeProfessorToStudent(UserIdDTO dto);
+        public  Task<ProfessorGetDTO> GetProfessorById(UserIdStringDTO dto);
+        public  Task<List<ProfessorGetDTO>> GetAllProfessors();
+
 
 
     }
