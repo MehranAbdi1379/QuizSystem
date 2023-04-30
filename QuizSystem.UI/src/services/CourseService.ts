@@ -13,19 +13,19 @@ export interface Course {
   }
 
 class CourseService{
-    GetAllCourses(setCourses: any)
+    GetAll(setCourses: any)
     {
-        authApiClient().get('Course/Get-All-Courses')
+        authApiClient().get('Course/GetAll').then(res => setCourses(res.data))
     }
 
-    GetWithId(id: any , setCourse: any)
+    GetById(id: any , setCourse: any)
     {
-        authApiClient().post('Course/Get-With-Id' , {id: id.courseId}).then(res => this.GetStudentsWithCourseId(id , setCourse).then(result => setCourse()))
+        authApiClient().post('Course/GetById' , {id: id.courseId}).then(res => setCourse(res.data))
     }
 
-    GetStudentsWithCourseId(id: any , setCourse: any)
+    GetStudentsWithCourseId(id: any , setCourseStudents: any)
     {
-        return authApiClient().post('Course/Get-Students-With-Course-Id' , {id: id.courseId})
+        authApiClient().post('Course/GetStudentsByCourseId' , {id: id.courseId}).then(res => setCourseStudents(res.data))
     }
 }
 

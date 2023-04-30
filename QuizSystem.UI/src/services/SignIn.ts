@@ -9,7 +9,7 @@ export interface UserSignIn {
 
 
 const signIn = (user: UserSignIn  ) => {
-     return apiClient.post('/User/Sign-In' , user)
+     return apiClient.post('/User/SignIn' , user)
     
       }
     

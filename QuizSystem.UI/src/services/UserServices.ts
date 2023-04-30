@@ -19,7 +19,7 @@ class UserServices {
 
     SignUp(user: UserSignUp , setUser: any)
     {
-        authApiClient().post('User/Sign-Up' , user)
+        authApiClient().post('User/SignUp' , user)
         .then(res => setUser(user))
     }
 }
