@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using QuizSystem.Service.Exceptions;
 using QuizSystem.Repository;
+using Microsoft.AspNetCore.Identity;
 
 namespace QuizSystem.Service
 {
@@ -17,12 +18,14 @@ namespace QuizSystem.Service
         protected readonly IProfessorRepository repository;
         protected readonly ICourseRepository courseRepository;
         protected readonly IStudentRepository studentRepository;
+        protected readonly UserManager<ApiUser> userManager;
 
-        public ProfessorService(IProfessorRepository repository, ICourseRepository courseRepository, IStudentRepository studentRepository)
+        public ProfessorService(IProfessorRepository repository, ICourseRepository courseRepository, IStudentRepository studentRepository , UserManager<ApiUser> userManager)
         {
             this.repository = repository;
             this.courseRepository = courseRepository;
             this.studentRepository = studentRepository;
+            this.userManager = userManager;
         }
 
         public Professor CreateProfessor(Guid id)
@@ -79,6 +82,54 @@ namespace QuizSystem.Service
 
                 repository.Delete(professor);
                 repository.Save();
+        }
+
+        public async Task<ProfessorGetDTO> GetProfessorById(UserIdStringDTO dto)
+        {
+            var data = await userManager.FindByIdAsync(dto.Id);
+            var courses = courseRepository.GetWithProfessorId(Guid.Parse(dto.Id));
+            var courseIds = new List<Guid>();
+            foreach (var item in courses)
+            {
+                courseIds.Add(item);
+            }
+            return new ProfessorGetDTO()
+            {
+                FirstName = data.FirstName,
+                LastName = data.LastName,
+                Accepted = repository.GetWithId(Guid.Parse(dto.Id)).Accepted,
+                BirthDate = data.BirthDate,
+                NationalCode = data.NationalCode,
+                Id = Guid.Parse(dto.Id),
+                CourseIds = courseIds
+            };
+        }
+
+        public async Task<List<ProfessorGetDTO>> GetAllProfessors()
+        {
+            var data = await userManager.GetUsersInRoleAsync("Professor");
+            var professors = new List<ProfessorGetDTO>();
+
+            foreach (var professor in data)
+            {
+                var courses = courseRepository.GetWithProfessorId(Guid.Parse(professor.Id));
+                var courseIds = new List<Guid>();
+                foreach (var item in courses)
+                {
+                    courseIds.Add(item);
+                }
+                professors.Add(new ProfessorGetDTO
+                {
+                    FirstName = professor.FirstName,
+                    LastName = professor.LastName,
+                    Accepted = repository.GetWithId(Guid.Parse(professor.Id)).Accepted,
+                    BirthDate = professor.BirthDate,
+                    NationalCode = professor.NationalCode,
+                    Id = Guid.Parse(professor.Id),
+                    CourseIds = courseIds
+                });
+            }
+            return professors;
         }
     }
 }

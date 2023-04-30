@@ -48,5 +48,35 @@ namespace QuizSystem.API.Controllers
             return Ok(professorService.UnAcceptProfessor(dto));
            
         }
+
+        [HttpPost]
+        [Route("GetById")]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> GetById(UserIdStringDTO dto)
+        {
+            if (!ModelState.IsValid)
+            {
+                Log.Error("Professor get by id modelstate error");
+                return BadRequest(ModelState);
+
+            }
+            Log.Information($"Professor get by id is completed for student: {dto.Id}");
+            return Ok(await professorService.GetProfessorById(dto));
+        }
+
+        [HttpGet]
+        [Route("GetAll")]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> GetAllProfessors()
+        {
+            if (!ModelState.IsValid)
+            {
+                Log.Error("Professor get all modelstate error");
+                return BadRequest(ModelState);
+
+            }
+            Log.Information($"Professor get all is successful");
+            return Ok(await professorService.GetAllProfessors());
+        }
     }
 }
