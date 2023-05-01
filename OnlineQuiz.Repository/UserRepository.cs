@@ -25,7 +25,7 @@ namespace QuizSystem.Repository
             this.userManager = userManager;
         }
 
-        public async Task<List<ApiUser>> Filter(string firstName, string lastName, string role)
+        public async Task<List<ApiUser>> Filter(string firstName, string lastName, string role="")
         {
             var result= new List<ApiUser>();
             var users = userManager.Users.Where(s => s.FirstName.ToLower().Contains(firstName.ToLower()) &&

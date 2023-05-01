@@ -24,6 +24,7 @@ import WelcomePage from "./pages/Global/WelcomePage";
 import AdminAllProfessorsPage from "./pages/Admin/AdminAllProfessorsPage";
 import AdminAllStudentsPage from "./pages/Admin/AdminAllStudentsPage";
 import AdminCourseEditPage from "./pages/Admin/AdminCourseEditPage";
+import AdminSearchPage from "./pages/Admin/AdminSearchPage";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -39,6 +40,7 @@ const router = createBrowserRouter(
         <Route path="sign-in" element={<SignedInLayout />}>
           <Route path="about-us" element={<AboutPage />}></Route>
           <Route path="admin" element={<AdminPage />}>
+            <Route path="search" element={<AdminSearchPage />}></Route>
             <Route path="courses">
               <Route path="create" element={<CourseCreatePage />}></Route>
               <Route path="all" element={<AdminAllCoursesPage />}></Route>

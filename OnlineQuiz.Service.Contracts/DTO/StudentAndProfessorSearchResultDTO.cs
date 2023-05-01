@@ -9,7 +9,7 @@ namespace QuizSystem.Service.Contracts.DTO
 {
     public class UserSearchResultDTO
     {
-        public string NationalCode { get; set; }
+        public string Id { get; set; }
         public string Role { get; set; }
     }
 }

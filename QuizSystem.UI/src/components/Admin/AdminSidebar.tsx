@@ -108,6 +108,11 @@ const AdminSidebar = () => {
             <Button>All Students</Button>
           </Link>
         </ListItem>
+        <ListItem marginTop={4}>
+          <Link to="/sign-in/admin/search">
+            <Button>Search</Button>
+          </Link>
+        </ListItem>
       </List>
     </Box>
   );

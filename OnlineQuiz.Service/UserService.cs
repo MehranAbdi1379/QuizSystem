@@ -28,7 +28,7 @@ namespace QuizSystem.Service
             var result = new List<UserSearchResultDTO>();
             foreach (var item in userList)
             {
-                result.Add(new UserSearchResultDTO { NationalCode = item.NationalCode , Role = userRepository.GetUserRole(item.NationalCode)});
+                result.Add(new UserSearchResultDTO { Id = item.Id , Role = userRepository.GetUserRole(item.NationalCode)});
             }
             return result;
         }

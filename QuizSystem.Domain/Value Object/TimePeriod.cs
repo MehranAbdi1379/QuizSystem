@@ -9,6 +9,10 @@ namespace QuizSystem.Domain.Value_Object
 {
     public class TimePeriod
     {
+        public TimePeriod()
+        {
+
+        }
         
         public TimePeriod(DateTime startDate, DateTime endDate)
         {
