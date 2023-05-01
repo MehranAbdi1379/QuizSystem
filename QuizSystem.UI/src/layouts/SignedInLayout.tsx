@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from "react";
-import Navbar from "../components/NavbarRoot";
 import { Outlet, useParams } from "react-router-dom";
-import NavbarSignedIn from "../components/NavbarSignedIn";
-import authApiClient from "../services/AuthApiClient";
-import GetAuthToken from "../services/Auth";
+import AdminNavbar from "../components/Admin/AdminNavbar";
 import UserServices from "../services/UserServices";
 import { SimpleGrid } from "@chakra-ui/react";
 
@@ -17,18 +14,18 @@ const SignedInLayout = () => {
     firstName: "",
     lastName: "",
   });
-  const params = useParams();
+  const userId = localStorage.getItem("userId");
   const { GetNameById } = new UserServices();
 
   useEffect(() => {
-    if (params.id) GetNameById(params, setName);
+    GetNameById(userId, setName);
   }, []);
 
   return (
     <>
-      <NavbarSignedIn
+      <AdminNavbar
         name={fullName.firstName + " " + fullName.lastName}
-      ></NavbarSignedIn>
+      ></AdminNavbar>
       <SimpleGrid>
         <Outlet />
       </SimpleGrid>
