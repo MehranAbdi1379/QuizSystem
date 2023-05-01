@@ -1,22 +1,20 @@
+import { HamburgerIcon } from "@chakra-ui/icons";
 import {
   Box,
-  Flex,
   HStack,
-  Icon,
   Switch,
   Text,
   VStack,
   useColorMode,
-  useMediaQuery,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
-import NavButton from "./NavButton";
-import { AddIcon, HamburgerIcon, MinusIcon } from "@chakra-ui/icons";
+import { useParams } from "react-router-dom";
+import NavButton from "../Global/NavButton";
 
-const ResponsiveNavbarRoot = () => {
+const AdminResponsiveNavbar = () => {
+  const params = useParams();
   const { colorMode, toggleColorMode } = useColorMode();
   const [sideNavbarOn, setSideNavbar] = useState<boolean>(false);
-
   return (
     <Box>
       <VStack
@@ -33,6 +31,7 @@ const ResponsiveNavbarRoot = () => {
         transform={sideNavbarOn == false ? "translateY(-100vh)" : "none"}
       >
         <HamburgerIcon
+          color={"white"}
           position={"absolute"}
           right={4}
           top={4}
@@ -41,19 +40,35 @@ const ResponsiveNavbarRoot = () => {
         ></HamburgerIcon>
         <NavButton
           onClick={() => setSideNavbar(false)}
-          to="/sign-in"
-          name="Sign In"
+          to={"/sign-in/admin"}
+          name="Dashboard"
+        ></NavButton>
+        <NavButton
+          onClick={() => setSideNavbar(false)}
+          to={"/sign-in/admin/courses/all"}
+          name="Courses"
         ></NavButton>
 
         <NavButton
           onClick={() => setSideNavbar(false)}
-          to="/sign-up"
-          name="Sign Up"
+          to="/sign-in/admin/professors/all"
+          name="Professors"
+        ></NavButton>
+
+        <NavButton
+          onClick={() => setSideNavbar(false)}
+          to="/sign-in/admin/students/all"
+          name="Students"
         ></NavButton>
         <NavButton
           onClick={() => setSideNavbar(false)}
-          to="/about-us"
+          to={"/sign-in/about-us"}
           name="About Us"
+        ></NavButton>
+        <NavButton
+          onClick={() => setSideNavbar(false)}
+          to="/"
+          name="Sign Out"
         ></NavButton>
 
         <HStack>
@@ -75,4 +90,4 @@ const ResponsiveNavbarRoot = () => {
   );
 };
 
-export default ResponsiveNavbarRoot;
+export default AdminResponsiveNavbar;

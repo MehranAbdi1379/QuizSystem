@@ -11,13 +11,12 @@ import {
   useStatStyles,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
-import CourseService, { Course } from "../services/CourseService";
 import { Link, NavLink, useParams } from "react-router-dom";
-import ProfessorService, { Professor } from "../services/ProfessorService";
-import StudentService, { Student } from "../services/StudentService";
+import CourseService, { Course } from "../../services/CourseService";
+import StudentService, { Student } from "../../services/StudentService";
+import ProfessorService, { Professor } from "../../services/ProfessorService";
 
 const AdminSidebar = () => {
-  const params = useParams();
   const { colorMode } = useColorMode();
   const [courses, setCourses] = useState<Course[]>();
   const [students, setStudents] = useState<Student[]>();
@@ -35,13 +34,16 @@ const AdminSidebar = () => {
     <Box
       p={5}
       minHeight={{ base: "200px", md: "100vh" }}
-      bg={colorMode == "dark" ? "gray.700" : "gray.100"}
+      bg={colorMode == "dark" ? "gray.700" : "gray.50"}
       borderTopRightRadius={20}
     >
       <Flex>
         <Heading>Courses</Heading>
-        <NavLink to={"/sign-in/" + params.id + "/admin/courses/create"}>
-          <Button paddingLeft={4} paddingTop={3} variant="unstyled">
+        <NavLink
+          state={{ students: students, professors: professors }}
+          to={"/sign-in/admin/courses/create"}
+        >
+          <Button fontSize={15} variant={"ghost"}>
             New course
           </Button>
         </NavLink>
@@ -51,12 +53,16 @@ const AdminSidebar = () => {
         {courses?.slice(0, 3).map((course) => (
           <ListItem key={course.id}>
             <Button variant={"ghost"}>
-              <Link to={"course/" + course.id}>{course.title}</Link>
+              <Link state={{ courseId: course.id }} to={"course"}>
+                {course.title}
+              </Link>
             </Button>
           </ListItem>
         ))}
         <ListItem>
-          <Button>All Courses</Button>
+          <Link to={"/sign-in/admin/courses/all"}>
+            <Button>All Courses</Button>
+          </Link>
         </ListItem>
       </List>
 
@@ -65,7 +71,7 @@ const AdminSidebar = () => {
         {professors?.slice(0, 3).map((professor) => (
           <ListItem key={professor.id}>
             <Button variant={"ghost"}>
-              <Link to={"professor/" + professor.id}>
+              <Link state={{ professorId: professor.id }} to={"professor"}>
                 {professor.firstName + " "}
                 {professor.lastName}
               </Link>
@@ -73,7 +79,12 @@ const AdminSidebar = () => {
           </ListItem>
         ))}
         <ListItem>
-          <Button>All Professors</Button>
+          <Link
+            state={{ professors: professors }}
+            to={"/sign-in/admin/professors/all"}
+          >
+            <Button>All Professors</Button>
+          </Link>
         </ListItem>
       </List>
 
@@ -82,7 +93,7 @@ const AdminSidebar = () => {
         {students?.slice(0, 3).map((student) => (
           <ListItem key={student.id}>
             <Button variant={"ghost"}>
-              <Link to={"student/" + student.id}>
+              <Link state={{ studentId: student.id }} to={"student"}>
                 {student.firstName + " "}
                 {student.lastName}
               </Link>
@@ -90,7 +101,12 @@ const AdminSidebar = () => {
           </ListItem>
         ))}
         <ListItem>
-          <Button>All Students</Button>
+          <Link
+            state={{ students: students }}
+            to={"/sign-in/admin/students/all"}
+          >
+            <Button>All Students</Button>
+          </Link>
         </ListItem>
       </List>
     </Box>

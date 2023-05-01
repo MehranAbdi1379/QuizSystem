@@ -8,22 +8,22 @@ import {
   useMediaQuery,
 } from "@chakra-ui/react";
 import React from "react";
-import NavButton from "./NavButton";
 import { NavLink } from "react-router-dom";
 import AdminResponsiveNavbar from "./AdminResponsiveNavbar";
+import NavButton from "../Global/NavButton";
 
 interface Props {
   name: string;
 }
 
-const NavbarSignedIn = ({ name }: Props) => {
+const AdminNavbar = ({ name }: Props) => {
   const { colorMode, toggleColorMode } = useColorMode();
   const [moreThanMedium] = useMediaQuery("(min-width: 820px)");
 
   return (
     <Flex p={4} justifyContent="space-between">
       <Heading>
-        <NavLink to="/">Quiz System</NavLink>
+        <NavLink to="/sign-in/admin">Quiz System</NavLink>
       </Heading>
 
       <HStack spacing={3}>
@@ -32,11 +32,14 @@ const NavbarSignedIn = ({ name }: Props) => {
           <NavButton
             to="/"
             name="Sign out"
-            onClick={() => localStorage.removeItem("token")}
+            onClick={() => {
+              localStorage.removeItem("token");
+              localStorage.removeItem("userId");
+            }}
           ></NavButton>
         )}
         {moreThanMedium && (
-          <NavButton to="/about-us" name="About Us"></NavButton>
+          <NavButton to="/sign-in/about-us" name="About Us"></NavButton>
         )}
 
         {moreThanMedium && (
@@ -55,4 +58,4 @@ const NavbarSignedIn = ({ name }: Props) => {
   );
 };
 
-export default NavbarSignedIn;
+export default AdminNavbar;
