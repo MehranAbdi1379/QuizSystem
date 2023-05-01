@@ -12,12 +12,21 @@ export interface Professor{
 class ProfessorService{
     GetById(id: any , setProfessor: any)
     {
-        authApiClient().post('Professor/GetById' , id).then(res => setProfessor(res.data))
+        authApiClient().post('Professor/GetById' , {id}).then(res => setProfessor(res.data))
     }
 
     GetAll(setProfessors: any)
     {
         authApiClient().get('Professor/GetAll').then(res => setProfessors(res.data))
+    }
+    Accept(id: any )
+    {
+        return authApiClient().patch('Professor/Accept' , {id})
+    }
+
+    Unaccept(id: any )
+    {
+        return authApiClient().patch('Professor/UnAccept' , {id})
     }
 }
 
