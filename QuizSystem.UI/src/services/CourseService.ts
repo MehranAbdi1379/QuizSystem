@@ -20,12 +20,22 @@ class CourseService{
 
     GetById(id: any , setCourse: any)
     {
-        authApiClient().post('Course/GetById' , {id: id.courseId}).then(res => setCourse(res.data))
+        authApiClient().post('Course/GetById' , {id}).then(res => setCourse(res.data))
     }
 
     GetStudentsWithCourseId(id: any , setCourseStudents: any)
     {
-        authApiClient().post('Course/GetStudentsByCourseId' , {id: id.courseId}).then(res => setCourseStudents(res.data))
+        authApiClient().post('Course/GetStudentsByCourseId' , {id}).then(res => setCourseStudents(res.data))
+    }
+
+    Create(course: any  )
+    {
+        return authApiClient().post('Course/Create' , course)
+    }
+
+    Update(course:any)
+    {
+        authApiClient().put('Course/Update' , course)
     }
 }
 
