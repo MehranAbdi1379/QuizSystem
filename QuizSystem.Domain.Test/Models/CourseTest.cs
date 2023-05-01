@@ -52,7 +52,7 @@ public class CourseTest
         professorRepositoryMock.Setup(c => c.GetWithId(It.IsAny<Guid>())).Returns(professor);
         course.SetProfessor(professor.Id,professorRepositoryMock.Object);
 
-        Assert.AreEqual(professor, course.Professor);
+        Assert.AreEqual(professor.Id, course.ProfessorId);
     }
 
     private Course InitialCourse(

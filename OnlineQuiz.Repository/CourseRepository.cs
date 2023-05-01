@@ -24,7 +24,7 @@ namespace QuizSystem.Repository
         }
         public List<Guid> GetWithProfessorId(Guid professorID)
         {
-            return context.Set<Course>().Where(p => p.Professor.Id == professorID).Select(p => p.Professor.Id).ToList();
+            return context.Set<Course>().Where(p => p.ProfessorId == professorID).Select(p => p.ProfessorId).ToList();
         }
         public List<Course> GetAllCourses()
         {

@@ -31,12 +31,17 @@ namespace QuizSystem.Domain.Models
 
         public string Title { get; private set; }
         public TimePeriod TimePeriod { get; private set; }
-        public Professor Professor { get; private set; }
+        public Guid ProfessorId { get; private set; }
 
         public void SetTitle(string title , ICourseRepository repository)
         {
             if (repository.CourseTitleExists(title))
                 throw new CourseTitleExistsException();
+            Title = title;
+        }
+
+        public void UpdateTitle(string title)
+        {
             Title = title;
         }
 
@@ -49,7 +54,7 @@ namespace QuizSystem.Domain.Models
         {
             if (professorRepository.IsExist(professorId) == false)
                 throw new CourseProfessorNotExistException();
-            Professor = professorRepository.GetWithId(professorId);
+            ProfessorId = professorId;
         }
     }
 }

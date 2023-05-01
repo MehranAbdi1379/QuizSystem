@@ -40,12 +40,7 @@ namespace QuizSystem.API.Controllers
         [Route("Update")]
         public IActionResult UpdateCourse(CourseUpdateDTO dto)
         {
-            if (!ModelState.IsValid)
-            {
-                Log.Error("Course update modelstate error.");
-                return BadRequest(ModelState);
-
-            }
+            
             Log.Information($"Course with id of {dto.Id} is updated");
             return Ok(courseService.UpdateCourse(dto));
 

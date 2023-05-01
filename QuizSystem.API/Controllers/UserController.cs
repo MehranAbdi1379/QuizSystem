@@ -43,8 +43,8 @@ namespace QuizSystem.API.Controllers
                 Log.Error(lengthError);
                 return BadRequest(lengthError);
             }
-            if (dto.Role.ToLower() != "admin")
-            {
+            //if (dto.Role.ToLower() != "admin")
+            //{
                 var task = await userService.SignUp(dto, userManager);
 
                 if (task.Succeeded)
@@ -56,7 +56,7 @@ namespace QuizSystem.API.Controllers
 
                 Log.Error("User can not be signed up.");
                 return BadRequest(task);
-            }
+            //}
             var error = "Admin can only be added in development phase";
             Log.Error(error);
             return BadRequest(error);

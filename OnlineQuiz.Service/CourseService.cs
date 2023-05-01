@@ -30,8 +30,8 @@ public class CourseService : ICourseService
     public Guid CreateCourse(CourseCreateDTO dto)
     {
         var course = new Course(dto.Title,
-            dto.StartTime,
-            dto.EndTime,
+            dto.StartDate,
+            dto.EndDate,
             repository,
             dto.ProfessorId,
             professorRepository);
@@ -53,8 +53,8 @@ public class CourseService : ICourseService
     public Guid UpdateCourse(CourseUpdateDTO dto)
     {
         Course course = repository.GetWithId(dto.Id);
-        course.SetTime(dto.StartTime, dto.EndTime);
-        course.SetTitle(dto.Title, repository);
+        course.SetTime(dto.TimePeriod.StartDate, dto.TimePeriod.EndDate);
+        course.UpdateTitle(dto.Title);
         course.SetProfessor(dto.ProfessorId, professorRepository);
 
         foreach (var item in courseStudentRepository.GetWithCourseId(course.Id))
