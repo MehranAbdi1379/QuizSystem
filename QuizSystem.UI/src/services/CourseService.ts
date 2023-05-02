@@ -37,6 +37,11 @@ class CourseService{
     {
         authApiClient().put('Course/Update' , course)
     }
+
+    GetByProfessorId(id: any , setCourses: any)
+    {
+        authApiClient().post('Course/GetByProfessorId' , {id}).then(res => setCourses(res.data))
+    }
 }
 
 export default CourseService
