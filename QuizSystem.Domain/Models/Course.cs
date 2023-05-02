@@ -25,7 +25,7 @@ namespace QuizSystem.Domain.Models
             IProfessorRepository professorRepository)
         {
             SetTitle(title, repository);
-            SetTime(startTime, endTime);
+            SetDate(startTime, endTime);
             SetProfessor(professorId,professorRepository);
         }
 
@@ -45,9 +45,14 @@ namespace QuizSystem.Domain.Models
             Title = title;
         }
 
-        public void SetTime(DateTime startTime , DateTime endTime)
+        public void SetDate(DateTime startDate , DateTime endDate)
         {
-            TimePeriod = new TimePeriod(startTime, endTime);
+            TimePeriod = new TimePeriod(startDate, endDate);
+        }
+
+        public void UpdateDate(DateTime startDate ,DateTime endDate)
+        {
+            TimePeriod = new TimePeriod(startDate, endDate, true);
         }
 
         public void SetProfessor(Guid professorId , IProfessorRepository professorRepository)

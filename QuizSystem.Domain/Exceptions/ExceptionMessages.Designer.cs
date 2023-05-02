@@ -97,6 +97,15 @@ namespace QuizSystem.Domain.Exceptions {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Course does not exist.
+        /// </summary>
+        public static string CourseNotExistException {
+            get {
+                return ResourceManager.GetString("CourseNotExistException", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Course Id doesn&apos;t exist to add to CourseProfessor model.
         /// </summary>
         public static string CourseProfessorCourseIdNotExistExceptionMessage {
@@ -174,6 +183,24 @@ namespace QuizSystem.Domain.Exceptions {
         public static string CourseTitleExistsExceptionMessage {
             get {
                 return ResourceManager.GetString("CourseTitleExistsExceptionMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Exam time is too short.
+        /// </summary>
+        public static string ExamTimeShortExceptionMessage {
+            get {
+                return ResourceManager.GetString("ExamTimeShortExceptionMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Exam title already exists.
+        /// </summary>
+        public static string ExamTitleExistException {
+            get {
+                return ResourceManager.GetString("ExamTitleExistException", resourceCulture);
             }
         }
         

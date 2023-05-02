@@ -129,6 +129,9 @@
   <data name="CourseEndTimeIsBeforeStartTimeExceptionMessage" xml:space="preserve">
     <value>End time for the course is before start time</value>
   </data>
+  <data name="CourseNotExistException" xml:space="preserve">
+    <value>Course does not exist</value>
+  </data>
   <data name="CourseProfessorCourseIdNotExistExceptionMessage" xml:space="preserve">
     <value>Course Id doesn't exist to add to CourseProfessor model</value>
   </data>
@@ -155,6 +158,12 @@
   </data>
   <data name="CourseTitleExistsExceptionMessage" xml:space="preserve">
     <value>Title already exists</value>
+  </data>
+  <data name="ExamTimeShortExceptionMessage" xml:space="preserve">
+    <value>Exam time is too short</value>
+  </data>
+  <data name="ExamTitleExistException" xml:space="preserve">
+    <value>Exam title already exists</value>
   </data>
   <data name="ProfessorAddCourseNotExistExceptionMessage" xml:space="preserve">
     <value>Course does not exist to add to Professor</value>
