@@ -32,6 +32,7 @@ namespace QuizSystem.API.Extensions
             builder.Services.AddScoped<IProfessorRepository , ProfessorRepository>();
             builder.Services.AddScoped<ICourseRepository, CourseRepository>();
             builder.Services.AddScoped<ICourseStudentRepository, CourseStudentRepository>();
+            builder.Services.AddScoped<IExamRepository, ExamRepository>();
         }
 
         public static void ConfigureIdentity(this IServiceCollection services)

@@ -10,7 +10,7 @@ namespace QuizSystem.API.Controllers
 {
     [ApiController]
     [Route("api/Course")]
-    [Authorize(Roles = "Admin")]
+    
     public class CourseController : ControllerBase
     {
         private readonly ICourseService courseService;
@@ -101,6 +101,62 @@ namespace QuizSystem.API.Controllers
 
             Log.Information($"Get students of course {dto.Id} is successful");
             return Ok(courseService.GetStudentsByCourseId(dto));
+        }
+
+        [HttpPost]
+        [Route("Exam/Create")]
+        public IActionResult CreateExam(ExamCreateDTO dto)
+        {
+            if(!ModelState.IsValid)
+            {
+                Log.Error("Create exam modelstate error");
+                return BadRequest(ModelState);
+            }
+
+            Log.Information("New exam created");
+            return Ok(courseService.CreateExam(dto));
+        }
+
+        [HttpPut]
+        [Route("Exam/Update")]
+        public IActionResult UpdateExam(ExamUpdateDTO dto)
+        {
+            if(!ModelState.IsValid)
+            {
+                Log.Error("Update exam modelstate error");
+                return BadRequest(ModelState);
+            }
+
+            Log.Information($"Exam with id : {dto.Id} updated");
+            return Ok(courseService.UpdateExam(dto));
+        }
+
+        [HttpPost]
+        [Route("Exam/GetByCourseId")]
+        public IActionResult GetExamByCourseId(CourseIdDTO dto)
+        {
+            if (!ModelState.IsValid)
+            {
+                Log.Error("Exam get by course id modelstate error");
+                return BadRequest(ModelState);
+            }
+
+            Log.Information($"Get exams for course with id {dto.Id}");
+            return Ok(courseService.GetAllExamsByCourseId(dto));
+        }
+        [HttpPost]
+        [Route("GetByProfessorId")]
+        [Authorize(Roles ="Professor")]
+        public IActionResult GetByProfessorId(UserIdDTO dto)
+        {
+            if (!ModelState.IsValid)
+            {
+                Log.Error("Course get by professor id modelstate error");
+                return BadRequest(ModelState);
+            }
+
+            Log.Information($"Get courses for professor with id: {dto.Id} is successful");
+            return Ok(courseService.GetCoursesByProfessorId(dto));
         }
     }
 }

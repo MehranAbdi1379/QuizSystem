@@ -15,16 +15,19 @@ public class CourseService : ICourseService
     protected readonly IProfessorRepository professorRepository;
     protected readonly IStudentRepository studentRepository;
     protected readonly ICourseStudentRepository courseStudentRepository;
+    protected readonly IExamRepository examRepository;
 
     public CourseService(ICourseRepository repository,
         IProfessorRepository professorRepository,
         IStudentRepository studentRepository,
-        ICourseStudentRepository courseStudentRepository)
+        ICourseStudentRepository courseStudentRepository,
+        IExamRepository examRepository)
     {
         this.repository = repository;
         this.professorRepository = professorRepository;
         this.studentRepository = studentRepository;
         this.courseStudentRepository = courseStudentRepository;
+        this.examRepository = examRepository;
     }
 
     public Guid CreateCourse(CourseCreateDTO dto)
@@ -53,8 +56,8 @@ public class CourseService : ICourseService
     public Guid UpdateCourse(CourseUpdateDTO dto)
     {
         Course course = repository.GetWithId(dto.Id);
-        course.SetTime(dto.TimePeriod.StartDate, dto.TimePeriod.EndDate);
         course.UpdateTitle(dto.Title);
+        course.UpdateDate(dto.StartDate, dto.EndDate);
         course.SetProfessor(dto.ProfessorId, professorRepository);
 
         foreach (var item in courseStudentRepository.GetWithCourseId(course.Id))
@@ -104,5 +107,41 @@ public class CourseService : ICourseService
             studentIds.Add(new UserIdDTO{Id = item.StudentId });
         }
         return studentIds;
+    }
+
+    public Exam CreateExam(ExamCreateDTO dto)
+    {
+        var exam = new Exam(repository, examRepository, dto.Title, dto.CourseId, dto.Description, dto.Time);
+        examRepository.Create(exam);
+        examRepository.Save();
+        return exam;
+    }
+
+    public Exam UpdateExam(ExamUpdateDTO dto)
+    {
+        var exam = examRepository.GetWithId(dto.Id);
+        exam.SetTime(dto.Time);
+        exam.SetDescription(dto.Description);
+        exam.SetTitle(dto.Title, examRepository);
+        exam.SetCourseId(dto.CourseId, repository);
+        examRepository.Update(exam);
+        examRepository.Save();
+        return exam;
+    }
+
+    public List<Exam> GetAllExamsByCourseId(CourseIdDTO dto)
+    {
+        return examRepository.GetAllExams(dto.Id);
+    }
+
+    public List<Course> GetCoursesByProfessorId(UserIdDTO dto)
+    {
+        var courseIds =  repository.GetWithProfessorId(dto.Id);
+        var courses = new List<Course>();
+        foreach (var item in courseIds)
+        {
+            courses.Add(repository.GetWithId(item));
+        }
+        return courses;
     }
 }

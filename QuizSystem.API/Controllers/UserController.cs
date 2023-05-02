@@ -128,7 +128,8 @@ namespace QuizSystem.API.Controllers
             }
             Log.Information($"Admin get by id is completed for admin: {dto.Id}");
             var result = userManager.FindByIdAsync(dto.Id.ToString()).Result;
-            return Ok(new { FirstName = result.FirstName, LastName = result.LastName });
+            var role = userManager.GetRolesAsync(result).Result[0];
+            return Ok(new { FirstName = result.FirstName, LastName = result.LastName , Role=role});
         }
     }
 }
