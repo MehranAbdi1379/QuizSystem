@@ -39,6 +39,15 @@ const AdminStudentsPage = () => {
         </Heading>
 
         <Heading marginTop={5} fontSize={22}>
+          Birth Date:
+        </Heading>
+        {student && (
+          <Heading fontSize={20}>
+            <Text>{student.birthDate.toString().slice(0, 10)}</Text>
+          </Heading>
+        )}
+
+        <Heading marginTop={5} fontSize={22}>
           National Code:
         </Heading>
         {student && (

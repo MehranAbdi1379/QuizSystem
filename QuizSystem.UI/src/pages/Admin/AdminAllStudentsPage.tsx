@@ -35,7 +35,10 @@ const AdminAllStudentsPage = () => {
           <GridItem>
             <Card bg={colorMode == "dark" ? "gray.600" : "gray.100"}>
               <CardBody>
-                <Link to={"/sign-in/admin/student/" + student.id}>
+                <Link
+                  to={"/sign-in/admin/student/"}
+                  state={{ studentId: student.id }}
+                >
                   <Button bg={colorMode == "dark" ? "gray.500" : "gray.300"}>
                     {student.firstName + " " + student.lastName}
                   </Button>
