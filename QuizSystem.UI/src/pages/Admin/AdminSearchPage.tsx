@@ -24,9 +24,13 @@ interface FieldData {
   firstName: string;
   lastName: string;
   role: string;
+  minBirthDate: Date;
+  maxBirthDate: Date;
 }
 
 const AdminSearchPage = () => {
+  const minDate = new Date();
+  minDate.setFullYear(minDate.getFullYear() - 100);
   const { colorMode } = useColorMode();
   const { handleSubmit, register } = useForm<FieldData>();
   const [searchRole, setSearchRole] = useState<string>();
@@ -35,6 +39,8 @@ const AdminSearchPage = () => {
   const { Search } = new UserServices();
   console.log(searchResults);
   function handleSearch(data: FieldData) {
+    if (!data.minBirthDate) data.minBirthDate = minDate;
+    if (!data.maxBirthDate) data.maxBirthDate = new Date();
     Search(data, setSearchResults);
     setSearchRole(data.role);
   }
@@ -56,6 +62,16 @@ const AdminSearchPage = () => {
             <FormControl>
               <FormLabel>LastName: </FormLabel>
               <Input {...register("lastName")} type="text"></Input>
+            </FormControl>
+
+            <FormControl>
+              <FormLabel>Minimum Birth Date: </FormLabel>
+              <Input {...register("minBirthDate")} type="date"></Input>
+            </FormControl>
+
+            <FormControl>
+              <FormLabel>Maximum Birth Date: </FormLabel>
+              <Input {...register("maxBirthDate")} type="date"></Input>
             </FormControl>
 
             <FormControl>
@@ -83,7 +99,10 @@ const AdminSearchPage = () => {
       )}
       {searchResults && searchResults.length > 0 && searchRole == "" && (
         <SimpleGrid p={10} spacing={20} columns={2} minChildWidth={500}>
-          <GridItem borderRadius={40} bg={"gray.50"}>
+          <GridItem
+            borderRadius={40}
+            bg={colorMode == "dark" ? "gray.700" : "gray.50"}
+          >
             <Heading paddingTop={5} paddingLeft={7}>
               Students
             </Heading>
@@ -96,7 +115,9 @@ const AdminSearchPage = () => {
                       to={"/sign-in/admin/student"}
                       state={{ studentId: student.id }}
                     >
-                      <Button bg={"gray.200"}>
+                      <Button
+                        bg={colorMode == "dark" ? "gray.600" : "gray.200"}
+                      >
                         <UserDisplay id={student.id}></UserDisplay>
                       </Button>
                     </Link>
@@ -104,7 +125,10 @@ const AdminSearchPage = () => {
                 ))}
             </SimpleGrid>
           </GridItem>
-          <GridItem borderRadius={40} bg={"gray.50"}>
+          <GridItem
+            borderRadius={40}
+            bg={colorMode == "dark" ? "gray.700" : "gray.50"}
+          >
             <Heading paddingTop={5} paddingLeft={7}>
               Professors
             </Heading>
@@ -117,7 +141,9 @@ const AdminSearchPage = () => {
                       to={"/sign-in/admin/professor"}
                       state={{ professorId: professor.id }}
                     >
-                      <Button bg={"gray.200"}>
+                      <Button
+                        bg={colorMode == "dark" ? "gray.600" : "gray.200"}
+                      >
                         <UserDisplay id={professor.id}></UserDisplay>
                       </Button>
                     </Link>
@@ -128,9 +154,13 @@ const AdminSearchPage = () => {
         </SimpleGrid>
       )}
       {searchResults && searchResults.length > 0 && searchRole == "student" && (
-        <Container borderRadius={40} marginTop={10} bg={"gray.50"}>
+        <Container
+          borderRadius={40}
+          marginTop={10}
+          bg={colorMode == "dark" ? "gray.700" : "gray.50"}
+        >
           <Heading paddingTop={5} paddingLeft={7}>
-            Students
+            Result
           </Heading>
           <SimpleGrid p={7} spacing={3} columns={3} minChildWidth={180}>
             {searchResults
@@ -141,7 +171,7 @@ const AdminSearchPage = () => {
                     to={"/sign-in/admin/student"}
                     state={{ studentId: student.id }}
                   >
-                    <Button bg={"gray.200"}>
+                    <Button bg={colorMode == "dark" ? "gray.600" : "gray.200"}>
                       <UserDisplay id={student.id}></UserDisplay>
                     </Button>
                   </Link>
@@ -153,9 +183,13 @@ const AdminSearchPage = () => {
       {searchResults &&
         searchResults.length > 0 &&
         searchRole == "professor" && (
-          <Container borderRadius={40} marginTop={10} bg={"gray.50"}>
+          <Container
+            borderRadius={40}
+            marginTop={10}
+            bg={colorMode == "dark" ? "gray.700" : "gray.50"}
+          >
             <Heading paddingTop={5} paddingLeft={7}>
-              Professors
+              Result
             </Heading>
             <SimpleGrid p={7} spacing={3} columns={3} minChildWidth={180}>
               {searchResults
@@ -164,9 +198,11 @@ const AdminSearchPage = () => {
                   <GridItem>
                     <Link
                       to={"/sign-in/admin/professor"}
-                      state={{ studentId: professor.id }}
+                      state={{ professorId: professor.id }}
                     >
-                      <Button bg={"gray.200"}>
+                      <Button
+                        bg={colorMode == "dark" ? "gray.600" : "gray.200"}
+                      >
                         <UserDisplay id={professor.id}></UserDisplay>
                       </Button>
                     </Link>

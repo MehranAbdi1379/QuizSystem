@@ -13,6 +13,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Schema;
 
 namespace QuizSystem.Repository
 {
@@ -25,11 +26,13 @@ namespace QuizSystem.Repository
             this.userManager = userManager;
         }
 
-        public async Task<List<ApiUser>> Filter(string firstName, string lastName, string role="")
+        public async Task<List<ApiUser>> Filter(string firstName, string lastName, DateTime minBirthDate , DateTime maxBirthDate, string role="")
         {
             var result= new List<ApiUser>();
-            var users = userManager.Users.Where(s => s.FirstName.ToLower().Contains(firstName.ToLower()) &&
-            s.LastName.ToLower().Contains(lastName.ToLower())).ToList();
+            var users = new List<ApiUser>();
+                users = userManager.Users.Where(s => s.FirstName.ToLower().Contains(firstName.ToLower()) &&
+            s.LastName.ToLower().Contains(lastName.ToLower()) && s.BirthDate > minBirthDate && s.BirthDate < maxBirthDate).ToList();
+            
             if (role.IsNullOrEmpty())
             {
                 return users;

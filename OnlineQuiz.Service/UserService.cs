@@ -24,7 +24,7 @@ namespace QuizSystem.Service
 
         public async Task<List<UserSearchResultDTO>> SearchForUser(StudentProfessorSearchDTO dto)
         {
-            var userList = await userRepository.Filter(dto.FirstName, dto.LastName, dto.Role);
+            var userList = await userRepository.Filter(dto.FirstName, dto.LastName, dto.MinBirthDate, dto.MaxBirthDate , dto.Role);
             var result = new List<UserSearchResultDTO>();
             foreach (var item in userList)
             {

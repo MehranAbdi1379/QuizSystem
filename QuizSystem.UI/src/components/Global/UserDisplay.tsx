@@ -14,7 +14,7 @@ const UserDisplay = ({ id }: Props) => {
   }>();
   useEffect(() => {
     GetNameById(id, setUser);
-  }, []);
+  }, [id]);
   return (
     <Box>
       {user?.firstName} {user?.lastName}
