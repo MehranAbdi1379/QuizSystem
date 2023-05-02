@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using QuizSystem.Repository.DataBase;
 
@@ -11,9 +12,11 @@ using QuizSystem.Repository.DataBase;
 namespace QuizSystem.Repository.Migrations
 {
     [DbContext(typeof(QuizSystemContext))]
-    partial class QuizSystemContextModelSnapshot : ModelSnapshot
+    [Migration("20230502094740_sefj")]
+    partial class sefj
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -47,6 +50,29 @@ namespace QuizSystem.Repository.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "06f26b14-1ecf-47fc-99ff-dad62252d4df",
+                            ConcurrencyStamp = "aa17855b-9d3a-4ce2-a32e-96b4fe1ab898",
+                            Name = "Student",
+                            NormalizedName = "STUDENT"
+                        },
+                        new
+                        {
+                            Id = "95f68c57-1f7e-468d-bbf1-edf388ef327f",
+                            ConcurrencyStamp = "fd17e83a-b4ad-4870-94a5-c70cc2fa48d4",
+                            Name = "Professor",
+                            NormalizedName = "PROFESSOR"
+                        },
+                        new
+                        {
+                            Id = "35eb57e7-cb71-4310-9956-1a01c5fb46af",
+                            ConcurrencyStamp = "398cfc42-632a-4e42-895d-4a9a7d27a608",
+                            Name = "Admin",
+                            NormalizedName = "ADMIN"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -295,7 +321,7 @@ namespace QuizSystem.Repository.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Exams");
+                    b.ToTable("Exam");
                 });
 
             modelBuilder.Entity("QuizSystem.Domain.Models.Professor", b =>

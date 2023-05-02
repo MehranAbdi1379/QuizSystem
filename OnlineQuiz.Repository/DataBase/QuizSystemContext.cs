@@ -24,11 +24,11 @@ namespace QuizSystem.Repository.DataBase
         {
             base.OnModelCreating(builder);
 
-            builder.ApplyConfiguration(new RoleConfiguration());
             builder.ApplyConfiguration(new StudentConfiguration());
             builder.ApplyConfiguration(new ProfessorConfiguration());
             builder.ApplyConfiguration(new CourseConfiguration());
             builder.ApplyConfiguration(new CourseStudentConfiguration());
+            builder.ApplyConfiguration(new ExamConfiguration());
 
         }
 
@@ -36,5 +36,6 @@ namespace QuizSystem.Repository.DataBase
         public DbSet<Professor> Professors { get; set; }
         public DbSet<Course> Courses{ get; set; }
         public DbSet<CourseStudent> CourseStudent { get; set; }
+        public DbSet<Exam> Exams { get; set; }
     }
 }
