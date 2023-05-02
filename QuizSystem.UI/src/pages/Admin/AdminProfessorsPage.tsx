@@ -55,9 +55,17 @@ const AdminProfessorsPage = () => {
             <Text>{professor.nationalCode}</Text>
           </Heading>
         )}
-        <Heading marginTop={5} marginBottom={2} fontSize={22}>
-          Courses
-        </Heading>
+        {courses?.length &&
+          courses
+            ?.map((x) => x)
+            .filter(function (x) {
+              return professor?.id.includes(x.professorId);
+            }).length > 0 && (
+            <Heading marginTop={5} marginBottom={2} fontSize={22}>
+              Courses
+            </Heading>
+          )}
+
         <VStack marginBottom={5} align={"startZ"}>
           {courses
             ?.map((x) => x)
