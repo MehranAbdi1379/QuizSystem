@@ -52,11 +52,15 @@ const CourseCreatePage = () => {
     Create(data)
       .then((res) => setCourseId(res.data))
       .then(() => setSubmited(true));
-    window.location.reload();
   }
 
   if (submited)
-    return <Navigate to={"/sign-in/admin/course/" + courseId}></Navigate>;
+    return (
+      <Navigate
+        to={"/sign-in/admin/course"}
+        state={{ courseId: courseId }}
+      ></Navigate>
+    );
   return (
     <Form onSubmit={handleSubmit((data) => handleCreateCourse(data))}>
       <Container

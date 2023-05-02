@@ -29,6 +29,7 @@ const AdminAllCoursesPage = () => {
   return (
     <Box paddingLeft={10} paddingTop={5} paddingRight={10}>
       <Heading paddingBottom={4}>Courses</Heading>
+
       <SimpleGrid
         columns={4}
         minChildWidth={260}

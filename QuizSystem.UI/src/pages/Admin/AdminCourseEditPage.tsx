@@ -35,6 +35,8 @@ const schema = z.object({
 type FormData = z.infer<typeof schema>;
 
 const AdminCourseEditPage = () => {
+  const today = new Date();
+
   const { colorMode } = useColorMode();
   const state: { course: Course; courseStudents: Student[] } =
     useLocation().state;
@@ -56,12 +58,13 @@ const AdminCourseEditPage = () => {
     resolver: zodResolver(schema),
   });
   function handleUpdateCourse(data: FormData) {
-    const newCourse: Course = {
+    const newCourse = {
       id: state.course.id,
       professorId: data.professorId
         ? data.professorId
         : state.course.professorId,
-      timePeriod: { endDate: data.endDate, startDate: data.startDate },
+      endDate: data.endDate,
+      startDate: data.startDate,
       studentIds: data.studentIds,
       title: data.title,
     };
@@ -103,6 +106,7 @@ const AdminCourseEditPage = () => {
               <Text color={"red.400"}>{errors.startDate.message}</Text>
             )}
           </FormControl>
+
           <FormControl>
             <FormLabel>End Date: </FormLabel>
             <Input
