@@ -14,9 +14,17 @@ namespace QuizSystem.Domain.Value_Object
 
         }
         
-        public TimePeriod(DateTime startDate, DateTime endDate)
+        public TimePeriod(DateTime startDate, DateTime endDate , bool update=false)
         {
-            ValidateTimePeriod(startDate, endDate);
+            if(update==false)
+            {
+                ValidateTimePeriod(startDate, endDate);
+            }
+            else
+            {
+                ValidateTimePeriodLenght(startDate, endDate);
+                ValidateStartDateIsBeforeEndDate(startDate, endDate);
+            }
             StartDate = startDate;
             EndDate = endDate;
         }
