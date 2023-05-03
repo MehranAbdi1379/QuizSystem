@@ -24,6 +24,7 @@ namespace QuizSystem.Repository.DataBase
         {
             base.OnModelCreating(builder);
 
+            builder.ApplyConfiguration(new RoleConfiguration());
             builder.ApplyConfiguration(new StudentConfiguration());
             builder.ApplyConfiguration(new ProfessorConfiguration());
             builder.ApplyConfiguration(new CourseConfiguration());

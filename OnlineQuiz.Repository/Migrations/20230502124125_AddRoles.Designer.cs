@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using QuizSystem.Repository.DataBase;
 
@@ -11,9 +12,11 @@ using QuizSystem.Repository.DataBase;
 namespace QuizSystem.Repository.Migrations
 {
     [DbContext(typeof(QuizSystemContext))]
-    partial class QuizSystemContextModelSnapshot : ModelSnapshot
+    [Migration("20230502124125_AddRoles")]
+    partial class AddRoles
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -276,7 +279,7 @@ namespace QuizSystem.Repository.Migrations
 
                     b.HasIndex("ProfessorId");
 
-                    b.ToTable("Courses", (string)null);
+                    b.ToTable("Courses");
                 });
 
             modelBuilder.Entity("QuizSystem.Domain.Models.CourseStudent", b =>
@@ -293,7 +296,7 @@ namespace QuizSystem.Repository.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("CourseStudent", (string)null);
+                    b.ToTable("CourseStudent");
                 });
 
             modelBuilder.Entity("QuizSystem.Domain.Models.Exam", b =>
@@ -318,7 +321,7 @@ namespace QuizSystem.Repository.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Exams", (string)null);
+                    b.ToTable("Exams");
                 });
 
             modelBuilder.Entity("QuizSystem.Domain.Models.Professor", b =>
@@ -332,7 +335,7 @@ namespace QuizSystem.Repository.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Professors", (string)null);
+                    b.ToTable("Professors");
                 });
 
             modelBuilder.Entity("QuizSystem.Domain.Models.Student", b =>
@@ -346,7 +349,7 @@ namespace QuizSystem.Repository.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Students", (string)null);
+                    b.ToTable("Students");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -408,7 +411,7 @@ namespace QuizSystem.Repository.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.OwnsOne("QuizSystem.Domain.Models.Course.TimePeriod#QuizSystem.Domain.Value_Object.TimePeriod", "TimePeriod", b1 =>
+                    b.OwnsOne("QuizSystem.Domain.Value_Object.TimePeriod", "TimePeriod", b1 =>
                         {
                             b1.Property<Guid>("CourseId")
                                 .HasColumnType("uniqueidentifier");
@@ -421,7 +424,7 @@ namespace QuizSystem.Repository.Migrations
 
                             b1.HasKey("CourseId");
 
-                            b1.ToTable("Courses", (string)null);
+                            b1.ToTable("Courses");
 
                             b1.WithOwner()
                                 .HasForeignKey("CourseId");
