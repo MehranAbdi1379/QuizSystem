@@ -28,19 +28,23 @@ class CourseService{
         authApiClient().post('Course/GetStudentsByCourseId' , {id}).then(res => setCourseStudents(res.data))
     }
 
-    Create(course: any  )
+    Create(course: any , setCourseId: any , setError : any , setSubmited: any)
     {
-        return authApiClient().post('Course/Create' , course)
+         authApiClient().post('Course/Create' , course).then(res => setCourseId(res.data)).then(() => setSubmited(true)).catch(err => setError(err.response.data))
     }
 
-    Update(course:any)
+    Update(course:any , setError: any , setSubmited: any)
     {
-        authApiClient().put('Course/Update' , course)
+        authApiClient().put('Course/Update' , course).then(res => setSubmited(true)).catch(err => setError(err.response.data))
     }
 
     GetByProfessorId(id: any , setCourses: any)
     {
         authApiClient().post('Course/GetByProfessorId' , {id}).then(res => setCourses(res.data))
+    }
+    Delete(id: any)
+    {
+        authApiClient().post('Course/Delete' , {id})
     }
 }
 
