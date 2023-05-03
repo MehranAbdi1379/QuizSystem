@@ -52,6 +52,20 @@ public class CourseService : ICourseService
 
         return course.Id;
     }
+    
+    public void RemoveCourse(CourseIdDTO dto)
+    {
+        var course = repository.GetWithId(dto.Id);
+        var studentCourses = courseStudentRepository.GetWithCourseId(dto.Id);
+        foreach (var item in studentCourses)
+        {
+            courseStudentRepository.Delete(item);
+        }
+        courseStudentRepository.Save();
+
+        repository.Delete(course);
+        repository.Save();
+    }
 
     public Guid UpdateCourse(CourseUpdateDTO dto)
     {
@@ -109,30 +123,6 @@ public class CourseService : ICourseService
         return studentIds;
     }
 
-    public Exam CreateExam(ExamCreateDTO dto)
-    {
-        var exam = new Exam(repository, examRepository, dto.Title, dto.CourseId, dto.Description, dto.Time);
-        examRepository.Create(exam);
-        examRepository.Save();
-        return exam;
-    }
-
-    public Exam UpdateExam(ExamUpdateDTO dto)
-    {
-        var exam = examRepository.GetWithId(dto.Id);
-        exam.SetTime(dto.Time);
-        exam.SetDescription(dto.Description);
-        exam.SetTitle(dto.Title, examRepository);
-        exam.SetCourseId(dto.CourseId, repository);
-        examRepository.Update(exam);
-        examRepository.Save();
-        return exam;
-    }
-
-    public List<Exam> GetAllExamsByCourseId(CourseIdDTO dto)
-    {
-        return examRepository.GetAllExams(dto.Id);
-    }
 
     public List<Course> GetCoursesByProfessorId(UserIdDTO dto)
     {
