@@ -29,29 +29,10 @@ const SignInPage = () => {
   } = useForm();
 
   function onSubmit(user: UserSignIn) {
-    signIn(user)
-      .then((res) => {
-        localStorage.setItem("token", res.data.token);
-        localStorage.setItem("userId", res.data.userId);
-        switch (res.data.role) {
-          case "Admin":
-            setUserRole("/sign-in/admin");
-            break;
-          case "Student":
-            setUserRole("/sign-in/student");
-            break;
-          case "Professor":
-            setUserRole("/sign-in/professor");
-            break;
-          default:
-            break;
-        }
-      })
-      .then(() => setAuthenticated(true))
-      .catch((err) => setError(err.message));
+    signIn(user, setUserRole, setError);
   }
 
-  if (authenticated == true) {
+  if (userRole) {
     return <Navigate to={userRole}></Navigate>;
   }
 
@@ -73,9 +54,7 @@ const SignInPage = () => {
             <Text>to your account</Text>
           </Box>
 
-          {error && (
-            <Text color="red">National code or password is wrong.</Text>
-          )}
+          {error && <Text color="red">{error}</Text>}
 
           <FormControl>
             <FormLabel>National Code: </FormLabel>
