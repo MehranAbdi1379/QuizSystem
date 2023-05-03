@@ -31,8 +31,18 @@ namespace QuizSystem.API.Controllers
                 return BadRequest(ModelState);
 
             }
-            Log.Information($"A new course is created with the title of {dto.Title}.");
-            return Ok(courseService.CreateCourse(dto));
+            try
+            {
+                Log.Information($"A new course is created with the title of {dto.Title}.");
+                return Ok(courseService.CreateCourse(dto));
+            }
+            catch (Exception ex)
+            {
+                var errorObject = new ObjectResult(ex.Message);
+                errorObject.StatusCode = StatusCodes.Status500InternalServerError;
+                return errorObject;
+            }
+            
 
         }
 
@@ -40,9 +50,23 @@ namespace QuizSystem.API.Controllers
         [Route("Update")]
         public IActionResult UpdateCourse(CourseUpdateDTO dto)
         {
+            if (!ModelState.IsValid)
+            {
+                Log.Error("Course update modelstate error");
+                return BadRequest(ModelState);
+            }
+            try
+            {
+                Log.Information($"Course with id of {dto.Id} is updated");
+                return Ok(courseService.UpdateCourse(dto));
+            }
+            catch (Exception ex)
+            {
+                var errorObject = new ObjectResult(ex.Message);
+                errorObject.StatusCode = StatusCodes.Status500InternalServerError;
+                return errorObject;
+            }
             
-            Log.Information($"Course with id of {dto.Id} is updated");
-            return Ok(courseService.UpdateCourse(dto));
 
         }
 
@@ -103,47 +127,7 @@ namespace QuizSystem.API.Controllers
             return Ok(courseService.GetStudentsByCourseId(dto));
         }
 
-        [HttpPost]
-        [Route("Exam/Create")]
-        public IActionResult CreateExam(ExamCreateDTO dto)
-        {
-            if(!ModelState.IsValid)
-            {
-                Log.Error("Create exam modelstate error");
-                return BadRequest(ModelState);
-            }
-
-            Log.Information("New exam created");
-            return Ok(courseService.CreateExam(dto));
-        }
-
-        [HttpPut]
-        [Route("Exam/Update")]
-        public IActionResult UpdateExam(ExamUpdateDTO dto)
-        {
-            if(!ModelState.IsValid)
-            {
-                Log.Error("Update exam modelstate error");
-                return BadRequest(ModelState);
-            }
-
-            Log.Information($"Exam with id : {dto.Id} updated");
-            return Ok(courseService.UpdateExam(dto));
-        }
-
-        [HttpPost]
-        [Route("Exam/GetByCourseId")]
-        public IActionResult GetExamByCourseId(CourseIdDTO dto)
-        {
-            if (!ModelState.IsValid)
-            {
-                Log.Error("Exam get by course id modelstate error");
-                return BadRequest(ModelState);
-            }
-
-            Log.Information($"Get exams for course with id {dto.Id}");
-            return Ok(courseService.GetAllExamsByCourseId(dto));
-        }
+        
         [HttpPost]
         [Route("GetByProfessorId")]
         [Authorize(Roles ="Professor")]
@@ -157,6 +141,21 @@ namespace QuizSystem.API.Controllers
 
             Log.Information($"Get courses for professor with id: {dto.Id} is successful");
             return Ok(courseService.GetCoursesByProfessorId(dto));
+        }
+
+        [HttpPost]
+        [Route("Delete")]
+        public IActionResult DeleteCourse(CourseIdDTO dto)
+        {
+            if (!ModelState.IsValid)
+            {
+                Log.Error("Course delete modelstate error");
+                return BadRequest(ModelState);
+            }
+
+            Log.Information($"Delete course with id: {dto.Id} is successful");
+            courseService.RemoveCourse(dto);
+            return Ok();
         }
     }
 }

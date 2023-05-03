@@ -9,5 +9,6 @@ namespace QuizSystem.API.Extensions
         public Task<List<UserSearchResultDTO>> SearchForUser(StudentProfessorSearchDTO dto);
         public Task<IdentityResult> SignUp(UserCreateDTO dto, UserManager<ApiUser> userManager);
         public  Task<AdminGetDTO> GetAdminById(UserIdStringDTO dto);
+        public Task<bool> SignIn(UserSignInDTO dto);
     }
 }
