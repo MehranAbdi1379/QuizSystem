@@ -40,6 +40,7 @@ const CourseCreatePage = () => {
   const { colorMode } = useColorMode();
   const [submited, setSubmited] = useState(false);
   const [courseId, setCourseId] = useState();
+  const [error, setError] = useState();
   const {
     register,
     handleSubmit,
@@ -49,9 +50,7 @@ const CourseCreatePage = () => {
   });
   const { Create } = new CourseService();
   function handleCreateCourse(data: FormData) {
-    Create(data)
-      .then((res) => setCourseId(res.data))
-      .then(() => setSubmited(true));
+    Create(data, setCourseId, setError, setSubmited);
   }
 
   if (submited)
@@ -122,6 +121,7 @@ const CourseCreatePage = () => {
               </FormControl>
             ))}
           </SimpleGrid>
+          {error && <Text color={"red.400"}>{error}</Text>}
           <FormControl>
             <Button type="submit">Submit</Button>
           </FormControl>

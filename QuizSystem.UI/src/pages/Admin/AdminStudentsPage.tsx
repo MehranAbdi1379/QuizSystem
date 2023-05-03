@@ -55,7 +55,7 @@ const AdminStudentsPage = () => {
             <Text>{student.nationalCode}</Text>
           </Heading>
         )}
-        {courses?.length &&
+        {courses &&
           courses
             ?.map((x) => x)
             .filter(function (x) {
@@ -81,7 +81,7 @@ const AdminStudentsPage = () => {
         {student?.accepted && (
           <Button
             onClick={() => {
-              Unaccept;
+              Unaccept(student.id);
               setStudent({ ...student, accepted: false });
             }}
           >
@@ -91,7 +91,7 @@ const AdminStudentsPage = () => {
         {student?.accepted == false && (
           <Button
             onClick={() => {
-              Accept;
+              Accept(student.id);
               setStudent({ ...student, accepted: true });
             }}
           >

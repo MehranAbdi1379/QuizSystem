@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
 using QuizSystem.API.Extensions;
 using QuizSystem.Domain.Models;
 using QuizSystem.Domain.Repository;
@@ -43,8 +44,8 @@ namespace QuizSystem.API.Controllers
                 Log.Error(lengthError);
                 return BadRequest(lengthError);
             }
-            //if (dto.Role.ToLower() != "admin")
-            //{
+            if (dto.Role.ToLower() != "admin")
+            {
                 var task = await userService.SignUp(dto, userManager);
 
                 if (task.Succeeded)
@@ -56,7 +57,7 @@ namespace QuizSystem.API.Controllers
 
                 Log.Error("User can not be signed up.");
                 return BadRequest(task);
-            //}
+            }
             var error = "Admin can only be added in development phase";
             Log.Error(error);
             return BadRequest(error);
@@ -87,17 +88,29 @@ namespace QuizSystem.API.Controllers
 
             if(!await authManager.ValidateUser(dto))
             {
-                var error = "NationalCode or Password is wrong. Can not sign in.";
+                var error = "NationalCode or Password is wrong.";
                 Log.Warning(error);
                 return Unauthorized(error);
             }
-            Log.Information($"User with national code of {dto.NationalCode} is signed in");
-            var result = new
-            { Token = await authManager.CreateToken(),
-                Role = userManager.GetRolesAsync(userManager.FindByNameAsync(dto.NationalCode).Result).Result[0] , 
-            UserId= userManager.FindByNameAsync(dto.NationalCode).Result.Id
-        };
-            return Accepted(result);
+            try
+            {
+                Log.Information($"User with national code of {dto.NationalCode} is signed in");
+                if (await userService.SignIn(dto))
+                {
+                    var result = new
+                    {
+                        Token = await authManager.CreateToken(),
+                        Role = userManager.GetRolesAsync(userManager.FindByNameAsync(dto.NationalCode).Result).Result[0],
+                        UserId = userManager.FindByNameAsync(dto.NationalCode).Result.Id
+                    };
+                    return Accepted(result);
+                }
+                return BadRequest("Your account is not accepted yet.");
+            }
+            catch (Exception ex) 
+            {
+                return BadRequest(ex.Message);
+            }       
         }
 
         [HttpPost]

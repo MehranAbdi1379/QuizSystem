@@ -55,7 +55,7 @@ const AdminProfessorsPage = () => {
             <Text>{professor.nationalCode}</Text>
           </Heading>
         )}
-        {courses?.length &&
+        {courses &&
           courses
             ?.map((x) => x)
             .filter(function (x) {
@@ -66,7 +66,7 @@ const AdminProfessorsPage = () => {
             </Heading>
           )}
 
-        <VStack marginBottom={5} align={"startZ"}>
+        <VStack marginBottom={5} align={"start"}>
           {courses
             ?.map((x) => x)
             .filter(function (x) {
@@ -81,7 +81,7 @@ const AdminProfessorsPage = () => {
         {professor?.accepted && (
           <Button
             onClick={() => {
-              Unaccept;
+              Unaccept(professor.id);
               setProfessor({ ...professor, accepted: false });
             }}
           >
@@ -91,7 +91,7 @@ const AdminProfessorsPage = () => {
         {professor?.accepted == false && (
           <Button
             onClick={() => {
-              Accept;
+              Accept(professor.id);
               setProfessor({ ...professor, accepted: true });
             }}
           >

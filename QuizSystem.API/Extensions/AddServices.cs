@@ -24,6 +24,7 @@ namespace QuizSystem.API.Extensions
             builder.Services.AddScoped<IProfessorService, ProfessorService>();
             builder.Services.AddScoped<ICourseService, CourseService>();
             builder.Services.AddScoped<IUserService,UserService>();
+            builder.Services.AddScoped<IExamService, ExamService>();
         }
 
         public static void AddDIForRepositoryClasses(this WebApplicationBuilder builder)

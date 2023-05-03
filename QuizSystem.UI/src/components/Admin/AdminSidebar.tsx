@@ -11,13 +11,14 @@ import {
   useStatStyles,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
-import { Link, NavLink, useParams } from "react-router-dom";
+import { Link, NavLink, useLocation, useParams } from "react-router-dom";
 import CourseService, { Course } from "../../services/CourseService";
 import StudentService, { Student } from "../../services/StudentService";
 import ProfessorService, { Professor } from "../../services/ProfessorService";
 
 const AdminSidebar = () => {
   const { colorMode } = useColorMode();
+  const state = useLocation().state;
   const [courses, setCourses] = useState<Course[]>();
   const [students, setStudents] = useState<Student[]>();
   const [professors, setProfessors] = useState<Professor[]>();
@@ -28,7 +29,7 @@ const AdminSidebar = () => {
     GetAllCourses(setCourses);
     GetAllStudents(setStudents);
     GetAllProfessors(setProfessors);
-  }, []);
+  }, [state]);
 
   return (
     <Box

@@ -18,7 +18,7 @@ namespace QuizSystem.Domain.Models
         public Exam(ICourseRepository courseRepository , IExamRepository examRepository , string title , Guid courseId , string description , int time)
         {
             SetCourseId(courseId, courseRepository);
-            SetTitle(Title, examRepository);
+            SetTitle(title, examRepository);
             SetDescription(description);
             SetTime(time);
         }
@@ -32,6 +32,10 @@ namespace QuizSystem.Domain.Models
         {
             if (examRepository.ExamTitleExists(title, CourseId))
                 throw new ExamTitleExistException();
+            Title = title;
+        }
+        public void UpdateTitle(string title)
+        {
             Title = title;
         }
         public void SetCourseId(Guid courseId , ICourseRepository courseRepository)

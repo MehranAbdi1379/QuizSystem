@@ -52,7 +52,10 @@ namespace QuizSystem.Domain.Models
 
         public void UpdateDate(DateTime startDate ,DateTime endDate)
         {
-            TimePeriod = new TimePeriod(startDate, endDate, true);
+            if (TimePeriod.StartDate.Subtract(DateTime.Now).TotalMinutes > 0 && startDate.AddDays(7) < endDate)
+                TimePeriod = new TimePeriod(startDate, endDate, true);
+            else 
+                TimePeriod= new TimePeriod(TimePeriod.StartDate, endDate, true);
         }
 
         public void SetProfessor(Guid professorId , IProfessorRepository professorRepository)

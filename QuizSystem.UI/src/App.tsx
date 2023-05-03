@@ -26,6 +26,10 @@ import AdminAllStudentsPage from "./pages/Admin/AdminAllStudentsPage";
 import AdminCourseEditPage from "./pages/Admin/AdminCourseEditPage";
 import AdminSearchPage from "./pages/Admin/AdminSearchPage";
 import ProfessorPage from "./pages/Professor/ProfessorPage";
+import ProfessorCoursePage from "./pages/Professor/ProfessorCoursePage";
+import ProfessorExamCreatePage from "./pages/Professor/ProfessorExamCreatePage";
+import ProfessorExamPage from "./pages/Professor/ProfessorExamPage";
+import ProfessorExamEditPage from "./pages/Professor/ProfessorExamEditPage";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -60,7 +64,20 @@ const router = createBrowserRouter(
             <Route path="professor" element={<AdminProfessorsPage />}></Route>
           </Route>
           <Route path="student" element={<AdminPage />}></Route>
-          <Route path="professor" element={<ProfessorPage />}></Route>
+          <Route path="professor" element={<ProfessorPage />}>
+            <Route path="course">
+              <Route index element={<ProfessorCoursePage />}></Route>
+              <Route path="create"></Route>
+              <Route path="exam">
+                <Route index element={<ProfessorExamPage />}></Route>
+                <Route
+                  path="create"
+                  element={<ProfessorExamCreatePage />}
+                ></Route>
+                <Route path="edit" element={<ProfessorExamEditPage />}></Route>
+              </Route>
+            </Route>
+          </Route>
         </Route>
       )}
     </Route>
