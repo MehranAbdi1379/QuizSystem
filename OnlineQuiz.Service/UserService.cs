@@ -1,10 +1,13 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.IdentityModel.Tokens;
 using QuizSystem.API.Extensions;
 using QuizSystem.Domain.Models;
 using QuizSystem.Domain.Repository;
 using QuizSystem.Repository;
 using QuizSystem.Service.Contracts.DTO;
+using System.Data;
+using System.Runtime.CompilerServices;
 
 namespace QuizSystem.Service
 {
@@ -14,12 +17,49 @@ namespace QuizSystem.Service
         private readonly IStudentService studentService;
         private readonly IProfessorService professorService;
         private readonly UserManager<ApiUser> userManager;
-        public UserService(UserManager<ApiUser> userManager, IStudentService studentService , IProfessorService professorService )
+        private readonly IStudentRepository studentRepository;
+        private readonly IProfessorRepository professorRepository;
+        public UserService(UserManager<ApiUser> userManager,
+            IStudentService studentService,
+            IProfessorService professorService,
+            IStudentRepository studentRepository,
+            IProfessorRepository professorRepository)
         {
             userRepository = new UserRepository(userManager);
             this.studentService = studentService;
-            this.professorService= professorService;
+            this.professorService = professorService;
             this.userManager = userManager;
+            this.studentRepository = studentRepository;
+            this.professorRepository = professorRepository;
+        }
+
+        public async Task<bool> SignIn(UserSignInDTO dto)
+        {
+            var user = await userManager.FindByNameAsync(dto.NationalCode);
+            var role = await userManager.GetRolesAsync(user);
+            var userRole = role[0];
+            if (userRole.ToLower() == "student")
+            {
+                var student = studentRepository.GetWithId(Guid.Parse(user.Id));
+                
+                if(student.Accepted==true)
+                {
+                    return true;
+                }
+            }
+            else if (userRole.ToLower() == "professor")
+            {
+                var professor = professorRepository.GetWithId(Guid.Parse(user.Id));
+
+                if (professor.Accepted == true)
+                {
+                    return true;
+                }
+            }
+            else if(userRole.ToLower() == "admin")
+                return true;
+            return false;
+            
         }
 
         public async Task<List<UserSearchResultDTO>> SearchForUser(StudentProfessorSearchDTO dto)
