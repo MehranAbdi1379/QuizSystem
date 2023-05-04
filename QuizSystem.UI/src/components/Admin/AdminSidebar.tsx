@@ -42,7 +42,7 @@ const AdminSidebar = () => {
         <Heading>Courses</Heading>
         <NavLink
           state={{ students: students, professors: professors }}
-          to={"/sign-in/admin/courses/create"}
+          to={"/sign-in/admin/course/create"}
         >
           <Button fontSize={15} variant={"ghost"}>
             New course
@@ -61,7 +61,7 @@ const AdminSidebar = () => {
           </ListItem>
         ))}
         <ListItem>
-          <Link to={"/sign-in/admin/courses/all"}>
+          <Link to={"/sign-in/admin/course/all"}>
             <Button>All Courses</Button>
           </Link>
         </ListItem>
@@ -82,7 +82,7 @@ const AdminSidebar = () => {
         <ListItem>
           <Link
             state={{ professors: professors }}
-            to={"/sign-in/admin/professors/all"}
+            to={"/sign-in/admin/professor/all"}
           >
             <Button>All Professors</Button>
           </Link>
@@ -104,7 +104,7 @@ const AdminSidebar = () => {
         <ListItem>
           <Link
             state={{ students: students }}
-            to={"/sign-in/admin/students/all"}
+            to={"/sign-in/admin/student/all"}
           >
             <Button>All Students</Button>
           </Link>

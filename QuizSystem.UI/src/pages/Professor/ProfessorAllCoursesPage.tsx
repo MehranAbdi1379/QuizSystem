@@ -1,28 +1,29 @@
+import React, { useEffect, useState } from "react";
+import CourseService, { Course } from "../../services/CourseService";
+import { Link, useLocation } from "react-router-dom";
 import {
-  Box,
-  Button,
-  Card,
-  CardBody,
-  GridItem,
-  HStack,
+  useColorMode,
   Heading,
   SimpleGrid,
+  GridItem,
+  Card,
+  CardBody,
+  Button,
+  HStack,
+  Box,
   Text,
-  useColorMode,
 } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
-import CourseService, { Course } from "../../services/CourseService";
-import { Link } from "react-router-dom";
 import UserDisplay from "../../components/Global/UserDisplay";
 
-const AdminAllCoursesPage = () => {
-  const { GetAll } = new CourseService();
+const ProfessorAllCoursesPage = () => {
+  const { GetByProfessorId } = new CourseService();
+  const state = useLocation().state;
   const [courses, setCourses] = useState<Course[]>();
   const { colorMode } = useColorMode();
 
   useEffect(() => {
-    GetAll(setCourses);
-  }, []);
+    GetByProfessorId(localStorage.getItem("userId"), setCourses);
+  }, [state]);
   return (
     <Box paddingLeft={10} paddingTop={5} paddingRight={10}>
       <Heading paddingBottom={4}>Courses</Heading>
@@ -38,7 +39,7 @@ const AdminAllCoursesPage = () => {
             <Card bg={colorMode == "dark" ? "gray.600" : "gray.100"}>
               <CardBody>
                 <Link
-                  to={"/sign-in/admin/course"}
+                  to={"/sign-in/professor/course"}
                   state={{ courseId: course.id }}
                 >
                   <Button bg={colorMode == "dark" ? "gray.500" : "gray.300"}>
@@ -57,9 +58,6 @@ const AdminAllCoursesPage = () => {
                     {course.timePeriod.endDate.toString().slice(0, 10)}
                   </Text>
                 </HStack>
-                <Box paddingTop={5} fontSize={20}>
-                  <UserDisplay id={course.professorId}></UserDisplay>
-                </Box>
               </CardBody>
             </Card>
           </GridItem>
@@ -69,4 +67,4 @@ const AdminAllCoursesPage = () => {
   );
 };
 
-export default AdminAllCoursesPage;
+export default ProfessorAllCoursesPage;

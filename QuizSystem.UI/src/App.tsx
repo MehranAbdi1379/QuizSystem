@@ -30,6 +30,8 @@ import ProfessorCoursePage from "./pages/Professor/ProfessorCoursePage";
 import ProfessorExamCreatePage from "./pages/Professor/ProfessorExamCreatePage";
 import ProfessorExamPage from "./pages/Professor/ProfessorExamPage";
 import ProfessorExamEditPage from "./pages/Professor/ProfessorExamEditPage";
+import ProfessorAllCoursesPage from "./pages/Professor/ProfessorAllCoursesPage";
+import ProfessorQuestionCreatePage from "./pages/Professor/ProfessorQuestionCreatePage";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -46,27 +48,28 @@ const router = createBrowserRouter(
           <Route path="about-us" element={<AboutPage />}></Route>
           <Route path="admin" element={<AdminPage />}>
             <Route path="search" element={<AdminSearchPage />}></Route>
-            <Route path="courses">
-              <Route path="create" element={<CourseCreatePage />}></Route>
-              <Route path="all" element={<AdminAllCoursesPage />}></Route>
-            </Route>
-            <Route path="professors">
-              <Route path="all" element={<AdminAllProfessorsPage />}></Route>
-            </Route>
-            <Route path="students">
-              <Route path="all" element={<AdminAllStudentsPage />}></Route>
-            </Route>
             <Route path="course">
               <Route index element={<AdminCoursePage />}></Route>
               <Route path="edit" element={<AdminCourseEditPage />}></Route>
+              <Route path="create" element={<CourseCreatePage />}></Route>
+              <Route path="all" element={<AdminAllCoursesPage />}></Route>
             </Route>
-            <Route path="student" element={<AdminStudentsPage />}></Route>
-            <Route path="professor" element={<AdminProfessorsPage />}></Route>
+            <Route path="professor">
+              <Route index element={<AdminProfessorsPage />}></Route>
+              <Route path="all" element={<AdminAllProfessorsPage />}></Route>
+            </Route>
+            <Route path="student">
+              <Route index element={<AdminStudentsPage />}></Route>
+              <Route path="all" element={<AdminAllStudentsPage />}></Route>
+            </Route>
           </Route>
+
           <Route path="student" element={<AdminPage />}></Route>
+
           <Route path="professor" element={<ProfessorPage />}>
             <Route path="course">
               <Route index element={<ProfessorCoursePage />}></Route>
+              <Route path="all" element={<ProfessorAllCoursesPage />}></Route>
               <Route path="create"></Route>
               <Route path="exam">
                 <Route index element={<ProfessorExamPage />}></Route>
@@ -74,7 +77,13 @@ const router = createBrowserRouter(
                   path="create"
                   element={<ProfessorExamCreatePage />}
                 ></Route>
-                <Route path="edit" element={<ProfessorExamEditPage />}></Route>
+                <Route path="edit">
+                  <Route index element={<ProfessorExamEditPage />}></Route>
+                  <Route
+                    path="question/create"
+                    element={<ProfessorQuestionCreatePage />}
+                  ></Route>
+                </Route>
               </Route>
             </Route>
           </Route>

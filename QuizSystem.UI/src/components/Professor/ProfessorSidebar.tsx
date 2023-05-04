@@ -45,7 +45,7 @@ const ProfessorSidebar = () => {
           </ListItem>
         ))}
         <ListItem>
-          <Link to={"/sign-in/professor/courses/all"}>
+          <Link to={"/sign-in/professor/course/all"}>
             <Button>All Courses</Button>
           </Link>
         </ListItem>
