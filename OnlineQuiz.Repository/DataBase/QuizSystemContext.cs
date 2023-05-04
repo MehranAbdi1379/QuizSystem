@@ -30,6 +30,10 @@ namespace QuizSystem.Repository.DataBase
             builder.ApplyConfiguration(new CourseConfiguration());
             builder.ApplyConfiguration(new CourseStudentConfiguration());
             builder.ApplyConfiguration(new ExamConfiguration());
+            builder.ApplyConfiguration(new DescriptiveQuestionConfiguration());
+            builder.ApplyConfiguration(new MultipleChoiceAnswerConfiguration());
+            builder.ApplyConfiguration(new MultipleChoiceQuestionConfiguration());
+            builder.ApplyConfiguration(new GradedQuestionConfiguration());
 
         }
 
@@ -38,5 +42,9 @@ namespace QuizSystem.Repository.DataBase
         public DbSet<Course> Courses{ get; set; }
         public DbSet<CourseStudent> CourseStudent { get; set; }
         public DbSet<Exam> Exams { get; set; }
+        public DbSet<DescriptiveQuestion> DescriptiveQuestions { get; set; }
+        public DbSet<MultipleChoiceQuestion> MultipleChoiceQuestions { get; set; }
+        public DbSet<MultipleChoiceAnswer> MultipleChoiceAnswers { get; set; }
+        public DbSet<GradedQuestion> GradedQuestions { get; set; }
     }
 }
