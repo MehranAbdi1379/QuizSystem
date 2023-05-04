@@ -25,6 +25,9 @@ namespace QuizSystem.API.Extensions
             builder.Services.AddScoped<ICourseService, CourseService>();
             builder.Services.AddScoped<IUserService,UserService>();
             builder.Services.AddScoped<IExamService, ExamService>();
+            builder.Services.AddScoped<IMultipleChoiceQuestionService , MultipleChoiceQuestionService>();
+            builder.Services.AddScoped<IDescriptiveQuestionService, DescriptiveQuestionService>();
+            builder.Services.AddScoped<IGradedQuestionService, GradedQuestionService>();
         }
 
         public static void AddDIForRepositoryClasses(this WebApplicationBuilder builder)
@@ -34,6 +37,10 @@ namespace QuizSystem.API.Extensions
             builder.Services.AddScoped<ICourseRepository, CourseRepository>();
             builder.Services.AddScoped<ICourseStudentRepository, CourseStudentRepository>();
             builder.Services.AddScoped<IExamRepository, ExamRepository>();
+            builder.Services.AddScoped<IDescriptiveQuestionRepository, DescriptiveQuestionRepository>();
+            builder.Services.AddScoped<IMultipleChoiceAnswerRepository, MultipleChoiceAnswerRepository>();
+            builder.Services.AddScoped<IMultipleChoiceQuestionRepository, MultipleChoiceQuestionRepository>();
+            builder.Services.AddScoped<IGradedQuestionRepository, GradedQuestionRepository>();
         }
 
         public static void ConfigureIdentity(this IServiceCollection services)
@@ -47,9 +54,8 @@ namespace QuizSystem.API.Extensions
                 o.Password.RequiredLength = 6;
                 o.User.RequireUniqueEmail = false;
             })
-.AddEntityFrameworkStores<QuizSystemContext>()
-.AddDefaultTokenProviders();
-
+            .AddEntityFrameworkStores<QuizSystemContext>()
+            .AddDefaultTokenProviders();
         }
 
         public static void ConfigureJWT(this IServiceCollection service, IConfiguration configuration)

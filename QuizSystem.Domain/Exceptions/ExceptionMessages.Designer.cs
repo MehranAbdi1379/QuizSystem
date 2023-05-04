@@ -61,20 +61,20 @@ namespace QuizSystem.Domain.Exceptions {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Admin National Code already exists.
-        /// </summary>
-        public static string AdminNationalCodeExistsExceptionMessage {
-            get {
-                return ResourceManager.GetString("AdminNationalCodeExistsExceptionMessage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Admin NationalCode is invalid.
         /// </summary>
         public static string AdminNationalCodeInvalidExceptionMessage {
             get {
                 return ResourceManager.GetString("AdminNationalCodeInvalidExceptionMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Answer title already exists in the question.
+        /// </summary>
+        public static string AnswerTitleAlreadyExistsExceptionMessage {
+            get {
+                return ResourceManager.GetString("AnswerTitleAlreadyExistsExceptionMessage", resourceCulture);
             }
         }
         
@@ -88,7 +88,7 @@ namespace QuizSystem.Domain.Exceptions {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to End time for the course is before start time.
+        ///   Looks up a localized string similar to End date is earlier than start date.
         /// </summary>
         public static string CourseEndTimeIsBeforeStartTimeExceptionMessage {
             get {
@@ -99,18 +99,9 @@ namespace QuizSystem.Domain.Exceptions {
         /// <summary>
         ///   Looks up a localized string similar to Course does not exist.
         /// </summary>
-        public static string CourseNotExistException {
+        public static string CourseIdNotExistExceptionMessage {
             get {
-                return ResourceManager.GetString("CourseNotExistException", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Course Id doesn&apos;t exist to add to CourseProfessor model.
-        /// </summary>
-        public static string CourseProfessorCourseIdNotExistExceptionMessage {
-            get {
-                return ResourceManager.GetString("CourseProfessorCourseIdNotExistExceptionMessage", resourceCulture);
+                return ResourceManager.GetString("CourseIdNotExistExceptionMessage", resourceCulture);
             }
         }
         
@@ -120,15 +111,6 @@ namespace QuizSystem.Domain.Exceptions {
         public static string CourseProfessorNotExistExceptionMessage {
             get {
                 return ResourceManager.GetString("CourseProfessorNotExistExceptionMessage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Professor Id doesn&apos;t exist to add to CourseProfessor model.
-        /// </summary>
-        public static string CourseProfessorProfessorIdNotExistExceptionMessage {
-            get {
-                return ResourceManager.GetString("CourseProfessorProfessorIdNotExistExceptionMessage", resourceCulture);
             }
         }
         
@@ -187,6 +169,15 @@ namespace QuizSystem.Domain.Exceptions {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Exam doesn&apos;t exist.
+        /// </summary>
+        public static string ExamNotExistExceptionMessage {
+            get {
+                return ResourceManager.GetString("ExamNotExistExceptionMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Exam time is too short.
         /// </summary>
         public static string ExamTimeShortExceptionMessage {
@@ -201,6 +192,33 @@ namespace QuizSystem.Domain.Exceptions {
         public static string ExamTitleExistException {
             get {
                 return ResourceManager.GetString("ExamTitleExistException", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Question already exists in this exam.
+        /// </summary>
+        public static string GradedQuestionDuplicateExceptionMessage {
+            get {
+                return ResourceManager.GetString("GradedQuestionDuplicateExceptionMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Grade should have a value.
+        /// </summary>
+        public static string GradeQuestionGradeExceptionMessage {
+            get {
+                return ResourceManager.GetString("GradeQuestionGradeExceptionMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Question already has a right answer.
+        /// </summary>
+        public static string MultipleChoiceAnswerAlreadyHasRightAnswerExceptionMessage {
+            get {
+                return ResourceManager.GetString("MultipleChoiceAnswerAlreadyHasRightAnswerExceptionMessage", resourceCulture);
             }
         }
         
@@ -232,6 +250,15 @@ namespace QuizSystem.Domain.Exceptions {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Professor Id doesn&apos;t exist .
+        /// </summary>
+        public static string ProfessorIdNotExistExceptionMessage {
+            get {
+                return ResourceManager.GetString("ProfessorIdNotExistExceptionMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to LastName is Required for Professor.
         /// </summary>
         public static string ProfessorLastNameRequiredExceptionMessage {
@@ -255,6 +282,24 @@ namespace QuizSystem.Domain.Exceptions {
         public static string ProfessorNationalCodeInvalidExceptionMessage {
             get {
                 return ResourceManager.GetString("ProfessorNationalCodeInvalidExceptionMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Question doesn&apos;t exist.
+        /// </summary>
+        public static string QuestionNotExistExceptionMessage {
+            get {
+                return ResourceManager.GetString("QuestionNotExistExceptionMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Question title already exists.
+        /// </summary>
+        public static string QuestionTitleExistsExceptionMessage {
+            get {
+                return ResourceManager.GetString("QuestionTitleExistsExceptionMessage", resourceCulture);
             }
         }
         

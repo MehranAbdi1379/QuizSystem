@@ -89,8 +89,6 @@ namespace QuizSystem.API.Controllers
                 errorObject.StatusCode = StatusCodes.Status500InternalServerError;
                 return errorObject;
             }
-
-            
         }
 
         [HttpPost]
@@ -107,7 +105,7 @@ namespace QuizSystem.API.Controllers
             return Ok(examService.GetById(dto));
         }
 
-        [HttpPost]
+        [HttpDelete]
         [Route("Delete")]
         public IActionResult Delete(IdDTO dto)
         {

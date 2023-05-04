@@ -3,19 +3,16 @@ import {
   Button,
   Card,
   CardBody,
-  CardFooter,
-  CardHeader,
   GridItem,
   HStack,
   Heading,
   SimpleGrid,
   Text,
-  VStack,
   useColorMode,
 } from "@chakra-ui/react";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import CourseService, { Course } from "../../services/CourseService";
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import UserDisplay from "../../components/Global/UserDisplay";
 
 const AdminAllCoursesPage = () => {

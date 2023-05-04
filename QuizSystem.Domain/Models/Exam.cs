@@ -26,7 +26,7 @@ namespace QuizSystem.Domain.Models
         public string Title { get; private set; }
         public string Description { get; private set; }
         public int Time { get; private set; }
-        public Guid CourseId { get; set; }
+        public Guid CourseId { get; private set; }
 
         public void SetTitle(string title , IExamRepository examRepository)
         {

@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace QuizSystem.Domain.Exceptions
 {
-    public class CourseNotExistException: DomainException
+    public class GradedQuestionDuplicateException: DomainException
     {
-        public override string Message => ExceptionMessages.CourseIdNotExistExceptionMessage;
+        public override string Message => ExceptionMessages.GradedQuestionDuplicateExceptionMessage;
     }
 }

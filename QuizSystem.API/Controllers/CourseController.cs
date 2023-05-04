@@ -143,7 +143,7 @@ namespace QuizSystem.API.Controllers
             return Ok(courseService.GetCoursesByProfessorId(dto));
         }
 
-        [HttpPost]
+        [HttpDelete]
         [Route("Delete")]
         public IActionResult DeleteCourse(CourseIdDTO dto)
         {

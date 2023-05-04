@@ -117,29 +117,23 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AdminNationalCodeExistsExceptionMessage" xml:space="preserve">
-    <value>Admin National Code already exists</value>
-  </data>
   <data name="AdminNationalCodeInvalidExceptionMessage" xml:space="preserve">
     <value>Admin NationalCode is invalid</value>
+  </data>
+  <data name="AnswerTitleAlreadyExistsExceptionMessage" xml:space="preserve">
+    <value>Answer title already exists in the question</value>
   </data>
   <data name="CourseAddStudentAlreadyExistsExceptionMessage" xml:space="preserve">
     <value>Student already exists and can not be added to the course</value>
   </data>
   <data name="CourseEndTimeIsBeforeStartTimeExceptionMessage" xml:space="preserve">
-    <value>End time for the course is before start time</value>
+    <value>End date is earlier than start date</value>
   </data>
-  <data name="CourseNotExistException" xml:space="preserve">
+  <data name="CourseIdNotExistExceptionMessage" xml:space="preserve">
     <value>Course does not exist</value>
-  </data>
-  <data name="CourseProfessorCourseIdNotExistExceptionMessage" xml:space="preserve">
-    <value>Course Id doesn't exist to add to CourseProfessor model</value>
   </data>
   <data name="CourseProfessorNotExistExceptionMessage" xml:space="preserve">
     <value>Professor is null for course</value>
-  </data>
-  <data name="CourseProfessorProfessorIdNotExistExceptionMessage" xml:space="preserve">
-    <value>Professor Id doesn't exist to add to CourseProfessor model</value>
   </data>
   <data name="CourseShortPeriodExceptionMessage" xml:space="preserve">
     <value>Time period is too short for a course</value>
@@ -159,11 +153,23 @@
   <data name="CourseTitleExistsExceptionMessage" xml:space="preserve">
     <value>Title already exists</value>
   </data>
+  <data name="ExamNotExistExceptionMessage" xml:space="preserve">
+    <value>Exam doesn't exist</value>
+  </data>
   <data name="ExamTimeShortExceptionMessage" xml:space="preserve">
     <value>Exam time is too short</value>
   </data>
   <data name="ExamTitleExistException" xml:space="preserve">
     <value>Exam title already exists</value>
+  </data>
+  <data name="GradedQuestionDuplicateExceptionMessage" xml:space="preserve">
+    <value>Question already exists in this exam</value>
+  </data>
+  <data name="GradeQuestionGradeExceptionMessage" xml:space="preserve">
+    <value>Grade should have a value</value>
+  </data>
+  <data name="MultipleChoiceAnswerAlreadyHasRightAnswerExceptionMessage" xml:space="preserve">
+    <value>Question already has a right answer</value>
   </data>
   <data name="ProfessorAddCourseNotExistExceptionMessage" xml:space="preserve">
     <value>Course does not exist to add to Professor</value>
@@ -174,6 +180,9 @@
   <data name="ProfessorFirstNameRequiredExceptionMessage" xml:space="preserve">
     <value>FirstName is Required for Professor</value>
   </data>
+  <data name="ProfessorIdNotExistExceptionMessage" xml:space="preserve">
+    <value>Professor Id doesn't exist </value>
+  </data>
   <data name="ProfessorLastNameRequiredExceptionMessage" xml:space="preserve">
     <value>LastName is Required for Professor</value>
   </data>
@@ -182,6 +191,12 @@
   </data>
   <data name="ProfessorNationalCodeInvalidExceptionMessage" xml:space="preserve">
     <value>Professor NationalCode is invalid</value>
+  </data>
+  <data name="QuestionNotExistExceptionMessage" xml:space="preserve">
+    <value>Question doesn't exist</value>
+  </data>
+  <data name="QuestionTitleExistsExceptionMessage" xml:space="preserve">
+    <value>Question title already exists</value>
   </data>
   <data name="StudentNationalCodeExistsExceptionMessage" xml:space="preserve">
     <value>National Code already exists</value>

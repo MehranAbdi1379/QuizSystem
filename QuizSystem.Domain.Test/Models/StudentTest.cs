@@ -39,7 +39,7 @@ namespace QuizSystem.Domain.Test.Models
         }
 
 
-        public Student InitialStudent(string nationalCode = "5050062330")
+        public Student InitialStudent()
         {
             return new Student();
         }

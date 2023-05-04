@@ -14,11 +14,10 @@ namespace QuizSystem.Domain.Models
     {
         public Professor()
         {
-
+            
         }
 
-        public Professor(bool accepted = false
-            ) 
+        public Professor(bool accepted = false) 
         {
             SetAccepted(accepted);
         }

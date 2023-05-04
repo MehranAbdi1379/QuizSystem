@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace QuizSystem.Domain.Exceptions
 {
-    public class UserFirstNameRequiredException : DomainException
+    public class CourseIdNotExistException: DomainException
     {
-        public override string Message => ExceptionMessages.UserFirstNameRequiredExceptionMessage;
+        public override string Message => ExceptionMessages.CourseIdNotExistExceptionMessage;
     }
 }
