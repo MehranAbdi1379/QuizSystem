@@ -27,7 +27,7 @@ class ExamService{
     }
     Delete(id: any)
     {
-        authApiClient().post('Exam/Delete' , {id})
+        authApiClient().delete('Exam/Delete' , {data:{id}})
     }
 }
 
