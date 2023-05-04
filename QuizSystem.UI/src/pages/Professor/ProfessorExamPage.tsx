@@ -18,7 +18,6 @@ const ProfessorExamPage = () => {
   const state = useLocation().state;
   const [exam, setExam] = useState<Exam>();
   const { GetById } = new ExamService();
-  console.log(state);
 
   useEffect(() => {
     GetById(state.examId, setExam);

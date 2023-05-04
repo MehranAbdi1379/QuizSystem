@@ -23,7 +23,6 @@ const ProfessorCoursePage = () => {
   const [exams, setExams] = useState<Exam[]>();
   const { GetById: GetWithId } = new CourseService();
   const { GetAllByCourseId } = new ExamService();
-  console.log(state);
   useEffect(() => {
     GetWithId(state.courseId, setCourse);
     GetAllByCourseId(state.courseId, setExams);

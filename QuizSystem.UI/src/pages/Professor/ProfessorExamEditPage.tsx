@@ -15,6 +15,7 @@ import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import {
   Form,
+  Link,
   Navigate,
   useLoaderData,
   useLocation,
@@ -39,7 +40,6 @@ const ProfessorExamEditPage = () => {
   const [deleteOn, setDeleteOn] = useState(false);
   const { Update, GetById, Delete } = new ExamService();
   const [error, setError] = useState();
-  console.log(state.courseId);
   const {
     register,
     handleSubmit,
@@ -61,7 +61,6 @@ const ProfessorExamEditPage = () => {
       time: data.time == "" ? exam?.time : parseInt(data.time),
       title: data.title == "" ? exam?.title : data.title,
     };
-    console.log(newExam);
     Update(newExam, setExam, setError, setSubmited);
   }
   if (submited)
@@ -116,6 +115,39 @@ const ProfessorExamEditPage = () => {
             )}
           </FormControl>
           <Text color={"red.400"}>{error}</Text>
+
+          <Box>
+            <Heading paddingBottom={2} fontSize={18}>
+              Questions:
+            </Heading>
+            <List
+              p={4}
+              spacing={2}
+              border={"1px"}
+              borderColor={colorMode == "light" ? "gray.200" : "gray.600"}
+              borderRadius={20}
+            >
+              <FormControl>
+                <Link to={"question/add"}>
+                  <Button>Add from question bank</Button>
+                </Link>
+              </FormControl>
+              <FormControl>
+                <Link
+                  to={"question/create"}
+                  state={{ courseId: exam?.courseId, examId: exam?.id }}
+                >
+                  <Button>Create new question</Button>
+                </Link>
+              </FormControl>
+              <FormControl>
+                <Link to={"question/edit"}>
+                  <Button>Edit questions</Button>
+                </Link>
+              </FormControl>
+            </List>
+          </Box>
+
           <FormControl>
             <Button type="submit">Submit</Button>
           </FormControl>
@@ -132,8 +164,6 @@ const ProfessorExamEditPage = () => {
       {deleteOn && (
         <Box
           position={"fixed"}
-          paddingLeft={"45%"}
-          paddingTop={"20%"}
           left={0}
           top={0}
           right={0}
@@ -142,7 +172,7 @@ const ProfessorExamEditPage = () => {
           bg={"blackAlpha.700"}
           zIndex={0}
         >
-          <Box margin={"auto"}>
+          <Box paddingLeft={"45vw"} paddingTop={"40vh"} margin={"auto"}>
             <Heading marginBottom={3} fontSize={25} color={"white"}>
               Are you sure?{" "}
             </Heading>
