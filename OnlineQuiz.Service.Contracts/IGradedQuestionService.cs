@@ -7,5 +7,6 @@ namespace QuizSystem.Service
     {
         GradedQuestion Create(GradedQuestionCreateDTO dto);
         void Delete(IdDTO dto);
+        public List<GradedQuestion> GetAllByExamId(IdDTO dto);
     }
 }

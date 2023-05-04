@@ -16,9 +16,13 @@ namespace QuizSystem.Service
         private readonly IDescriptiveQuestionRepository descriptiveQuestionRepository;
         private readonly IMultipleChoiceQuestionRepository multipleChoiceQuestionRepository;
         private readonly IExamRepository examRepository;
-        public GradedQuestionService()
+        public GradedQuestionService(IGradedQuestionRepository gradedQuestionRepository , IDescriptiveQuestionRepository descriptiveQuestionRepository , 
+            IMultipleChoiceQuestionRepository multipleChoiceQuestionRepository, IExamRepository examRepository)
         {
-
+            this.examRepository = examRepository;
+            this.gradedQuestionRepository = gradedQuestionRepository;
+            this.descriptiveQuestionRepository = descriptiveQuestionRepository;
+            this.multipleChoiceQuestionRepository  = multipleChoiceQuestionRepository;
         }
 
         public GradedQuestion Create(GradedQuestionCreateDTO dto)
@@ -34,6 +38,11 @@ namespace QuizSystem.Service
             var answer = gradedQuestionRepository.GetWithId(dto.Id);
             gradedQuestionRepository.Delete(answer);
             gradedQuestionRepository.Save();
+        }
+
+        public List<GradedQuestion> GetAllByExamId(IdDTO dto)
+        {
+            return gradedQuestionRepository.GetAllByExamId(dto.Id);
         }
     }
 }

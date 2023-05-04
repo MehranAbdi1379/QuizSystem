@@ -19,5 +19,10 @@ namespace QuizSystem.Repository
         {
             return context.Set<GradedQuestion>().Any(x => x.ExamId == examId && x.QuestionId == questionId);
         }
+
+        public List<GradedQuestion> GetAllByExamId(Guid examId)
+        {
+            return context.Set<GradedQuestion>().Where(x => x.ExamId == examId).ToList();
+        }
     }
 }

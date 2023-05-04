@@ -302,5 +302,28 @@ namespace QuizSystem.API.Controllers
                 return errorObject;
             }
         }
+
+        [HttpPost]
+        [Route("GradedQuestion/GetAllByExamId")]
+        public IActionResult GradedQuestionGetAllByExamId(IdDTO dto)
+        {
+            if (!ModelState.IsValid)
+            {
+                Log.Error("Graded question getAllByExamId modelstate error.");
+                return BadRequest(ModelState);
+            }
+            try
+            {
+                Log.Information($"Graded question getAllByExamId successful");
+                
+                return Ok(gradedQuestionService.GetAllByExamId(dto));
+            }
+            catch (Exception ex)
+            {
+                var errorObject = new ObjectResult(ex.Message);
+                errorObject.StatusCode = StatusCodes.Status500InternalServerError;
+                return errorObject;
+            }
+        }
     }
 }
