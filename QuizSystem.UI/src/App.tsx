@@ -32,6 +32,7 @@ import ProfessorExamPage from "./pages/Professor/ProfessorExamPage";
 import ProfessorExamEditPage from "./pages/Professor/ProfessorExamEditPage";
 import ProfessorAllCoursesPage from "./pages/Professor/ProfessorAllCoursesPage";
 import ProfessorQuestionCreatePage from "./pages/Professor/ProfessorQuestionCreatePage";
+import ProfessorQuestionAddFromBank from "./pages/Professor/ProfessorQuestionAddFromBank";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -82,6 +83,10 @@ const router = createBrowserRouter(
                   <Route
                     path="question/create"
                     element={<ProfessorQuestionCreatePage />}
+                  ></Route>
+                  <Route
+                    path="question/bank"
+                    element={<ProfessorQuestionAddFromBank />}
                   ></Route>
                 </Route>
               </Route>
