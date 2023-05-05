@@ -50,6 +50,7 @@ const ProfessorQuestionCreatePage = () => {
   const [multipleChoiceModeOn, setMultipleChoiceModeOn] = useState(false);
   const [error, setError] = useState();
   const { CreateAndAddQuestion } = new QuestionService();
+  const [answerError, setAnswerError] = useState(false);
   const {
     register,
     formState: { errors },

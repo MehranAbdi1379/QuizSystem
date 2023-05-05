@@ -128,7 +128,10 @@ const ProfessorExamEditPage = () => {
               borderRadius={20}
             >
               <FormControl>
-                <Link to={"question/add"}>
+                <Link
+                  to={"question/bank"}
+                  state={{ courseId: state.courseId, examId: state.examId }}
+                >
                   <Button>Add from question bank</Button>
                 </Link>
               </FormControl>

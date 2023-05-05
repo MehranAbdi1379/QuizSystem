@@ -19,13 +19,13 @@ class MultipleChoiceQuestionService{
     {
         authApiClient().delete('Question/MultipleChoice/Delete' , {data:{id}}).catch(err => setError(err.response.data));
     }
-    GetByCourseAndProfessorId(courseId: any , professorId: any , setDescriptiveQuestions: any, setError: any)
+    GetByCourseAndProfessorId(courseId: any , professorId: any , setMultipleChoiceQuestions: any, setError: any)
     {
-        authApiClient().post('Question/MultipleChoice/GetByCourseAndProfessorId' , {courseId , professorId}).then(res => setDescriptiveQuestions(res.data)).catch(err => setError(err.response.data));
+        authApiClient().post('Question/MultipleChoice/GetByCourseAndProfessorId' , {courseId , professorId}).then(res => setMultipleChoiceQuestions(res.data)).catch(err => setError(err.response.data));
     }
     CreateAnswer(answer: any, setError: any )
     {
-        authApiClient().post('Question/MultipleChoice/Answer/Create' , answer).catch(err => setError(err.response.data));
+        return authApiClient().post('Question/MultipleChoice/Answer/Create' , answer);
     }
     DeleteAnswer(answerId: any, setError: any)
     {
