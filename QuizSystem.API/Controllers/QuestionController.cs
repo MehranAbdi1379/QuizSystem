@@ -325,5 +325,27 @@ namespace QuizSystem.API.Controllers
                 return errorObject;
             }
         }
+        [HttpPatch]
+        [Route("GradedQuestion/Update")]
+        public IActionResult GradedQuestionUpdateGrade(GradedQuestionUpdateDTO dto)
+        {
+            if (!ModelState.IsValid)
+            {
+                Log.Error("Graded question update modelstate error.");
+                return BadRequest(ModelState);
+            }
+            try
+            {
+                Log.Information($"Graded question update successful");
+
+                return Ok(gradedQuestionService.Update(dto));
+            }
+            catch (Exception ex)
+            {
+                var errorObject = new ObjectResult(ex.Message);
+                errorObject.StatusCode = StatusCodes.Status500InternalServerError;
+                return errorObject;
+            }
+        }
     }
 }

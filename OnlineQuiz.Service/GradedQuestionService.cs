@@ -44,5 +44,16 @@ namespace QuizSystem.Service
         {
             return gradedQuestionRepository.GetAllByExamId(dto.Id);
         }
+
+        public GradedQuestion Update(GradedQuestionUpdateDTO dto)
+        {
+            var question = gradedQuestionRepository.GetWithId(dto.Id);
+            question.SetGrade(dto.Grade);
+
+            gradedQuestionRepository.Update(question);
+            gradedQuestionRepository.Save();
+
+            return question;
+        }
     }
 }
