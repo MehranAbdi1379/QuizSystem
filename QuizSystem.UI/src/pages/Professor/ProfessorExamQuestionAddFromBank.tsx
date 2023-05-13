@@ -43,7 +43,11 @@ const ProfessorExamQuestionAddFromBank = () => {
   const [error, setError] = useState();
   const state = useLocation().state;
   const { colorMode } = useColorMode();
-  const { Create } = new GradedQuestionService();
+  const { Create, GetAllByExamId } = new GradedQuestionService();
+  const [gradedQuestions, setGradedQuestions] =
+    useState<
+      { id: string; questionId: string; examId: string; grade: number }[]
+    >();
   const {
     formState: { errors },
     handleSubmit,
@@ -66,6 +70,7 @@ const ProfessorExamQuestionAddFromBank = () => {
       setMultipleChoiceQuestions,
       setError
     );
+    GetAllByExamId(state.examId, setGradedQuestions, setError);
   }, [state]);
   if (add == true)
     return (
@@ -123,27 +128,32 @@ const ProfessorExamQuestionAddFromBank = () => {
           borderRadius={20}
         >
           <Heading>Descriptive Questions: </Heading>
-          {descriptiveQuestions?.map((q) => (
-            <Card key={q.id} margin={5}>
-              <CardHeader>
-                <Heading fontSize={24}>{q.title}</Heading>
-              </CardHeader>
-              <CardBody>
-                <Text>{q.description}</Text>
-              </CardBody>
-              <CardFooter>
-                <Button
-                  onClick={() => {
-                    setAdd(true);
-                    setQuestionId(q.id);
-                  }}
-                >
-                  Add
-                </Button>
-                <Text>{errors?.grade?.message}</Text>
-              </CardFooter>
-            </Card>
-          ))}
+          {descriptiveQuestions
+            ?.map((q) => q)
+            .filter(function (q) {
+              return !gradedQuestions?.map((q) => q.questionId).includes(q.id);
+            })
+            .map((q) => (
+              <Card key={q.id} margin={5}>
+                <CardHeader>
+                  <Heading fontSize={24}>{q.title}</Heading>
+                </CardHeader>
+                <CardBody>
+                  <Text>{q.description}</Text>
+                </CardBody>
+                <CardFooter>
+                  <Button
+                    onClick={() => {
+                      setAdd(true);
+                      setQuestionId(q.id);
+                    }}
+                  >
+                    Add
+                  </Button>
+                  <Text>{errors?.grade?.message}</Text>
+                </CardFooter>
+              </Card>
+            ))}
         </Box>
         <Box
           p={5}
@@ -151,19 +161,31 @@ const ProfessorExamQuestionAddFromBank = () => {
           bg={colorMode == "dark" ? "gray.600" : "gray.100"}
         >
           <Heading>Multiple Choice Questions: </Heading>
-          {multipleChoiceQuestions?.map((q) => (
-            <Card margin={5} key={q.id}>
-              <CardHeader>
-                <Heading fontSize={24}>{q.title}</Heading>
-              </CardHeader>
-              <CardBody>
-                <Text>{q.description}</Text>
-              </CardBody>
-              <CardFooter>
-                <Button>Add</Button>
-              </CardFooter>
-            </Card>
-          ))}
+          {multipleChoiceQuestions
+            ?.map((q) => q)
+            .filter(function (q) {
+              return !gradedQuestions?.map((q) => q.questionId).includes(q.id);
+            })
+            .map((q) => (
+              <Card margin={5} key={q.id}>
+                <CardHeader>
+                  <Heading fontSize={24}>{q.title}</Heading>
+                </CardHeader>
+                <CardBody>
+                  <Text>{q.description}</Text>
+                </CardBody>
+                <CardFooter>
+                  <Button
+                    onClick={() => {
+                      setAdd(true);
+                      setQuestionId(q.id);
+                    }}
+                  >
+                    Add
+                  </Button>
+                </CardFooter>
+              </Card>
+            ))}
         </Box>
       </List>
     </Container>
