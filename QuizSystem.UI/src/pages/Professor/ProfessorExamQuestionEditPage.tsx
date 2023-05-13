@@ -7,10 +7,10 @@ import {
   CardHeader,
   Container,
   Heading,
+  Input,
   List,
   Text,
   useColorMode,
-  useStatStyles,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
@@ -31,11 +31,17 @@ const ProfessorExamQuestionEditPage = () => {
     useState<Question[]>();
   const [multipleChoiceQuestions, setMultipleChoiceQuestions] =
     useState<Question[]>();
-  const { GetAllByExamId } = new GradedQuestionService();
+  const { GetAllByExamId, Update, Delete } = new GradedQuestionService();
   const [gradedQuestions, setGradedQuestions] =
-    useState<{ questionId: string; examId: string; grade: number }[]>();
+    useState<
+      { id: string; questionId: string; examId: string; grade: number }[]
+    >();
   const [error, setError] = useState();
   const { colorMode } = useColorMode();
+  var gradeSum: number = 0;
+  gradedQuestions?.forEach((element) => {
+    gradeSum += element.grade;
+  });
 
   useEffect(() => {
     GetAllMultipleChoiceQuestions(
@@ -79,14 +85,36 @@ const ProfessorExamQuestionEditPage = () => {
                     {gradedQuestions
                       ?.filter((question) => question.questionId == q.id)
                       .map((que) => (
-                        <Text>Grade: {que.grade}</Text>
+                        <Box key={que.id}>
+                          <Text>Grade: </Text>
+                          <Input
+                            type="number"
+                            required
+                            defaultValue={que.grade}
+                            onChange={(e) => {
+                              console.log(e);
+                              if (e.target.value) {
+                                Update(
+                                  { id: que.id, grade: e.target.value },
+                                  setError
+                                );
+                              }
+                            }}
+                          ></Input>
+                          <Button
+                            onClick={() => {
+                              Delete(que.id, setError);
+                            }}
+                          >
+                            Delete
+                          </Button>
+                        </Box>
                       ))}
                   </CardBody>
                 </Card>
               ))}
           </Box>
         )}
-
         {multipleChoiceQuestions
           ?.map((q) => q)
           .filter(function (q) {
@@ -94,8 +122,8 @@ const ProfessorExamQuestionEditPage = () => {
           }).length && (
           <Box
             p={5}
-            borderRadius={20}
             bg={colorMode == "dark" ? "gray.600" : "gray.100"}
+            borderRadius={20}
           >
             <Heading>Multiple Choice Questions: </Heading>
             {multipleChoiceQuestions
@@ -104,20 +132,50 @@ const ProfessorExamQuestionEditPage = () => {
                 return gradedQuestions?.map((q) => q.questionId).includes(q.id);
               })
               .map((q) => (
-                <Card margin={5} key={q.id}>
-                  <CardHeader>
-                    <Heading fontSize={24}>{q.title}</Heading>
-                  </CardHeader>
+                <Card key={q.id} margin={5}>
                   <CardBody>
+                    <Heading fontSize={24}>{q.title}</Heading>
                     <Text>{q.description}</Text>
+                    {gradedQuestions
+                      ?.filter((question) => question.questionId == q.id)
+                      .map((que) => (
+                        <Box key={que.id}>
+                          <Text>Grade: </Text>
+                          <Input
+                            type="number"
+                            required
+                            defaultValue={que.grade}
+                            onChange={(e) => {
+                              console.log(e);
+                              if (e.target.value) {
+                                Update(
+                                  { id: que.id, grade: e.target.value },
+                                  setError
+                                );
+                              }
+                            }}
+                          ></Input>
+                          <Button
+                            onClick={() => {
+                              Delete(que.id, setError);
+                            }}
+                          >
+                            Delete
+                          </Button>
+                        </Box>
+                      ))}
                   </CardBody>
-                  <CardFooter>
-                    <Button>Add</Button>
-                  </CardFooter>
                 </Card>
               ))}
           </Box>
         )}
+        <Box
+          p={5}
+          bg={colorMode == "dark" ? "gray.600" : "gray.100"}
+          borderRadius={20}
+        >
+          <Heading fontSize={22}>Sum: {gradeSum}</Heading>
+        </Box>
       </List>
     </Container>
   );

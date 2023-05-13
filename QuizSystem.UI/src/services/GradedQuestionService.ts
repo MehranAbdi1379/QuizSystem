@@ -9,6 +9,14 @@ class GradedQuestionService{
     {
         authApiClient().post('Question/GradedQuestion/GetAllByExamId' , {id: examId}).then(res=> setQuestions(res.data)).catch(err => setError(err.response.data))
     }
+    Update(question: any , setError: any)
+    {
+        authApiClient().patch('Question/GradedQuestion/Update' , question).catch(err => setError(err.response.data))
+    }
+    Delete(questionId: any , setError: any)
+    {
+        authApiClient().delete('Question/GradedQuestion/Delete' , {data:{id: questionId}}).catch(err => setError(err.response.data))
+    }
 }
 
 export default GradedQuestionService
