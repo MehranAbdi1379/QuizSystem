@@ -23,6 +23,7 @@ import {
 } from "react-router-dom";
 import { z } from "zod";
 import ExamService, { Exam } from "../../services/ExamService";
+import GradedQuestionService from "../../services/GradedQuestionService";
 
 const schema = z.object({
   title: z.string(),
@@ -144,7 +145,13 @@ const ProfessorExamEditPage = () => {
                 </Link>
               </FormControl>
               <FormControl>
-                <Link to={"question/edit"}>
+                <Link
+                  to={"question/edit"}
+                  state={{
+                    courseId: exam?.courseId,
+                    examId: exam?.id,
+                  }}
+                >
                   <Button>Edit questions</Button>
                 </Link>
               </FormControl>

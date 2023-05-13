@@ -52,6 +52,7 @@ const ProfessorCoursePage = () => {
         <VStack align={"start"}>
           {exams?.map((exam) => (
             <Button
+              key={exam.id}
               onClick={() =>
                 navigate("/sign-in/professor/course/exam", {
                   state: { examId: exam.id, courseId: course?.id },

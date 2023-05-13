@@ -35,7 +35,7 @@ const ProfessorAllCoursesPage = () => {
         paddingTop={5}
       >
         {courses?.map((course) => (
-          <GridItem>
+          <GridItem key={course.id}>
             <Card bg={colorMode == "dark" ? "gray.600" : "gray.100"}>
               <CardBody>
                 <Link

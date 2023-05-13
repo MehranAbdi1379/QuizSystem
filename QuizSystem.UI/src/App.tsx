@@ -31,8 +31,9 @@ import ProfessorExamCreatePage from "./pages/Professor/ProfessorExamCreatePage";
 import ProfessorExamPage from "./pages/Professor/ProfessorExamPage";
 import ProfessorExamEditPage from "./pages/Professor/ProfessorExamEditPage";
 import ProfessorAllCoursesPage from "./pages/Professor/ProfessorAllCoursesPage";
-import ProfessorQuestionCreatePage from "./pages/Professor/ProfessorQuestionCreatePage";
-import ProfessorQuestionAddFromBank from "./pages/Professor/ProfessorQuestionAddFromBank";
+import ProfessorExamQuestionCreatePage from "./pages/Professor/ProfessorExamQuestionCreatePage";
+import ProfessorExamQuestionAddFromBank from "./pages/Professor/ProfessorExamQuestionAddFromBank";
+import ProfessorExamQuestionEditPage from "./pages/Professor/ProfessorExamQuestionEditPage";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -82,11 +83,15 @@ const router = createBrowserRouter(
                   <Route index element={<ProfessorExamEditPage />}></Route>
                   <Route
                     path="question/create"
-                    element={<ProfessorQuestionCreatePage />}
+                    element={<ProfessorExamQuestionCreatePage />}
                   ></Route>
                   <Route
                     path="question/bank"
-                    element={<ProfessorQuestionAddFromBank />}
+                    element={<ProfessorExamQuestionAddFromBank />}
+                  ></Route>
+                  <Route
+                    path="question/edit"
+                    element={<ProfessorExamQuestionEditPage />}
                   ></Route>
                 </Route>
               </Route>

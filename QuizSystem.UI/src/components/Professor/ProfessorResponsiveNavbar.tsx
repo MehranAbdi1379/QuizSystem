@@ -44,7 +44,7 @@ const ProfessorResponsiveNavbar = () => {
         ></NavButton>
         <NavButton
           onClick={() => setSideNavbar(false)}
-          to={"/sign-in/professor/courses/all"}
+          to={"/sign-in/professor/course/all"}
           name="Courses"
         ></NavButton>
 

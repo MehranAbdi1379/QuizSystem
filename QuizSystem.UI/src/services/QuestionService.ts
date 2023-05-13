@@ -1,4 +1,5 @@
-import { QuestionCreateFormData } from "../pages/Professor/ProfessorQuestionCreatePage";
+import { QuestionCreateFormData } from "../pages/Professor/ProfessorExamQuestionCreatePage";
+import authApiClient from "./AuthApiClient";
 import DescriptiveQuestionService from "./DescriptiveQuestionService";
 import GradedQuestionService from "./GradedQuestionService";
 import MultipleChoiceQuestionService from "./MultipleChoiceQuestionService";
@@ -80,6 +81,7 @@ class QuestionService{
             .catch((err) => setError(err.response.data));
         }
       }
+      
 }
 
 export default QuestionService
