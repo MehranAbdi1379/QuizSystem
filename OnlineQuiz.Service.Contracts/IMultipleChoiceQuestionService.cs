@@ -11,5 +11,6 @@ namespace QuizSystem.Service
         void DeleteAnswer(IdDTO dto);
         List<MultipleChoiceQuestion> GetWithCourseAndProfessorId(CourseAndProfessorIdDTO dto);
         MultipleChoiceQuestion Update(QuestionUpdateDTO dto);
+        public List<MultipleChoiceAnswer> GetAnswersByQuestionId(IdDTO dto);
     }
 }

@@ -7,6 +7,7 @@ namespace QuizSystem.Repository
     {
         public bool TitleExist(string title, Guid questionId);
         public bool RightAnswerExist(Guid questionId);
+        public List<MultipleChoiceAnswer> GetByQuestionId(Guid questionId);
 
     }
 }

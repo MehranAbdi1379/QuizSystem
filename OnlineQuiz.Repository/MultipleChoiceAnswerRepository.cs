@@ -26,6 +26,9 @@ namespace QuizSystem.Repository
             return context.Set<MultipleChoiceAnswer>().Where(x => x.QuestionId == questionId).Any(x => x.RightAnswer == true);
         }
 
-        
+        public List<MultipleChoiceAnswer> GetByQuestionId(Guid questionId)
+        {
+            return context.Set<MultipleChoiceAnswer>().Where(x => x.QuestionId == questionId).ToList() ;
+        }
     }
 }

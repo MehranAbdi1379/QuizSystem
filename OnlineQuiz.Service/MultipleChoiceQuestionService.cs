@@ -73,5 +73,10 @@ namespace QuizSystem.Service
             multipleChoiceAnswerRepository.Delete(answer);
             multipleChoiceAnswerRepository.Save();
         }
+
+        public List<MultipleChoiceAnswer> GetAnswersByQuestionId(IdDTO dto)
+        {
+            return multipleChoiceAnswerRepository.GetByQuestionId(dto.Id);
+        }
     }
 }
