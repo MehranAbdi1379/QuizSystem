@@ -19,7 +19,6 @@ const ProfessorCoursePage = () => {
   const { colorMode } = useColorMode();
   const [course, setCourse] = useState<Course>();
   const state = useLocation().state;
-  const [editPage, setEditPage] = useState(false);
   const [exams, setExams] = useState<Exam[]>();
   const { GetById: GetWithId } = new CourseService();
   const { GetAllByCourseId } = new ExamService();
@@ -69,10 +68,16 @@ const ProfessorCoursePage = () => {
           to="/sign-in/professor/course/exam/create"
           state={{ courseId: course?.id, examCreated: false }}
         >
-          <Button marginTop={5} onClick={() => setEditPage(true)}>
-            Create Exam
-          </Button>
+          <Button marginTop={5}>Create Exam</Button>
         </Link>
+        <Box marginTop={4}>
+          <Link
+            to={"/sign-in/professor/course/question/all"}
+            state={{ courseId: course?.id }}
+          >
+            <Button>Questions</Button>
+          </Link>
+        </Box>
       </Box>
     </Container>
   );
