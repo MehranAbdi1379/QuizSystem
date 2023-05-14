@@ -9,7 +9,7 @@ namespace QuizSystem.API.Controllers
 {
     [Route("api/Exam")]
     [ApiController]
-    [Authorize(Roles ="Professor")]
+    
     public class ExamController : ControllerBase
     {
         private readonly IExamService examService;
@@ -21,6 +21,7 @@ namespace QuizSystem.API.Controllers
 
         [HttpPost]
         [Route("Create")]
+        [Authorize(Roles = "Professor")]
         public IActionResult CreateExam(ExamCreateDTO dto)
         {
             if (!ModelState.IsValid)
@@ -46,6 +47,7 @@ namespace QuizSystem.API.Controllers
 
         [HttpPut]
         [Route("Update")]
+        [Authorize(Roles = "Professor")]
         public IActionResult UpdateExam(ExamUpdateDTO dto)
         {
             if (!ModelState.IsValid)
@@ -70,6 +72,7 @@ namespace QuizSystem.API.Controllers
 
         [HttpPost]
         [Route("GetByCourseId")]
+        [Authorize(Roles ="Student,Professor")]
         public IActionResult GetExamByCourseId(IdDTO dto)
         {
             if (!ModelState.IsValid)
@@ -93,6 +96,7 @@ namespace QuizSystem.API.Controllers
 
         [HttpPost]
         [Route("GetById")]
+        [Authorize(Roles = "Student,Professor")]
         public IActionResult GetById(IdDTO dto)
         {
             if (!ModelState.IsValid)
@@ -107,6 +111,7 @@ namespace QuizSystem.API.Controllers
 
         [HttpDelete]
         [Route("Delete")]
+        [Authorize(Roles = "Professor")]
         public IActionResult Delete(IdDTO dto)
         {
             if (!ModelState.IsValid)
