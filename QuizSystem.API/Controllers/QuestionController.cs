@@ -258,6 +258,30 @@ namespace QuizSystem.API.Controllers
         }
 
         [HttpPost]
+        [Route("MultipleChoice/Answer/GetByQuestionId")]
+        public IActionResult GetMultipleChoiceAnswersByQuestionId(IdDTO dto)
+        {
+            if (!ModelState.IsValid)
+            {
+                Log.Error("MultipleChoice answer getByQuestionId modelstate error.");
+                return BadRequest(ModelState);
+
+            }
+            try
+            {
+                Log.Information($"MultipleChoice answer getByQuestionId successful");
+                
+                return Ok(multipleChoiceQuestionService.GetAnswersByQuestionId(dto));
+            }
+            catch (Exception ex)
+            {
+                var errorObject = new ObjectResult(ex.Message);
+                errorObject.StatusCode = StatusCodes.Status500InternalServerError;
+                return errorObject;
+            }
+        }
+
+        [HttpPost]
         [Route("GradedQuestion/Create")]
         public IActionResult CreateGradedQuestion(GradedQuestionCreateDTO dto)
         {
@@ -339,6 +363,29 @@ namespace QuizSystem.API.Controllers
                 Log.Information($"Graded question update successful");
 
                 return Ok(gradedQuestionService.Update(dto));
+            }
+            catch (Exception ex)
+            {
+                var errorObject = new ObjectResult(ex.Message);
+                errorObject.StatusCode = StatusCodes.Status500InternalServerError;
+                return errorObject;
+            }
+        }
+
+        [HttpPost]
+        [Route("GradedQuestion/GetByQuestionId")]
+        public IActionResult GradedQuestionGetByQuestionId(IdDTO dto)
+        {
+            if (!ModelState.IsValid)
+            {
+                Log.Error("Graded question GetByExamAndQuestionId modelstate error.");
+                return BadRequest(ModelState);
+            }
+            try
+            {
+                Log.Information($"Graded question GetByExamAndQuestionId successful");
+
+                return Ok(gradedQuestionService.GetByQuestionId(dto));
             }
             catch (Exception ex)
             {

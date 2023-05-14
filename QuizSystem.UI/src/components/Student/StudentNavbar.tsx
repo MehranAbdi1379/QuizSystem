@@ -9,14 +9,14 @@ import {
 } from "@chakra-ui/react";
 import React from "react";
 import { NavLink } from "react-router-dom";
-import ProfessorResponsiveNavbar from "./ProfessorResponsiveNavbar";
+import ProfessorResponsiveNavbar from "./StudentResponsiveNavbar";
 import NavButton from "../Global/NavButton";
 
 interface Props {
   name: string;
 }
 
-const ProfessorNavbar = ({ name }: Props) => {
+const StudentNavbar = ({ name }: Props) => {
   const { colorMode, toggleColorMode } = useColorMode();
   const [moreThanMedium] = useMediaQuery("(min-width: 770px)");
   const [moreThanBig] = useMediaQuery("(min-width: 1000px)");
@@ -24,7 +24,7 @@ const ProfessorNavbar = ({ name }: Props) => {
   return (
     <Flex p={4} justifyContent="space-between">
       <Heading>
-        <NavLink to="/sign-in/professor">Quiz System</NavLink>
+        <NavLink to="/sign-in/student">Quiz System</NavLink>
       </Heading>
 
       <HStack spacing={3}>
@@ -61,4 +61,4 @@ const ProfessorNavbar = ({ name }: Props) => {
   );
 };
 
-export default ProfessorNavbar;
+export default StudentNavbar;

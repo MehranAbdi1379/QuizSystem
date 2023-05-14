@@ -14,13 +14,14 @@ import React, { useEffect, useState } from "react";
 import { Link, NavLink, useParams } from "react-router-dom";
 import CourseService, { Course } from "../../services/CourseService";
 
-const ProfessorSidebar = () => {
+const StudentSidebar = () => {
   const { colorMode } = useColorMode();
   const id = localStorage.getItem("userId");
   const [courses, setCourses] = useState<Course[]>();
-  const { GetByProfessorId } = new CourseService();
+  const { GetByStudentId } = new CourseService();
+  const [error, setError] = useState();
   useEffect(() => {
-    GetByProfessorId(id, setCourses);
+    GetByStudentId(id, setCourses, setError);
   }, []);
 
   return (
@@ -44,7 +45,7 @@ const ProfessorSidebar = () => {
           </ListItem>
         ))}
         <ListItem>
-          <Link to={"/sign-in/professor/course/all"}>
+          <Link to={"/sign-in/student/course/all"}>
             <Button>All Courses</Button>
           </Link>
         </ListItem>
@@ -53,4 +54,4 @@ const ProfessorSidebar = () => {
   );
 };
 
-export default ProfessorSidebar;
+export default StudentSidebar;

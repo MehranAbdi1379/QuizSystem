@@ -11,8 +11,7 @@ import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import NavButton from "../Global/NavButton";
 
-const AdminResponsiveNavbar = () => {
-  const params = useParams();
+const StudentResponsiveNavbar = () => {
   const { colorMode, toggleColorMode } = useColorMode();
   const [sideNavbarOn, setSideNavbar] = useState<boolean>(false);
   return (
@@ -40,33 +39,26 @@ const AdminResponsiveNavbar = () => {
         ></CloseIcon>
         <NavButton
           onClick={() => setSideNavbar(false)}
-          to={"/sign-in/admin"}
+          to={"/sign-in/student"}
           name="Dashboard"
         ></NavButton>
         <NavButton
           onClick={() => setSideNavbar(false)}
-          to={"/sign-in/admin/courses/all"}
+          to={"/sign-in/student/course/all"}
           name="Courses"
         ></NavButton>
 
-        <NavButton
-          onClick={() => setSideNavbar(false)}
-          to="/sign-in/admin/professors/all"
-          name="Professors"
-        ></NavButton>
-
-        <NavButton
-          onClick={() => setSideNavbar(false)}
-          to="/sign-in/admin/students/all"
-          name="Students"
-        ></NavButton>
         <NavButton
           onClick={() => setSideNavbar(false)}
           to={"/sign-in/about-us"}
           name="About Us"
         ></NavButton>
         <NavButton
-          onClick={() => setSideNavbar(false)}
+          onClick={() => {
+            localStorage.removeItem("token");
+            localStorage.removeItem("userId");
+            setSideNavbar(false);
+          }}
           to="/"
           name="Sign Out"
         ></NavButton>
@@ -90,4 +82,4 @@ const AdminResponsiveNavbar = () => {
   );
 };
 
-export default AdminResponsiveNavbar;
+export default StudentResponsiveNavbar;

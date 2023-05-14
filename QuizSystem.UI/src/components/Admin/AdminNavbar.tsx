@@ -18,7 +18,8 @@ interface Props {
 
 const AdminNavbar = ({ name }: Props) => {
   const { colorMode, toggleColorMode } = useColorMode();
-  const [moreThanMedium] = useMediaQuery("(min-width: 820px)");
+  const [moreThanMedium] = useMediaQuery("(min-width: 770px)");
+  const [moreThanBig] = useMediaQuery("(min-width: 1000px)");
 
   return (
     <Flex p={4} justifyContent="space-between">
@@ -27,7 +28,7 @@ const AdminNavbar = ({ name }: Props) => {
       </Heading>
 
       <HStack spacing={3}>
-        {moreThanMedium && <Text>Welcome Mr/Ms {name}</Text>}
+        {moreThanBig && <Text>Welcome Mr/Ms {name}</Text>}
         {moreThanMedium && (
           <NavButton
             to="/"

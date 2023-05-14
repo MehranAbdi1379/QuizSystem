@@ -14,7 +14,7 @@ import ResponsiveNavbarRoot from "./ResponsiveNavbarRoot";
 
 const Navbar = () => {
   const { colorMode, toggleColorMode } = useColorMode();
-  const [moreThanMedium] = useMediaQuery("(min-width: 760px)");
+  const [moreThanMedium] = useMediaQuery("(min-width: 770px)");
   const [moreThanSmall] = useMediaQuery("(min-width: 420px)");
 
   return (

@@ -1,4 +1,4 @@
-import { HamburgerIcon } from "@chakra-ui/icons";
+import { CloseIcon, HamburgerIcon } from "@chakra-ui/icons";
 import {
   Box,
   HStack,
@@ -29,14 +29,14 @@ const ProfessorResponsiveNavbar = () => {
         transition={"1s"}
         transform={sideNavbarOn == false ? "translateY(-100vh)" : "none"}
       >
-        <HamburgerIcon
+        <CloseIcon
           color={"white"}
           position={"absolute"}
           right={4}
           top={4}
           onClick={() => setSideNavbar(false)}
-          boxSize={10}
-        ></HamburgerIcon>
+          boxSize={7}
+        ></CloseIcon>
         <NavButton
           onClick={() => setSideNavbar(false)}
           to={"/sign-in/professor"}
