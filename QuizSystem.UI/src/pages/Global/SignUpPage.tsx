@@ -16,7 +16,7 @@ import {
   Flex,
 } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
-import { Form, Navigate } from "react-router-dom";
+import { Form, Navigate, useNavigate } from "react-router-dom";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
@@ -57,39 +57,25 @@ const schema = z.object({
 type FormData = z.infer<typeof schema>;
 
 const SignUpPage = () => {
+  const navigate = useNavigate();
+  const [error, setError] = useState();
   const { colorMode } = useColorMode();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<FormData>({ resolver: zodResolver(schema) });
-  const [user, setUser] = useState<UserSignUp>();
 
   const { SignUp } = new UserServices();
 
-  useEffect(() => {
-    if (user) localStorage.setItem("userId", user.id);
-  }, [user]);
-  let newUser: Student | Professor;
-
-  if (user?.role == "student") {
-    newUser = { ...user, id: user.id, courseIds: [], accepted: false };
-    return (
-      <Navigate state={{ student: newUser }} to="/sign-in/student"></Navigate>
-    );
-  }
-
-  if (user?.role == "professor") {
-    newUser = { ...user, id: user.id, courseIds: [], accepted: false };
-    return (
-      <Navigate
-        state={{ professor: newUser }}
-        to="/sign-in/professor"
-      ></Navigate>
-    );
-  }
   return (
-    <Form onSubmit={handleSubmit((data) => SignUp(data, setUser))}>
+    <Form
+      onSubmit={handleSubmit((data) => {
+        SignUp(data)
+          .then((res) => navigate("/"))
+          .catch((err) => setError(err.response.data));
+      })}
+    >
       <Container
         marginTop={5}
         bg={colorMode == "dark" ? "gray.700" : "gray.50"}
@@ -154,6 +140,11 @@ const SignUpPage = () => {
               </Text>
             )}
           </FormControl>
+          {error && (
+            <Text color={"red.400"}>
+              Please check your information and try again.
+            </Text>
+          )}
           <FormControl>
             <Button type="submit">Submit</Button>
           </FormControl>

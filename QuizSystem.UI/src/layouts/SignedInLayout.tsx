@@ -4,6 +4,7 @@ import AdminNavbar from "../components/Admin/AdminNavbar";
 import UserServices from "../services/UserServices";
 import { SimpleGrid } from "@chakra-ui/react";
 import ProfessorNavbar from "../components/Professor/ProfessorNavbar";
+import StudentNavbar from "../components/Student/StudentNavbar";
 
 interface fullName {
   firstName: string;
@@ -31,6 +32,11 @@ const SignedInLayout = () => {
         <ProfessorNavbar
           name={fullName.firstName + " " + fullName.lastName}
         ></ProfessorNavbar>
+      )}
+      {fullName?.role == "Student" && (
+        <StudentNavbar
+          name={fullName.firstName + " " + fullName.lastName}
+        ></StudentNavbar>
       )}
       <SimpleGrid>
         <Outlet />

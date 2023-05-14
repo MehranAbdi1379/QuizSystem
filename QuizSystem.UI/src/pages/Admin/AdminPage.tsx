@@ -13,7 +13,7 @@ interface admin {
 }
 
 const AdminPage = () => {
-  const [moreThanMedium] = useMediaQuery("(min-width: 820px)");
+  const [moreThanMedium] = useMediaQuery("(min-width: 770px)");
   return (
     <>
       <Grid templateColumns={"repeat(6 , 1fr)"}>

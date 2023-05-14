@@ -39,8 +39,6 @@ const AdminCourseEditPage = () => {
   const state: { course: Course; courseStudents: Student[] } =
     useLocation().state;
   const { colorMode } = useColorMode();
-
-  console.log(state.course.timePeriod.startDate);
   const [professors, setProfessors] = useState<Professor[]>();
   const [students, setStudents] = useState<Student[]>();
   const [error, setError] = useState();
@@ -131,7 +129,7 @@ const AdminCourseEditPage = () => {
                   <option
                     key={professor.id}
                     value={professor.id}
-                    selected={
+                    defaultChecked={
                       state.course.professorId == professor.id ? true : false
                     }
                   >
@@ -150,7 +148,7 @@ const AdminCourseEditPage = () => {
                   return state.courseStudents.map((x) => x.id).includes(x.id);
                 })
                 .map((student) => (
-                  <FormControl>
+                  <FormControl key={student.id}>
                     <HStack align={"stretch"} key={student.id}>
                       <Checkbox
                         {...register("studentIds")}

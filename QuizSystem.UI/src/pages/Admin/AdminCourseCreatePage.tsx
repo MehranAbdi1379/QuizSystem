@@ -34,7 +34,7 @@ const schema = z.object({
 
 type FormData = z.infer<typeof schema>;
 
-const CourseCreatePage = () => {
+const AdminCourseCreatePage = () => {
   const state: { students: Student[]; professors: Professor[] } =
     useLocation().state;
   const { colorMode } = useColorMode();
@@ -131,4 +131,4 @@ const CourseCreatePage = () => {
   );
 };
 
-export default CourseCreatePage;
+export default AdminCourseCreatePage;
