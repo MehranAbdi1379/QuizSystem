@@ -17,6 +17,10 @@ class GradedQuestionService{
     {
         authApiClient().delete('Question/GradedQuestion/Delete' , {data:{id: questionId}}).catch(err => setError(err.response.data))
     }
+    GetByQuestionId( questionId: any)
+    {
+        return authApiClient().post('Question/GradedQuestion/GetByQuestionId' , {id:questionId})
+    }
 }
 
 export default GradedQuestionService

@@ -1,4 +1,5 @@
 import authApiClient from "./AuthApiClient";
+import GradedQuestionService from "./GradedQuestionService";
 
 export interface Answer{
     questionId: string,
@@ -15,9 +16,9 @@ class MultipleChoiceQuestionService{
     {
         authApiClient().put('Question/MultipleChoice/Update' , question).catch(err => setError(err.response.data));
     }
-    Delete(id: any, setError: any)
+    Delete(id: any)
     {
-        authApiClient().delete('Question/MultipleChoice/Delete' , {data:{id}}).catch(err => setError(err.response.data));
+        return authApiClient().delete('Question/MultipleChoice/Delete' , {data:{id}})
     }
     GetByCourseAndProfessorId(courseId: any , professorId: any , setMultipleChoiceQuestions: any, setError: any)
     {
@@ -25,11 +26,35 @@ class MultipleChoiceQuestionService{
     }
     CreateAnswer(answer: any, setError: any )
     {
-        return authApiClient().post('Question/MultipleChoice/Answer/Create' , answer);
+        return authApiClient().post('Question/MultipleChoice/Answer/Create' , answer).catch(err => setError(err.response.data));
     }
     DeleteAnswer(answerId: any, setError: any)
     {
-        authApiClient().delete('Question/MultipleChoice/Answer/Delete',{data:{answerId}}).catch(err => setError(err.response.data));
+        authApiClient().delete('Question/MultipleChoice/Answer/Delete',{data:{id: answerId}}).catch(err => setError(err.response.data));
+    }
+    GetAnswerByQuestionId(questionId: any , setError: any)
+    {
+        return authApiClient().post('Question/MultipleChoice/Answer/GetByQuestionId' , {id: questionId})
+    }
+    DeleteMultipleChoiceQuestionAndAnswers(questionId: any , setError: any)
+    {
+        const {Delete , GetAnswerByQuestionId , DeleteAnswer} = new MultipleChoiceQuestionService()
+        const {Delete:DeleteGradedQuestion , GetByQuestionId:GetGradedQuestionByQuestionId} = new GradedQuestionService()
+        return Delete(questionId)
+                    .then(() => GetAnswerByQuestionId(questionId,setError).then(res => {
+                        var result : {id: string, rightAnswer: boolean, title: string, questionId: string}[] = res.data;
+                        
+                        result.forEach(element => {
+                            DeleteAnswer(element.id , setError);
+                        });
+                    }))
+                    .then(()=> GetGradedQuestionByQuestionId(questionId).then((res) => {
+                        var result: { id: string }[] = res.data;
+                        result.forEach((element) => {
+                          DeleteGradedQuestion(element.id, setError);
+                        });
+                      }))
+                      .catch((err) => setError(err.response.data));
     }
 }
 

@@ -5,13 +5,13 @@ class DescriptiveQuestionService{
     {
         return authApiClient().post('Question/Descriptive/Create' , question)
     }
-    Update(question:any, setError: any)
+    Update(question:any)
     {
-        authApiClient().put('Question/Descriptive/Update' , question).catch(err => setError(err.response.data));
+        return authApiClient().put('Question/Descriptive/Update' , question)
     }
-    Delete(id: any, setError: any)
+    Delete(id: any)
     {
-        authApiClient().delete('Question/Descriptive/Delete' , {data:{id}}).catch(err => setError(err.response.data));
+        return authApiClient().delete('Question/Descriptive/Delete' , {data:{id}})
     }
     GetByCourseAndProfessorId(courseId: any , professorId: any , setDescriptiveQuestions: any, setError: any)
     {

@@ -46,6 +46,11 @@ class CourseService{
     {
         authApiClient().post('Course/Delete' , {id})
     }
+
+    GetByStudentId(studentId: any ,setCourses: any ,  setError: any)
+    {
+        authApiClient().post('Course/GetByStudentId' , {id:studentId}).then(res=>setCourses(res.data)).catch(err => setError(err.response.data))
+    }
 }
 
 export default CourseService

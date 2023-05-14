@@ -18,10 +18,9 @@ class UserServices {
         .then(res => setName(res.data))
     }
 
-    SignUp(user: any , setUser: any)
+    SignUp(user: any )
     {
-        authApiClient().post('User/SignUp' , user)
-        .then(res => setUser(user))
+        return authApiClient().post('User/SignUp' , user)
     }
     Search(user: {firstName: string, lastName: string, role:string} , setSearchResults: any)
     {
