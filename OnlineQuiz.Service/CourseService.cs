@@ -123,15 +123,20 @@ public class CourseService : ICourseService
         return studentIds;
     }
 
-
     public List<Course> GetCoursesByProfessorId(UserIdDTO dto)
     {
-        var courseIds =  repository.GetWithProfessorId(dto.Id);
+        return repository.GetByProfessorId(dto.Id);
+    }
+    public List<Course> GetCourseByStudentId(UserIdDTO dto)
+    {
+        var courseStudents = courseStudentRepository.GetWithStudentId(dto.Id);
+
         var courses = new List<Course>();
-        foreach (var item in courseIds)
+        foreach (var item in courseStudents)
         {
-            courses.Add(repository.GetWithId(item));
+            courses.Add(repository.GetWithId(item.CourseId));
         }
+
         return courses;
     }
 }

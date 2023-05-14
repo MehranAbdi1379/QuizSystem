@@ -143,6 +143,30 @@ namespace QuizSystem.API.Controllers
             return Ok(courseService.GetCoursesByProfessorId(dto));
         }
 
+        [HttpPost]
+        [Route("GetByStudentId")]
+        [Authorize(Roles ="Student")]
+        public IActionResult GetByStudentId(UserIdDTO dto)
+        {
+            if (!ModelState.IsValid)
+            {
+                Log.Error("Course GetByStudentId modelstate error.");
+                return BadRequest(ModelState);
+            }
+            try
+            {
+                Log.Information($"Course GetByStudentId successful");
+
+                return Ok(courseService.GetCourseByStudentId(dto));
+            }
+            catch (Exception ex)
+            {
+                var errorObject = new ObjectResult(ex.Message);
+                errorObject.StatusCode = StatusCodes.Status500InternalServerError;
+                return errorObject;
+            }
+        }
+
         [HttpDelete]
         [Route("Delete")]
         public IActionResult DeleteCourse(CourseIdDTO dto)

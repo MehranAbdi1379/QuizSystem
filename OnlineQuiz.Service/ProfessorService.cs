@@ -87,11 +87,11 @@ namespace QuizSystem.Service
         public async Task<ProfessorGetDTO> GetProfessorById(UserIdStringDTO dto)
         {
             var data = await userManager.FindByIdAsync(dto.Id);
-            var courses = courseRepository.GetWithProfessorId(Guid.Parse(dto.Id));
+            var courses = courseRepository.GetByProfessorId(Guid.Parse(dto.Id));
             var courseIds = new List<Guid>();
             foreach (var item in courses)
             {
-                courseIds.Add(item);
+                courseIds.Add(item.Id);
             }
             return new ProfessorGetDTO()
             {
@@ -112,11 +112,11 @@ namespace QuizSystem.Service
 
             foreach (var professor in data)
             {
-                var courses = courseRepository.GetWithProfessorId(Guid.Parse(professor.Id));
+                var courses = courseRepository.GetByProfessorId(Guid.Parse(professor.Id));
                 var courseIds = new List<Guid>();
                 foreach (var item in courses)
                 {
-                    courseIds.Add(item);
+                    courseIds.Add(item.Id);
                 }
                 professors.Add(new ProfessorGetDTO
                 {
