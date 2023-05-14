@@ -22,9 +22,9 @@ namespace QuizSystem.Repository
         {
             return context.Set<Course>().Any(s => s.Title == title);
         }
-        public List<Guid> GetWithProfessorId(Guid professorID)
+        public List<Course> GetByProfessorId(Guid professorID)
         {
-            return context.Set<Course>().Where(p => p.ProfessorId == professorID).Select(p => p.Id).ToList();
+            return context.Set<Course>().Where(p => p.ProfessorId == professorID).ToList();
         }
         public List<Course> GetAllCourses()
         {

@@ -55,5 +55,10 @@ namespace QuizSystem.Service
 
             return question;
         }
+
+        public List<GradedQuestion> GetByQuestionId(IdDTO dto)
+        {
+            return gradedQuestionRepository.GetByQuestionId(dto.Id);
+        }
     }
 }

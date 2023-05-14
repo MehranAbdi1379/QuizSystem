@@ -9,5 +9,6 @@ namespace QuizSystem.Service
         void Delete(IdDTO dto);
         public List<GradedQuestion> GetAllByExamId(IdDTO dto);
         public GradedQuestion Update(GradedQuestionUpdateDTO dto);
+        public List<GradedQuestion> GetByQuestionId(IdDTO dto);
     }
 }

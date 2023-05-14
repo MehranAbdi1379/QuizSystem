@@ -7,5 +7,6 @@ namespace QuizSystem.Repository
     {
         bool QuestionIsDuplicate(Guid questionId, Guid examId);
         public List<GradedQuestion> GetAllByExamId(Guid examId);
+        public List<GradedQuestion> GetByQuestionId(Guid questionId);
     }
 }
