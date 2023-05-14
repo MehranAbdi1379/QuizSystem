@@ -108,6 +108,7 @@ const ProfessorExamQuestionCreatePage = () => {
           <FormControl>
             <FormLabel>Grade: </FormLabel>
             <Input
+              step=".01"
               {...register("grade", { valueAsNumber: true })}
               type="number"
             ></Input>

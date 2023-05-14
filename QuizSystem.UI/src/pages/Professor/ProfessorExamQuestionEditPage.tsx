@@ -42,6 +42,7 @@ const ProfessorExamQuestionEditPage = () => {
   gradedQuestions?.forEach((element) => {
     gradeSum += element.grade;
   });
+  const [deleteCounter, setDeleteCounter] = useState(0);
 
   useEffect(() => {
     GetAllMultipleChoiceQuestions(
@@ -57,7 +58,7 @@ const ProfessorExamQuestionEditPage = () => {
       setError
     );
     GetAllByExamId(state.examId, setGradedQuestions, setError);
-  });
+  }, [state, deleteCounter]);
   return (
     <Container marginTop={10} maxWidth={600}>
       <List spacing={5}>
@@ -104,6 +105,7 @@ const ProfessorExamQuestionEditPage = () => {
                           <Button
                             onClick={() => {
                               Delete(que.id, setError);
+                              setDeleteCounter(deleteCounter + 1);
                             }}
                           >
                             Delete
@@ -158,6 +160,7 @@ const ProfessorExamQuestionEditPage = () => {
                           <Button
                             onClick={() => {
                               Delete(que.id, setError);
+                              setDeleteCounter(deleteCounter + 1);
                             }}
                           >
                             Delete

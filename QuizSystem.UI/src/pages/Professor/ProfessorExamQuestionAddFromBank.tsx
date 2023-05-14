@@ -27,7 +27,9 @@ import { useForm } from "react-hook-form";
 import GradedQuestionService from "../../services/GradedQuestionService";
 
 const schema = z.object({
-  grade: z.string(),
+  grade: z
+    .number({ invalid_type_error: "Grade must be a number" })
+    .min(0.1, "Please enter a valid number"),
 });
 
 type FormData = z.infer<typeof schema>;
@@ -104,15 +106,16 @@ const ProfessorExamQuestionAddFromBank = () => {
               <FormControl>
                 <FormLabel>Grade: </FormLabel>
                 <Input
-                  required
-                  maxWidth={200}
                   type="number"
-                  {...register("grade")}
+                  step=".01"
+                  maxWidth={200}
+                  {...register("grade", { valueAsNumber: true })}
                 ></Input>
                 <Button colorScheme="green" type="submit">
                   Submit
                 </Button>
               </FormControl>
+              <Text color={"red.400"}>{errors.grade?.message}</Text>
               <Button onClick={() => setAdd(false)}>Back</Button>
             </VStack>
           </Form>

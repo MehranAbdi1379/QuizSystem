@@ -3,7 +3,7 @@ import { Outlet } from "react-router-dom";
 import ProfessorSidebar from "../../components/Professor/ProfessorSidebar";
 
 const ProfessorPage = () => {
-  const [moreThanMedium] = useMediaQuery("(min-width: 820px)");
+  const [moreThanMedium] = useMediaQuery("(min-width: 770px)");
   return (
     <>
       <Grid templateColumns={"repeat(6 , 1fr)"}>
