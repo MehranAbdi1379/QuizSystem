@@ -44,7 +44,7 @@ class CourseService{
     }
     Delete(id: any)
     {
-        authApiClient().post('Course/Delete' , {id})
+        authApiClient().delete('Course/Delete' , {data:{id:id}})
     }
 
     GetByStudentId(studentId: any ,setCourses: any ,  setError: any)

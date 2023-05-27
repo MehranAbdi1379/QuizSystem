@@ -2,6 +2,7 @@ import authApiClient from "./AuthApiClient";
 import GradedQuestionService from "./GradedQuestionService";
 
 export interface Answer{
+    id: string,
     questionId: string,
     title: string,
     rightAnswer: boolean
@@ -14,7 +15,7 @@ class MultipleChoiceQuestionService{
     }
     Update(question:any, setError: any)
     {
-        authApiClient().put('Question/MultipleChoice/Update' , question).catch(err => setError(err.response.data));
+        return authApiClient().put('Question/MultipleChoice/Update' , question)
     }
     Delete(id: any)
     {
@@ -24,13 +25,17 @@ class MultipleChoiceQuestionService{
     {
         authApiClient().post('Question/MultipleChoice/GetByCourseAndProfessorId' , {courseId , professorId}).then(res => setMultipleChoiceQuestions(res.data)).catch(err => setError(err.response.data));
     }
-    CreateAnswer(answer: any, setError: any )
+    CreateAnswer(answer: any,setError: any )
     {
         return authApiClient().post('Question/MultipleChoice/Answer/Create' , answer).catch(err => setError(err.response.data));
     }
     DeleteAnswer(answerId: any, setError: any)
     {
         authApiClient().delete('Question/MultipleChoice/Answer/Delete',{data:{id: answerId}}).catch(err => setError(err.response.data));
+    }
+    UpdateAnswer(answer: any , setError: any)
+    {
+        authApiClient().patch('Question/MultipleChoice/Answer/Update' , answer)
     }
     GetAnswerByQuestionId(questionId: any , setError: any)
     {
