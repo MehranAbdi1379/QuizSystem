@@ -50,6 +50,12 @@ namespace QuizSystem.Service
         public void Delete(IdDTO dto)
         {
             var question = multipleChoiceQuestionRepository.GetWithId(dto.Id);
+            var answers = multipleChoiceAnswerRepository.GetByQuestionId(question.Id);
+            foreach (var item in answers)
+            {
+                multipleChoiceAnswerRepository.Delete(item);
+            }
+            multipleChoiceAnswerRepository.Save();
             multipleChoiceQuestionRepository.Delete(question);
             multipleChoiceQuestionRepository.Save();
         }
@@ -77,6 +83,18 @@ namespace QuizSystem.Service
         public List<MultipleChoiceAnswer> GetAnswersByQuestionId(IdDTO dto)
         {
             return multipleChoiceAnswerRepository.GetByQuestionId(dto.Id);
+        }
+
+        public MultipleChoiceAnswer UpdateAnswer(MultipleChoiceAnswerUpdateDTO dto)
+        {
+            var answer = multipleChoiceAnswerRepository.GetWithId(dto.Id);
+            answer.SetTitle(dto.Title,multipleChoiceAnswerRepository,dto.QuestionId);
+            answer.SetQuestionId(dto.QuestionId, multipleChoiceQuestionRepository);
+
+            multipleChoiceAnswerRepository.Update(answer);
+            multipleChoiceAnswerRepository.Save();
+
+            return answer;
         }
     }
 }
