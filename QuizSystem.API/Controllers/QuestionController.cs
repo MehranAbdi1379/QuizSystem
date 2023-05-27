@@ -257,6 +257,29 @@ namespace QuizSystem.API.Controllers
             }
         }
 
+        [HttpPatch]
+        [Route("MultipleChoice/Answer/Update")]
+        public IActionResult UpdateMultipleChoiceAnswer(MultipleChoiceAnswerUpdateDTO dto)
+        {
+            if (!ModelState.IsValid)
+            {
+                Log.Error("MultipleChoice answer update modelstate error.");
+                return BadRequest(ModelState);
+
+            }
+            try
+            {
+                Log.Information($"MultipleChoice answer update successful");
+                return Ok(multipleChoiceQuestionService.UpdateAnswer(dto));
+            }
+            catch (Exception ex)
+            {
+                var errorObject = new ObjectResult(ex.Message);
+                errorObject.StatusCode = StatusCodes.Status500InternalServerError;
+                return errorObject;
+            }
+        }
+
         [HttpPost]
         [Route("MultipleChoice/Answer/GetByQuestionId")]
         public IActionResult GetMultipleChoiceAnswersByQuestionId(IdDTO dto)

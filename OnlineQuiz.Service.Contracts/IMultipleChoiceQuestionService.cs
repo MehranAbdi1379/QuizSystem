@@ -12,5 +12,6 @@ namespace QuizSystem.Service
         List<MultipleChoiceQuestion> GetWithCourseAndProfessorId(CourseAndProfessorIdDTO dto);
         MultipleChoiceQuestion Update(QuestionUpdateDTO dto);
         public List<MultipleChoiceAnswer> GetAnswersByQuestionId(IdDTO dto);
+        public MultipleChoiceAnswer UpdateAnswer(MultipleChoiceAnswerUpdateDTO dto);
     }
 }

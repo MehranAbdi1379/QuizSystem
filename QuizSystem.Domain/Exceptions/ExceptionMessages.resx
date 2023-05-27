@@ -198,6 +198,9 @@
   <data name="QuestionTitleExistsExceptionMessage" xml:space="preserve">
     <value>Question title already exists</value>
   </data>
+  <data name="QuestionTitleLengthLongExceptionMessage" xml:space="preserve">
+    <value>Title must be shorter than 20 characters</value>
+  </data>
   <data name="StudentNationalCodeExistsExceptionMessage" xml:space="preserve">
     <value>National Code already exists</value>
   </data>

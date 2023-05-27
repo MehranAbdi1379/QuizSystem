@@ -169,17 +169,26 @@ namespace QuizSystem.API.Controllers
 
         [HttpDelete]
         [Route("Delete")]
-        public IActionResult DeleteCourse(CourseIdDTO dto)
+        public IActionResult DeleteCourse(CourseRemoveDTO dto)
         {
             if (!ModelState.IsValid)
             {
                 Log.Error("Course delete modelstate error");
                 return BadRequest(ModelState);
             }
-
-            Log.Information($"Delete course with id: {dto.Id} is successful");
-            courseService.RemoveCourse(dto);
-            return Ok();
+            try
+            {
+                Log.Information($"Delete course with id: {dto.Id} is successful");
+                courseService.RemoveCourse(dto);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                var errorObject = new ObjectResult(ex.Message);
+                errorObject.StatusCode = StatusCodes.Status500InternalServerError;
+                return errorObject;
+            }
+            
         }
     }
 }

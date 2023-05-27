@@ -304,6 +304,15 @@ namespace QuizSystem.Domain.Exceptions {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Title must be shorter than 20 characters.
+        /// </summary>
+        public static string QuestionTitleLengthLongExceptionMessage {
+            get {
+                return ResourceManager.GetString("QuestionTitleLengthLongExceptionMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to National Code already exists.
         /// </summary>
         public static string StudentNationalCodeExistsExceptionMessage {
