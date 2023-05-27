@@ -93,12 +93,12 @@ const ProfessorExamQuestionEditPage = () => {
                             required
                             defaultValue={que.grade}
                             onChange={(e) => {
-                              console.log(e);
                               if (e.target.value) {
                                 Update(
                                   { id: que.id, grade: e.target.value },
                                   setError
                                 );
+                                setDeleteCounter(deleteCounter + 1);
                               }
                             }}
                           ></Input>
@@ -148,12 +148,12 @@ const ProfessorExamQuestionEditPage = () => {
                             required
                             defaultValue={que.grade}
                             onChange={(e) => {
-                              console.log(e);
                               if (e.target.value) {
                                 Update(
                                   { id: que.id, grade: e.target.value },
                                   setError
                                 );
+                                setDeleteCounter(deleteCounter + 1);
                               }
                             }}
                           ></Input>

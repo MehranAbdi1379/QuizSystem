@@ -22,9 +22,9 @@ namespace QuizSystem.Domain.Models
             SetRightAnswer(rightAnswer, repository, questionId);
         }
 
-        public string Title { get; set; }
-        public bool RightAnswer { get; set; }
-        public Guid QuestionId { get; set; }
+        public string Title { get; private set; }
+        public bool RightAnswer { get; private set; }
+        public Guid QuestionId { get; private set; }
 
         public void SetRightAnswer(bool rightAnswer , IMultipleChoiceAnswerRepository repository , Guid questionId)
         {

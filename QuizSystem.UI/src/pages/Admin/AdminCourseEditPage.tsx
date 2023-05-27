@@ -129,7 +129,7 @@ const AdminCourseEditPage = () => {
                   <option
                     key={professor.id}
                     value={professor.id}
-                    defaultChecked={
+                    selected={
                       state.course.professorId == professor.id ? true : false
                     }
                   >

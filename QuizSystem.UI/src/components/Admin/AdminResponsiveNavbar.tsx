@@ -45,19 +45,19 @@ const AdminResponsiveNavbar = () => {
         ></NavButton>
         <NavButton
           onClick={() => setSideNavbar(false)}
-          to={"/sign-in/admin/courses/all"}
+          to={"/sign-in/admin/course/all"}
           name="Courses"
         ></NavButton>
 
         <NavButton
           onClick={() => setSideNavbar(false)}
-          to="/sign-in/admin/professors/all"
+          to="/sign-in/admin/professor/all"
           name="Professors"
         ></NavButton>
 
         <NavButton
           onClick={() => setSideNavbar(false)}
-          to="/sign-in/admin/students/all"
+          to="/sign-in/admin/student/all"
           name="Students"
         ></NavButton>
         <NavButton

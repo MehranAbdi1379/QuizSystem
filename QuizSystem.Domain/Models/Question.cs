@@ -24,7 +24,7 @@ namespace QuizSystem.Domain.Models
             Description = description;
         }
 
-        public string Description { get;  set; }
+        public string Description { get; set; }
         public Guid ProfessorId { get; private set; }
         public Guid CourseId { get; private set; }
 

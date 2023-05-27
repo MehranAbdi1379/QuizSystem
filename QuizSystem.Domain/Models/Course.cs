@@ -52,8 +52,10 @@ namespace QuizSystem.Domain.Models
 
         public void UpdateDate(DateTime startDate ,DateTime endDate)
         {
-            if (TimePeriod.StartDate.Subtract(DateTime.Now).TotalMinutes > 0 && startDate.AddDays(7) < endDate)
+            if (TimePeriod.StartDate.Subtract(DateTime.Now).TotalMinutes > 0 && startDate.AddDays(7) < endDate && startDate.Subtract(DateTime.Now).TotalMinutes>0)
                 TimePeriod = new TimePeriod(startDate, endDate, true);
+            else if (endDate.Subtract(DateTime.Now).TotalMinutes<0 && startDate.Subtract(DateTime.Now).TotalMinutes > 0)
+                TimePeriod = new TimePeriod(startDate, TimePeriod.EndDate, true);
             else 
                 TimePeriod= new TimePeriod(TimePeriod.StartDate, endDate, true);
         }
