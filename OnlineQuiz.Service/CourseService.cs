@@ -1,5 +1,6 @@
 ﻿using QuizSystem.Domain.Models;
 using QuizSystem.Domain.Repository;
+using QuizSystem.Repository;
 using QuizSystem.Service.Contracts.DTO;
 using System;
 using System.Collections.Generic;
@@ -16,18 +17,27 @@ public class CourseService : ICourseService
     protected readonly IStudentRepository studentRepository;
     protected readonly ICourseStudentRepository courseStudentRepository;
     protected readonly IExamRepository examRepository;
+    protected readonly IDescriptiveQuestionRepository descriptiveQuestionRepository;
+    protected readonly IMultipleChoiceQuestionService multipleChoiceQuestionService;
+    protected readonly IMultipleChoiceQuestionRepository multipleChoiceQuestionRepository;
 
     public CourseService(ICourseRepository repository,
         IProfessorRepository professorRepository,
         IStudentRepository studentRepository,
         ICourseStudentRepository courseStudentRepository,
-        IExamRepository examRepository)
+        IExamRepository examRepository,
+        IDescriptiveQuestionRepository descriptiveQuestionRepository,
+        IMultipleChoiceQuestionService multipleChoiceQuestionService
+        ,IMultipleChoiceQuestionRepository multipleChoiceQuestionRepository)
     {
         this.repository = repository;
         this.professorRepository = professorRepository;
         this.studentRepository = studentRepository;
         this.courseStudentRepository = courseStudentRepository;
         this.examRepository = examRepository;
+        this.descriptiveQuestionRepository = descriptiveQuestionRepository;
+        this.multipleChoiceQuestionService = multipleChoiceQuestionService;
+        this.multipleChoiceQuestionRepository = multipleChoiceQuestionRepository;
     }
 
     public Guid CreateCourse(CourseCreateDTO dto)
@@ -53,7 +63,7 @@ public class CourseService : ICourseService
         return course.Id;
     }
     
-    public void RemoveCourse(CourseIdDTO dto)
+    public void RemoveCourse(CourseRemoveDTO dto)
     {
         var course = repository.GetWithId(dto.Id);
         var studentCourses = courseStudentRepository.GetWithCourseId(dto.Id);
@@ -65,6 +75,20 @@ public class CourseService : ICourseService
 
         repository.Delete(course);
         repository.Save();
+
+        var descriptiveQuestions = descriptiveQuestionRepository.GetWithCourseAndProfessorId(dto.Id, dto.ProfessorId);
+        foreach (var item in descriptiveQuestions)
+        {
+            descriptiveQuestionRepository.Delete(item);
+        }
+        descriptiveQuestionRepository.Save();
+
+        var multipleChoiceQuestions = multipleChoiceQuestionRepository.GetWithCourseAndProfessorId(dto.Id, dto.ProfessorId);
+
+        foreach (var item in multipleChoiceQuestions)
+        {
+            multipleChoiceQuestionService.Delete(new IdDTO { Id = item.Id });
+        }
     }
 
     public Guid UpdateCourse(CourseUpdateDTO dto)
