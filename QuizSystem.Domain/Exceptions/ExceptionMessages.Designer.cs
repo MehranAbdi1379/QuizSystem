@@ -169,6 +169,15 @@ namespace QuizSystem.Domain.Exceptions {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ExamStudent doestn&apos;t exist.
+        /// </summary>
+        public static string ExamStudentNotExistExceptionMessage {
+            get {
+                return ResourceManager.GetString("ExamStudentNotExistExceptionMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Exam time is too short.
         /// </summary>
         public static string ExamTimeShortExceptionMessage {
@@ -192,6 +201,15 @@ namespace QuizSystem.Domain.Exceptions {
         public static string GradedQuestionDuplicateExceptionMessage {
             get {
                 return ResourceManager.GetString("GradedQuestionDuplicateExceptionMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to GradedQuestion doesn&apos;t exist.
+        /// </summary>
+        public static string GradedQuestionNotExistExceptionMessage {
+            get {
+                return ResourceManager.GetString("GradedQuestionNotExistExceptionMessage", resourceCulture);
             }
         }
         

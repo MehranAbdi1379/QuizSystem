@@ -153,6 +153,9 @@
   <data name="ExamStudentExamIdNotExistExceptionMessage" xml:space="preserve">
     <value>ExamStudent Exam not exist</value>
   </data>
+  <data name="ExamStudentNotExistExceptionMessage" xml:space="preserve">
+    <value>ExamStudent doestn't exist</value>
+  </data>
   <data name="ExamTimeShortExceptionMessage" xml:space="preserve">
     <value>Exam time is too short</value>
   </data>
@@ -161,6 +164,9 @@
   </data>
   <data name="GradedQuestionDuplicateExceptionMessage" xml:space="preserve">
     <value>Question already exists in this exam</value>
+  </data>
+  <data name="GradedQuestionNotExistExceptionMessage" xml:space="preserve">
+    <value>GradedQuestion doesn't exist</value>
   </data>
   <data name="GradeQuestionGradeExceptionMessage" xml:space="preserve">
     <value>Grade should have a value</value>
