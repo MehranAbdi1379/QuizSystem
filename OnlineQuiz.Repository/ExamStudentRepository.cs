@@ -15,5 +15,15 @@ namespace QuizSystem.Repository
         public ExamStudentRepository(QuizSystemContext context) : base(context)
         {
         }
+
+        public bool ExamStudentAlreadyExist(Guid examId , Guid studentId)
+        {
+            return context.Set<ExamStudent>().Any(x => x.ExamId == examId && x.StudentId == studentId);
+        }
+
+        public ExamStudent GetByExamAndStudentId(Guid examId , Guid studentId)
+        {
+            return context.Set<ExamStudent>().Where(x => x.StudentId == studentId && x.ExamId == examId).First();
+        }
     }
 }
