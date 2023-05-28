@@ -1,4 +1,5 @@
 ﻿using Framework.Core.Domain;
+using QuizSystem.Domain.Exceptions;
 using QuizSystem.Domain.Repository;
 using QuizSystem.Repository;
 using System;
@@ -30,14 +31,14 @@ namespace QuizSystem.Domain.Models
         public void SetExamStudentId(Guid examStudentId , IExamStudentRepository examStudentRepository)
         {
             if (!examStudentRepository.IsExist(examStudentId))
-                throw new Exception();
+                throw new ExamStudentNotExistException();
             ExamStudentId = examStudentId;
         }
 
         public void SetGradedQuestionId(Guid gradedQuestionId , IGradedQuestionRepository gradedQuestionRepository)
         {
             if (!gradedQuestionRepository.IsExist(gradedQuestionId))
-                throw new Exception();
+                throw new GradedQuestionNotExistException();
             GradedQuestionId = gradedQuestionId;
         }
     }
