@@ -13,10 +13,12 @@ namespace QuizSystem.API.Controllers
     public class ExamController : ControllerBase
     {
         private readonly IExamService examService;
+        private readonly IExamStudentService examStudentService;
 
-        public ExamController(IExamService examService)
+        public ExamController(IExamService examService, IExamStudentService examStudentService)
         {
             this.examService = examService;
+            this.examStudentService = examStudentService;
         }
 
         [HttpPost]
@@ -123,6 +125,129 @@ namespace QuizSystem.API.Controllers
             Log.Information($"Delete exam with id {dto.Id} is successful");
             examService.DeleteExam(dto);
             return Ok();
+        }
+
+        [HttpPost]
+        [Route("ExamStudent/Create")]
+        [Authorize(Roles = "Student")]
+        public IActionResult CreateExamStudent(ExamStudentCreateDTO dto)
+        {
+            if (!ModelState.IsValid)
+            {
+                Log.Error("Create examStudent modelstate error");
+                return BadRequest(ModelState);
+            }
+
+            try
+            {
+                Log.Information("New examStudent created");
+                return Ok(examStudentService.Create(dto));
+            }
+            catch (Exception ex)
+            {
+                var errorObject = new ObjectResult(ex.Message);
+                errorObject.StatusCode = StatusCodes.Status500InternalServerError;
+                return errorObject;
+            }
+        }
+
+        [HttpPatch]
+        [Route("ExamStudent/UpdateGrade")]
+        [Authorize(Roles = "Student")]
+        public IActionResult UpdateExamStudentGrade(ExamStudentAddGradeDTO dto)
+        {
+            if (!ModelState.IsValid)
+            {
+                Log.Error("Update examStudent Grade modelstate error");
+                return BadRequest(ModelState);
+            }
+
+            try
+            {
+                Log.Information("Update examStudent Grade was successful");
+                return Ok(examStudentService.UpdateGrade(dto));
+            }
+            catch (Exception ex)
+            {
+                var errorObject = new ObjectResult(ex.Message);
+                errorObject.StatusCode = StatusCodes.Status500InternalServerError;
+                return errorObject;
+            }
+        }
+
+        [HttpPatch]
+        [Route("ExamStudent/UpdateTimeLeft")]
+        [Authorize(Roles = "Student")]
+        public IActionResult ExamStudentCountDownTimeLeft(IdDTO dto)
+        {
+            if (!ModelState.IsValid)
+            {
+                Log.Error("Update examStudent time left modelstate error");
+                return BadRequest(ModelState);
+            }
+
+            try
+            {
+                Log.Information("Update examStudent time left was successful");
+                return Ok(examStudentService.CountDownTimeLeft(dto));
+            }
+            catch (Exception ex)
+            {
+                var errorObject = new ObjectResult(ex.Message);
+                errorObject.StatusCode = StatusCodes.Status500InternalServerError;
+                return errorObject;
+            }
+        }
+
+        [HttpPatch]
+        [Route("ExamStudent/FinishExam")]
+        [Authorize(Roles = "Student")]
+        public IActionResult ExamStudentFinishExam(IdDTO dto)
+        {
+            if (!ModelState.IsValid)
+            {
+                Log.Error("Finish examStudent modelstate error");
+                return BadRequest(ModelState);
+            }
+
+            try
+            {
+                Log.Information("Finish examStudent was successful");
+                return Ok(examStudentService.FinishExam(dto));
+            }
+            catch (Exception ex)
+            {
+                var errorObject = new ObjectResult(ex.Message);
+                errorObject.StatusCode = StatusCodes.Status500InternalServerError;
+                return errorObject;
+            }
+        }
+
+        [HttpDelete]
+        [Route("ExamStudent/Delete")]
+        [Authorize(Roles = "Student,Professor")]
+        public IActionResult DeleteExamStudent(IdDTO dto)
+        {
+            if (!ModelState.IsValid)
+            {
+                Log.Error("ExamStudent delete modelstate error");
+                return BadRequest(ModelState);
+            }
+
+            try
+            {
+                Log.Information($"Delete examStudent with id {dto.Id} is successful");
+                examStudentService.Delete(dto);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                var errorObject = new ObjectResult(ex.Message);
+                errorObject.StatusCode = StatusCodes.Status500InternalServerError;
+                return errorObject;
+            }
+
+            
         }
     }
 }

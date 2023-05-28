@@ -29,14 +29,14 @@ namespace QuizSystem.Domain.Models
         public void SetStudentId(Guid studentId, IStudentRepository studentRepository)
         {
             if (!studentRepository.IsExist(studentId))
-                throw new CourseStudentStudentIdNotExistException();
+                throw new StudentIdNotExistException();
             StudentId = studentId;
         }
 
         public void SetCourseId(Guid courseId , ICourseRepository courseRepository)
         {
             if (courseRepository.IsExist(courseId)==false)
-                throw new CourseStudentCourseIdNotExistException();
+                throw new CourseIdNotExistException();
             CourseId = courseId;
         }
     }

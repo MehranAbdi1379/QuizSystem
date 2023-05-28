@@ -144,17 +144,14 @@
   <data name="CourseStudentAddNullExceptionMessage" xml:space="preserve">
     <value>Student is null for adding to course</value>
   </data>
-  <data name="CourseStudentCourseIdNotExistExceptionMessage" xml:space="preserve">
-    <value>Course Id doesn't exist to add to CourseStudent model</value>
-  </data>
-  <data name="CourseStudentStudentIdNotExistExceptionMessage" xml:space="preserve">
-    <value>Student Id doesn't exist to add to CourseStudent model</value>
-  </data>
   <data name="CourseTitleExistsExceptionMessage" xml:space="preserve">
     <value>Title already exists</value>
   </data>
   <data name="ExamNotExistExceptionMessage" xml:space="preserve">
     <value>Exam doesn't exist</value>
+  </data>
+  <data name="ExamStudentExamIdNotExistExceptionMessage" xml:space="preserve">
+    <value>ExamStudent Exam not exist</value>
   </data>
   <data name="ExamTimeShortExceptionMessage" xml:space="preserve">
     <value>Exam time is too short</value>
@@ -200,6 +197,9 @@
   </data>
   <data name="QuestionTitleLengthLongExceptionMessage" xml:space="preserve">
     <value>Title must be shorter than 20 characters</value>
+  </data>
+  <data name="StudentIdNotExistExceptionMessage" xml:space="preserve">
+    <value>Student Id doesn't exist </value>
   </data>
   <data name="StudentNationalCodeExistsExceptionMessage" xml:space="preserve">
     <value>National Code already exists</value>

@@ -142,24 +142,6 @@ namespace QuizSystem.Domain.Exceptions {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Course Id doesn&apos;t exist to add to CourseStudent model.
-        /// </summary>
-        public static string CourseStudentCourseIdNotExistExceptionMessage {
-            get {
-                return ResourceManager.GetString("CourseStudentCourseIdNotExistExceptionMessage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Student Id doesn&apos;t exist to add to CourseStudent model.
-        /// </summary>
-        public static string CourseStudentStudentIdNotExistExceptionMessage {
-            get {
-                return ResourceManager.GetString("CourseStudentStudentIdNotExistExceptionMessage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Title already exists.
         /// </summary>
         public static string CourseTitleExistsExceptionMessage {
@@ -174,6 +156,15 @@ namespace QuizSystem.Domain.Exceptions {
         public static string ExamNotExistExceptionMessage {
             get {
                 return ResourceManager.GetString("ExamNotExistExceptionMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ExamStudent Exam not exist.
+        /// </summary>
+        public static string ExamStudentExamIdNotExistExceptionMessage {
+            get {
+                return ResourceManager.GetString("ExamStudentExamIdNotExistExceptionMessage", resourceCulture);
             }
         }
         
@@ -309,6 +300,15 @@ namespace QuizSystem.Domain.Exceptions {
         public static string QuestionTitleLengthLongExceptionMessage {
             get {
                 return ResourceManager.GetString("QuestionTitleLengthLongExceptionMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Student Id doesn&apos;t exist .
+        /// </summary>
+        public static string StudentIdNotExistExceptionMessage {
+            get {
+                return ResourceManager.GetString("StudentIdNotExistExceptionMessage", resourceCulture);
             }
         }
         
