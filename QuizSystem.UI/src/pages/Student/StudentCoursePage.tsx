@@ -45,7 +45,7 @@ const StudentCoursePage = () => {
           <Text>{course?.timePeriod.endDate.toString().slice(0, 10)}</Text>
         </HStack>
 
-        {/* <Heading paddingTop={5} fontSize={22}>
+        <Heading paddingTop={5} fontSize={22}>
           Exams
         </Heading>
 
@@ -54,7 +54,7 @@ const StudentCoursePage = () => {
             <Button
               key={exam.id}
               onClick={() =>
-                navigate("/sign-in/professor/course/exam", {
+                navigate("/sign-in/student/course/exam/information", {
                   state: { examId: exam.id, courseId: course?.id },
                 })
               }
@@ -63,7 +63,7 @@ const StudentCoursePage = () => {
               {exam.title}
             </Button>
           ))}
-        </VStack> */}
+        </VStack>
       </Box>
     </Container>
   );

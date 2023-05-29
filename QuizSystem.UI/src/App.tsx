@@ -40,6 +40,10 @@ import StudentCoursePage from "./pages/Student/StudentCoursePage";
 import ProfessorAllQuestionsPage from "./pages/Professor/ProfessorAllQuestionsPage";
 import ProfessorDescriptiveQuestionEditPage from "./pages/Professor/ProfessorDescriptiveQuestionEditPage";
 import ProfessorMultipleChoiceQuestionEditPage from "./pages/Professor/ProfessorMultipleChoiceQuestionEditPage";
+import StudentExamInformationPage from "./pages/Student/StudentExamInformationPage";
+import StudentExamTakingPage from "./pages/Student/StudentExamTakingPage";
+import StudentExamDescriptiveQuestionPage from "./pages/Student/StudentExamDescriptiveQuestionPage";
+import StudentExamMultipleChoiceQuestionPage from "./pages/Student/StudentExamMultipleChoiceQuestionPage";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -124,6 +128,22 @@ const router = createBrowserRouter(
             <Route path="course">
               <Route index element={<StudentCoursePage />}></Route>
               <Route path="all" element={<StudentAllCoursesPage />}></Route>
+              <Route path="exam">
+                <Route
+                  path="information"
+                  element={<StudentExamInformationPage />}
+                ></Route>
+                <Route path="take" element={<StudentExamTakingPage />}>
+                  <Route
+                    path="descriptive-question"
+                    element={<StudentExamDescriptiveQuestionPage />}
+                  ></Route>
+                  <Route
+                    path="multiple-choice-question"
+                    element={<StudentExamMultipleChoiceQuestionPage />}
+                  ></Route>
+                </Route>
+              </Route>
             </Route>
           </Route>
         </Route>
