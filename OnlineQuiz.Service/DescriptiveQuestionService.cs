@@ -56,5 +56,10 @@ namespace QuizSystem.Service
         {
             return descriptiveQuestionRepository.GetWithCourseAndProfessorId(dto.CourseId, dto.ProfessorId);
         }
+
+        public DescriptiveQuestion GetWithId(IdDTO dto)
+        {
+            return descriptiveQuestionRepository.GetWithId(dto.Id);
+        }
     }
 }

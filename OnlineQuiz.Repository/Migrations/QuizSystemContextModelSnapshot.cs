@@ -347,6 +347,56 @@ namespace QuizSystem.Repository.Migrations
                     b.ToTable("Exams");
                 });
 
+            modelBuilder.Entity("QuizSystem.Domain.Models.ExamStudent", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("EndTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("ExamId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<double>("Grade")
+                        .HasColumnType("float");
+
+                    b.Property<DateTime>("StartTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("StudentId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ExamStudent");
+                });
+
+            modelBuilder.Entity("QuizSystem.Domain.Models.ExamStudentQuestion", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Answer")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("ExamStudentId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<double>("Grade")
+                        .HasColumnType("float");
+
+                    b.Property<Guid>("GradedQuestionId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ExamStudentQuestion");
+                });
+
             modelBuilder.Entity("QuizSystem.Domain.Models.GradedQuestion", b =>
                 {
                     b.Property<Guid>("Id")

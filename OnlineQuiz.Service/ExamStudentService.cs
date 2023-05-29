@@ -17,64 +17,61 @@ namespace QuizSystem.Service
         protected readonly IExamRepository examRepository;
         protected readonly IGradedQuestionRepository gradedQuestionRepository;
         protected readonly IExamStudentQuestionRepository examStudentQuestionRepository;
+        protected readonly IExamStudentRepository examStudentRepository;
 
-        public ExamStudentService(IStudentRepository studentRepository, IExamRepository examRepository, IExamStudentRepository repository, IGradedQuestionRepository gradedQuestionRepository, IExamStudentQuestionRepository examStudentQuestionRepository)
+        public ExamStudentService(IStudentRepository studentRepository, IExamRepository examRepository, IExamStudentRepository repository, IGradedQuestionRepository gradedQuestionRepository, IExamStudentQuestionRepository examStudentQuestionRepository, IExamStudentRepository examStudentRepository)
         {
             this.studentRepository = studentRepository;
             this.examRepository = examRepository;
             this.repository = repository;
             this.gradedQuestionRepository = gradedQuestionRepository;
             this.examStudentQuestionRepository = examStudentQuestionRepository;
+            this.examStudentRepository = examStudentRepository;
         }
 
 
-        public ExamStudent CreateOrGet(ExamStudentCreateDTO dto)
+        public ExamStudent Create(ExamStudentCreateDTO dto)
         {
-            if (repository.ExamStudentAlreadyExist(dto.ExamId, dto.StudentId))
-                return repository.GetByExamAndStudentId(dto.ExamId, dto.StudentId);
-
-            var examStudent = new ExamStudent(dto.ExamId, dto.StudentId, 0, examRepository.GetWithId(dto.ExamId).Time, examRepository, studentRepository);
-
+            var examStudent = new ExamStudent(dto.ExamId, dto.StudentId, 0, examRepository, studentRepository,examStudentRepository,gradedQuestionRepository);
+            var gradedQuestions = gradedQuestionRepository.GetAllByExamId(dto.ExamId);
             repository.Create(examStudent);
             repository.Save();
 
-            //var gradedQuestions = gradedQuestionRepository.GetAllByExamId(dto.ExamId);
-            //foreach (var item in gradedQuestions)
-            //{
-            //    examStudentQuestionRepository.Create(new ExamStudentQuestion(examStudent.Id , item.Id , "" , repository, gradedQuestionRepository));
-            //}
-            //examStudentQuestionRepository.Save();
+            foreach (var item in gradedQuestions)
+            {
+                var examStudentQuestion = new ExamStudentQuestion(examStudent.Id, item.Id, "", repository, gradedQuestionRepository);
 
-
-            return examStudent;
-        }
-
-        public ExamStudent UpdateGrade(ExamStudentAddGradeDTO dto)
-        {
-            var examStudent = repository.GetWithId(dto.Id);
-            examStudent.Grade = examStudent.Grade + dto.Grade;
-
-            repository.Update(examStudent);
-            repository.Save();
+                examStudentQuestionRepository.Create(examStudentQuestion);
+                
+            }
+            examStudentQuestionRepository.Save();
+            
 
             return examStudent;
         }
 
-        public ExamStudent CountDownTimeLeft(IdDTO dto)
+        public bool StudentExamExist(ExamStudentCreateDTO dto)
         {
-            var examStudent = repository.GetWithId(dto.Id);
-            examStudent.TimeLeft = examStudent.TimeLeft - 1;
-
-            repository.Update(examStudent);
-            repository.Save();
-
-            return examStudent;
+            return repository.ExamStudentAlreadyExist(dto.ExamId, dto.StudentId);
         }
 
-        public ExamStudent FinishExam(IdDTO dto)
+        public ExamStudent GetByStudentAndExamId(ExamStudentCreateDTO dto)
+        {
+            return repository.GetByExamAndStudentId(dto.ExamId, dto.StudentId);
+        }
+
+        public ExamStudent UpdateGrade(IdDTO dto)
         {
             var examStudent = repository.GetWithId(dto.Id);
-            examStudent.TimeLeft = 0;
+            var questions = examStudentQuestionRepository.GetAllWithExamStudentId(dto.Id);
+            double grade = 0;
+
+            foreach (var item in questions)
+            {
+                grade += item.Grade;
+            }
+
+            examStudent.SetGrade(grade, examStudent.ExamId , gradedQuestionRepository);
 
             repository.Update(examStudent);
             repository.Save();
@@ -90,16 +87,9 @@ namespace QuizSystem.Service
             repository.Save();
         }
 
-        public ExamStudentQuestion CreateOrGetQuestion(ExamStudentQuestionCreateDTO dto)
+        public ExamStudentQuestion GetQuestion(ExamStudentQuestionGetDTO dto)
         {
-            if (examStudentQuestionRepository.ExamStudentQuestionAlreadyExist(dto.ExamStudentId, dto.GradedQuestionId))
-                return examStudentQuestionRepository.GetWithExamStudentAndGradedQuestionId(dto.ExamStudentId, dto.GradedQuestionId);
-            var examStudentQuestion = new ExamStudentQuestion(dto.ExamStudentId , dto.GradedQuestionId, dto.Answer, repository, gradedQuestionRepository);
-            
-            examStudentQuestionRepository.Create(examStudentQuestion);
-            examStudentQuestionRepository.Save();
-
-            return examStudentQuestion;
+            return examStudentQuestionRepository.GetWithExamStudentAndGradedQuestionId(dto.ExamStudentId , dto.GradedQuestionId);
         }
 
         public ExamStudentQuestion UpdateQuestion(ExamStudentQuestionUpdateDTO dto)
