@@ -34,6 +34,8 @@ namespace QuizSystem.Repository.DataBase
             builder.ApplyConfiguration(new MultipleChoiceAnswerConfiguration());
             builder.ApplyConfiguration(new MultipleChoiceQuestionConfiguration());
             builder.ApplyConfiguration(new GradedQuestionConfiguration());
+            builder.ApplyConfiguration(new ExamStudentConfiguration());
+            builder.ApplyConfiguration(new ExamStudentQuestionConfiguration());
 
         }
 
@@ -46,5 +48,7 @@ namespace QuizSystem.Repository.DataBase
         public DbSet<MultipleChoiceQuestion> MultipleChoiceQuestions { get; set; }
         public DbSet<MultipleChoiceAnswer> MultipleChoiceAnswers { get; set; }
         public DbSet<GradedQuestion> GradedQuestions { get; set; }
+        public DbSet<ExamStudent> ExamStudent { get; set; }
+        public DbSet<ExamStudentQuestion> ExamStudentQuestion { get; set; }
     }
 }

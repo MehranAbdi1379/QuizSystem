@@ -24,5 +24,10 @@ namespace QuizSystem.Repository
         {
             return context.Set<ExamStudentQuestion>().Where(x => x.GradedQuestionId == gradedQuestionId && x.ExamStudentId == examStudentId).First();
         }
+
+        public List<ExamStudentQuestion> GetAllWithExamStudentId(Guid examStudentId)
+        {
+            return context.Set<ExamStudentQuestion>().Where(x => x.ExamStudentId == examStudentId).ToList();
+        }
     }
 }
