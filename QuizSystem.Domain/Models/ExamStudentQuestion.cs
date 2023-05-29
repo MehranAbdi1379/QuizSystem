@@ -27,6 +27,7 @@ namespace QuizSystem.Domain.Models
         public Guid ExamStudentId { get; private set; }
         public Guid GradedQuestionId { get; private set; }
         public string Answer { get; set; } 
+        public double Grade { get; private set; }
 
         public void SetExamStudentId(Guid examStudentId , IExamStudentRepository examStudentRepository)
         {
@@ -40,6 +41,13 @@ namespace QuizSystem.Domain.Models
             if (!gradedQuestionRepository.IsExist(gradedQuestionId))
                 throw new GradedQuestionNotExistException();
             GradedQuestionId = gradedQuestionId;
+        }
+
+        public void SetGrade(double grade ,Guid gradedQuestionId, IGradedQuestionRepository gradedQuestionRepository)
+        {
+            if (gradedQuestionRepository.GetWithId(gradedQuestionId).Grade < grade)
+                throw new Exception();
+            Grade = grade;
         }
     }
 }
