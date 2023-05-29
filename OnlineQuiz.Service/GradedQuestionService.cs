@@ -16,13 +16,15 @@ namespace QuizSystem.Service
         private readonly IDescriptiveQuestionRepository descriptiveQuestionRepository;
         private readonly IMultipleChoiceQuestionRepository multipleChoiceQuestionRepository;
         private readonly IExamRepository examRepository;
+        private readonly ICourseRepository courseRepository;
         public GradedQuestionService(IGradedQuestionRepository gradedQuestionRepository , IDescriptiveQuestionRepository descriptiveQuestionRepository , 
-            IMultipleChoiceQuestionRepository multipleChoiceQuestionRepository, IExamRepository examRepository)
+            IMultipleChoiceQuestionRepository multipleChoiceQuestionRepository, IExamRepository examRepository, ICourseRepository courseRepository)
         {
             this.examRepository = examRepository;
             this.gradedQuestionRepository = gradedQuestionRepository;
             this.descriptiveQuestionRepository = descriptiveQuestionRepository;
             this.multipleChoiceQuestionRepository  = multipleChoiceQuestionRepository;
+            this.courseRepository = courseRepository;
         }
 
         public GradedQuestion Create(GradedQuestionCreateDTO dto)
@@ -59,6 +61,43 @@ namespace QuizSystem.Service
         public List<GradedQuestion> GetByQuestionId(IdDTO dto)
         {
             return gradedQuestionRepository.GetByQuestionId(dto.Id);
+        }
+
+        public List<GradedQuestion> GetDescriptiveQuestionsOnly(IdDTO dto)
+        {
+            var courseId = examRepository.GetWithId(dto.Id).CourseId;
+            var professorId = courseRepository.GetWithId(courseId).ProfessorId;
+            var descriptiveQuestions = descriptiveQuestionRepository.GetWithCourseAndProfessorId(courseId, professorId);
+            var gradedQuestions = gradedQuestionRepository.GetAllByExamId(dto.Id);
+            var result = new List<GradedQuestion>();
+            foreach (var gradedQuestion in gradedQuestions)
+            {
+                foreach (var descriptiveQuestion in descriptiveQuestions)
+                {
+                    if (gradedQuestion.QuestionId==descriptiveQuestion.Id)
+                        result.Add(gradedQuestion);
+                }
+            }
+
+            return result;
+        }
+
+        public List<GradedQuestion> GetMultipleChoiceQuestionsOnly(IdDTO dto)
+        {
+            var courseId = examRepository.GetWithId(dto.Id).CourseId;
+            var professorId = courseRepository.GetWithId(courseId).ProfessorId;
+            var multipleChoiceQuestions = multipleChoiceQuestionRepository.GetWithCourseAndProfessorId(courseId, professorId);
+            var gradedQuestions = gradedQuestionRepository.GetAllByExamId(dto.Id);
+            var result = new List<GradedQuestion>();
+            foreach (var gradedQuestion in gradedQuestions)
+            {
+                foreach (var multipleChoiceQuestion in multipleChoiceQuestions)
+                {
+                    if (gradedQuestion.QuestionId == multipleChoiceQuestion.Id)
+                        result.Add(gradedQuestion);
+                }
+            }
+            return result;
         }
     }
 }
