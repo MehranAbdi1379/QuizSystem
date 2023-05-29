@@ -17,6 +17,10 @@ class DescriptiveQuestionService{
     {
         authApiClient().post('Question/Descriptive/GetByCourseAndProfessorId' , {courseId , professorId}).then(res => setDescriptiveQuestions(res.data)).catch(err => setError(err.response.data));
     }
+    GetById(id: any , setQuestion: any , setError: any)
+    {
+        authApiClient().post('Question/Descriptive/GetById' , {id}).then(res => setQuestion(res.data)).catch(err => setError(err.response.data))
+    }
 }
 
 export default DescriptiveQuestionService
