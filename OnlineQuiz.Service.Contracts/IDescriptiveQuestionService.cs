@@ -9,5 +9,6 @@ namespace QuizSystem.Service
         void Delete(IdDTO dto);
         List<DescriptiveQuestion> GetWithCourseAndProfessorId(CourseAndProfessorIdDTO dto);
         DescriptiveQuestion Update(QuestionUpdateDTO dto);
+        public DescriptiveQuestion GetWithId(IdDTO dto);
     }
 }

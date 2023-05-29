@@ -13,5 +13,6 @@ namespace QuizSystem.Service
         MultipleChoiceQuestion Update(QuestionUpdateDTO dto);
         public List<MultipleChoiceAnswer> GetAnswersByQuestionId(IdDTO dto);
         public MultipleChoiceAnswer UpdateAnswer(MultipleChoiceAnswerUpdateDTO dto);
+        public MultipleChoiceQuestion GetWithId(IdDTO dto);
     }
 }

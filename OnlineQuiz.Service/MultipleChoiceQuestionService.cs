@@ -96,5 +96,10 @@ namespace QuizSystem.Service
 
             return answer;
         }
+
+        public MultipleChoiceQuestion GetWithId(IdDTO dto)
+        {
+            return multipleChoiceQuestionRepository.GetWithId(dto.Id);
+        }
     }
 }

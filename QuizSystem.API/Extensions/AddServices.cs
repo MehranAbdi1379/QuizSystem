@@ -28,6 +28,7 @@ namespace QuizSystem.API.Extensions
             builder.Services.AddScoped<IMultipleChoiceQuestionService , MultipleChoiceQuestionService>();
             builder.Services.AddScoped<IDescriptiveQuestionService, DescriptiveQuestionService>();
             builder.Services.AddScoped<IGradedQuestionService, GradedQuestionService>();
+            builder.Services.AddScoped<IExamStudentService, ExamStudentService>();
         }
 
         public static void AddDIForRepositoryClasses(this WebApplicationBuilder builder)
@@ -41,6 +42,8 @@ namespace QuizSystem.API.Extensions
             builder.Services.AddScoped<IMultipleChoiceAnswerRepository, MultipleChoiceAnswerRepository>();
             builder.Services.AddScoped<IMultipleChoiceQuestionRepository, MultipleChoiceQuestionRepository>();
             builder.Services.AddScoped<IGradedQuestionRepository, GradedQuestionRepository>();
+            builder.Services.AddScoped<IExamStudentRepository, ExamStudentRepository>();
+            builder.Services.AddScoped<IExamStudentQuestionRepository, ExamStudentQuestionRepository>();
         }
 
         public static void ConfigureIdentity(this IServiceCollection services)

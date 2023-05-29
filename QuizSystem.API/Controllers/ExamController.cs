@@ -128,9 +128,9 @@ namespace QuizSystem.API.Controllers
         }
 
         [HttpPost]
-        [Route("ExamStudent/CreateOrGet")]
+        [Route("ExamStudent/Create")]
         [Authorize(Roles = "Student")]
-        public IActionResult CreateOrGetExamStudent(ExamStudentCreateDTO dto)
+        public IActionResult CreateExamStudent(ExamStudentCreateDTO dto)
         {
             if (!ModelState.IsValid)
             {
@@ -141,7 +141,55 @@ namespace QuizSystem.API.Controllers
             try
             {
                 Log.Information("New examStudent created");
-                return Ok(examStudentService.CreateOrGet(dto));
+                return Ok(examStudentService.Create(dto));
+            }
+            catch (Exception ex)
+            {
+                var errorObject = new ObjectResult(ex.Message);
+                errorObject.StatusCode = StatusCodes.Status500InternalServerError;
+                return errorObject;
+            }
+        }
+
+        [HttpPost]
+        [Route("ExamStudent/Get")]
+        [Authorize(Roles = "Student")]
+        public IActionResult GetExamStudent(ExamStudentCreateDTO dto)
+        {
+            if (!ModelState.IsValid)
+            {
+                Log.Error("Get examStudent modelstate error");
+                return BadRequest(ModelState);
+            }
+
+            try
+            {
+                Log.Information("Get examStudent successful");
+                return Ok(examStudentService.GetByStudentAndExamId(dto));
+            }
+            catch (Exception ex)
+            {
+                var errorObject = new ObjectResult(ex.Message);
+                errorObject.StatusCode = StatusCodes.Status500InternalServerError;
+                return errorObject;
+            }
+        }
+
+        [HttpPost]
+        [Route("ExamStudent/Exist")]
+        [Authorize(Roles = "Student")]
+        public IActionResult ExamStudentExist(ExamStudentCreateDTO dto)
+        {
+            if (!ModelState.IsValid)
+            {
+                Log.Error("ExamStudentExist modelstate error");
+                return BadRequest(ModelState);
+            }
+
+            try
+            {
+                Log.Information("ExamStudentExist successful");
+                return Ok(examStudentService.StudentExamExist(dto));
             }
             catch (Exception ex)
             {
@@ -154,7 +202,7 @@ namespace QuizSystem.API.Controllers
         [HttpPatch]
         [Route("ExamStudent/UpdateGrade")]
         [Authorize(Roles = "Student")]
-        public IActionResult UpdateExamStudentGrade(ExamStudentAddGradeDTO dto)
+        public IActionResult UpdateExamStudentGrade(IdDTO dto)
         {
             if (!ModelState.IsValid)
             {
@@ -166,54 +214,6 @@ namespace QuizSystem.API.Controllers
             {
                 Log.Information("Update examStudent Grade was successful");
                 return Ok(examStudentService.UpdateGrade(dto));
-            }
-            catch (Exception ex)
-            {
-                var errorObject = new ObjectResult(ex.Message);
-                errorObject.StatusCode = StatusCodes.Status500InternalServerError;
-                return errorObject;
-            }
-        }
-
-        [HttpPatch]
-        [Route("ExamStudent/UpdateTimeLeft")]
-        [Authorize(Roles = "Student")]
-        public IActionResult ExamStudentCountDownTimeLeft(IdDTO dto)
-        {
-            if (!ModelState.IsValid)
-            {
-                Log.Error("Update examStudent time left modelstate error");
-                return BadRequest(ModelState);
-            }
-
-            try
-            {
-                Log.Information("Update examStudent time left was successful");
-                return Ok(examStudentService.CountDownTimeLeft(dto));
-            }
-            catch (Exception ex)
-            {
-                var errorObject = new ObjectResult(ex.Message);
-                errorObject.StatusCode = StatusCodes.Status500InternalServerError;
-                return errorObject;
-            }
-        }
-
-        [HttpPatch]
-        [Route("ExamStudent/FinishExam")]
-        [Authorize(Roles = "Student")]
-        public IActionResult ExamStudentFinishExam(IdDTO dto)
-        {
-            if (!ModelState.IsValid)
-            {
-                Log.Error("Finish examStudent modelstate error");
-                return BadRequest(ModelState);
-            }
-
-            try
-            {
-                Log.Information("Finish examStudent was successful");
-                return Ok(examStudentService.FinishExam(dto));
             }
             catch (Exception ex)
             {
@@ -250,52 +250,6 @@ namespace QuizSystem.API.Controllers
             
         }
 
-        [HttpPost]
-        [Route("ExamStudentQuestion/CreateOrGet")]
-        [Authorize(Roles = "Student")]
-        public IActionResult CreateOrGetExamStudentQuestion(ExamStudentQuestionCreateDTO dto)
-        {
-            if (!ModelState.IsValid)
-            {
-                Log.Error("Create examStudentQuestion modelstate error");
-                return BadRequest(ModelState);
-            }
-
-            try
-            {
-                Log.Information("New examStudentQuestion created");
-                return Ok(examStudentService.CreateOrGetQuestion(dto));
-            }
-            catch (Exception ex)
-            {
-                var errorObject = new ObjectResult(ex.Message);
-                errorObject.StatusCode = StatusCodes.Status500InternalServerError;
-                return errorObject;
-            }
-        }
-
-        [HttpPatch]
-        [Route("ExamStudentQuestion/Update")]
-        [Authorize(Roles = "Student")]
-        public IActionResult UpdateExamStudentQuestion(ExamStudentAddGradeDTO dto)
-        {
-            if (!ModelState.IsValid)
-            {
-                Log.Error("Update examStudentQuestion modelstate error");
-                return BadRequest(ModelState);
-            }
-
-            try
-            {
-                Log.Information("Update examStudentQuestion was successful");
-                return Ok(examStudentService.UpdateGrade(dto));
-            }
-            catch (Exception ex)
-            {
-                var errorObject = new ObjectResult(ex.Message);
-                errorObject.StatusCode = StatusCodes.Status500InternalServerError;
-                return errorObject;
-            }
-        }
+        
     }
 }

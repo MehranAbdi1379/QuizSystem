@@ -150,6 +150,9 @@
   <data name="ExamNotExistExceptionMessage" xml:space="preserve">
     <value>Exam doesn't exist</value>
   </data>
+  <data name="ExamStudentAlreadyExistExceptionMessage" xml:space="preserve">
+    <value>ExamStudent Already exists</value>
+  </data>
   <data name="ExamStudentExamIdNotExistExceptionMessage" xml:space="preserve">
     <value>ExamStudent Exam not exist</value>
   </data>

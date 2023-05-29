@@ -160,6 +160,15 @@ namespace QuizSystem.Domain.Exceptions {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ExamStudent Already exists.
+        /// </summary>
+        public static string ExamStudentAlreadyExistExceptionMessage {
+            get {
+                return ResourceManager.GetString("ExamStudentAlreadyExistExceptionMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ExamStudent Exam not exist.
         /// </summary>
         public static string ExamStudentExamIdNotExistExceptionMessage {

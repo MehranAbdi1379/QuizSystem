@@ -5,13 +5,14 @@ namespace QuizSystem.Service
 {
     public interface IExamStudentService
     {
-        ExamStudent CountDownTimeLeft(IdDTO dto);
-        ExamStudent CreateOrGet(ExamStudentCreateDTO dto);
+        ExamStudent UpdateGrade(IdDTO dto);
         void Delete(IdDTO dto);
-        ExamStudent FinishExam(IdDTO dto);
-        ExamStudent UpdateGrade(ExamStudentAddGradeDTO dto);
-        public ExamStudentQuestion CreateOrGetQuestion(ExamStudentQuestionCreateDTO dto);
-        public ExamStudentQuestion UpdateQuestion(ExamStudentQuestionUpdateDTO dto);
+        ExamStudentQuestion UpdateQuestion(ExamStudentQuestionUpdateDTO dto);
+        public ExamStudent Create(ExamStudentCreateDTO dto);
+        public ExamStudent GetByStudentAndExamId(ExamStudentCreateDTO dto);
+        public ExamStudentQuestion GetQuestion(ExamStudentQuestionGetDTO dto);
+        public bool StudentExamExist(ExamStudentCreateDTO dto);
+
 
     }
 }

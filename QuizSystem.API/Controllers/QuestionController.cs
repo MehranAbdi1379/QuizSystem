@@ -11,20 +11,23 @@ namespace QuizSystem.API.Controllers
 {
     [Route("api/Question")]
     [ApiController]
-    [Authorize(Roles =("Professor"))]
+    
     public class QuestionController : ControllerBase
     {
         private readonly IMultipleChoiceQuestionService multipleChoiceQuestionService;
         private readonly IDescriptiveQuestionService descriptiveQuestionService;
         private readonly IGradedQuestionService gradedQuestionService;
-        public QuestionController(IDescriptiveQuestionService descriptiveQuestionService, IMultipleChoiceQuestionService multipleChoiceQuestionService, IGradedQuestionService gradedQuestionService)
+        private readonly IExamStudentService examStudentService;
+        public QuestionController(IDescriptiveQuestionService descriptiveQuestionService, IMultipleChoiceQuestionService multipleChoiceQuestionService, IGradedQuestionService gradedQuestionService, IExamStudentService examStudentService)
         {
             this.descriptiveQuestionService = descriptiveQuestionService;
             this.multipleChoiceQuestionService = multipleChoiceQuestionService;
             this.gradedQuestionService = gradedQuestionService;
+            this.examStudentService = examStudentService;
         }
         [HttpPost]
         [Route("Descriptive/Create")]
+        [Authorize(Roles = ("Professor"))]
         public IActionResult CreateDescriptiveQuestion(QuestionCreateDTO dto)
         {
             if (!ModelState.IsValid)
@@ -49,6 +52,7 @@ namespace QuizSystem.API.Controllers
 
         [HttpPut]
         [Route("Descriptive/Update")]
+        [Authorize(Roles = ("Professor"))]
         public IActionResult UpdateDescriptiveQuestion(QuestionUpdateDTO dto)
         {
             if (!ModelState.IsValid)
@@ -72,6 +76,7 @@ namespace QuizSystem.API.Controllers
 
         [HttpDelete]
         [Route("Descriptive/Delete")]
+        [Authorize(Roles = ("Professor"))]
         public IActionResult DeleteDescriptiveQuestion(IdDTO dto)
         {
             if (!ModelState.IsValid)
@@ -96,6 +101,7 @@ namespace QuizSystem.API.Controllers
 
         [HttpPost]
         [Route("Descriptive/GetByCourseAndProfessorId")]
+        [Authorize(Roles = ("Professor"))]
         public IActionResult GetDescriptiveQuestionByCourseAndProfessorId(CourseAndProfessorIdDTO dto)
         {
             if (!ModelState.IsValid)
@@ -118,7 +124,32 @@ namespace QuizSystem.API.Controllers
         }
 
         [HttpPost]
+        [Route("Descriptive/GetById")]
+        [Authorize(Roles = ("Professor,Student"))]
+        public IActionResult GetDescriptiveQuestionById(IdDTO dto)
+        {
+            if (!ModelState.IsValid)
+            {
+                Log.Error("Descriptive question getById modelstate error.");
+                return BadRequest(ModelState);
+
+            }
+            try
+            {
+                Log.Information($"Descriptive question getById successful");
+                return Ok(descriptiveQuestionService.GetWithId(dto));
+            }
+            catch (Exception ex)
+            {
+                var errorObject = new ObjectResult(ex.Message);
+                errorObject.StatusCode = StatusCodes.Status500InternalServerError;
+                return errorObject;
+            }
+        }
+
+        [HttpPost]
         [Route("MultipleChoice/Create")]
+        [Authorize(Roles = ("Professor"))]
         public IActionResult CreateMultipleChoiceQuestion(QuestionCreateDTO dto)
         {
             if (!ModelState.IsValid)
@@ -142,6 +173,7 @@ namespace QuizSystem.API.Controllers
 
         [HttpPut]
         [Route("MultipleChoice/Update")]
+        [Authorize(Roles = ("Professor"))]
         public IActionResult UpdateMultipleChoiceQuestion(QuestionUpdateDTO dto)
         {
             if (!ModelState.IsValid)
@@ -165,6 +197,7 @@ namespace QuizSystem.API.Controllers
 
         [HttpDelete]
         [Route("MultipleChoice/Delete")]
+        [Authorize(Roles = ("Professor"))]
         public IActionResult DeleteMultipleChoiceQuestion(IdDTO dto)
         {
             if (!ModelState.IsValid)
@@ -189,6 +222,7 @@ namespace QuizSystem.API.Controllers
 
         [HttpPost]
         [Route("MultipleChoice/GetByCourseAndProfessorId")]
+        [Authorize(Roles = ("Professor"))]
         public IActionResult GetMultipleChoiceQuestionByCourseAndProfessorId(CourseAndProfessorIdDTO dto)
         {
             if (!ModelState.IsValid)
@@ -211,7 +245,32 @@ namespace QuizSystem.API.Controllers
         }
 
         [HttpPost]
+        [Route("MultipleChoice/GetById")]
+        [Authorize(Roles = ("Professor,Student"))]
+        public IActionResult GetMultipleChoiceQuestionById(IdDTO dto)
+        {
+            if (!ModelState.IsValid)
+            {
+                Log.Error("Multiple choice question getById modelstate error.");
+                return BadRequest(ModelState);
+
+            }
+            try
+            {
+                Log.Information($"Multiple choice question getById successful");
+                return Ok(multipleChoiceQuestionService.GetWithId(dto));
+            }
+            catch (Exception ex)
+            {
+                var errorObject = new ObjectResult(ex.Message);
+                errorObject.StatusCode = StatusCodes.Status500InternalServerError;
+                return errorObject;
+            }
+        }
+
+        [HttpPost]
         [Route("MultipleChoice/Answer/Create")]
+        [Authorize(Roles = ("Professor"))]
         public IActionResult CreateMultipleChoiceAnswer(MultipleChoiceAnswerCreateDTO dto)
         {
             if (!ModelState.IsValid)
@@ -235,6 +294,7 @@ namespace QuizSystem.API.Controllers
 
         [HttpDelete]
         [Route("MultipleChoice/Answer/Delete")]
+        [Authorize(Roles = ("Professor"))]
         public IActionResult DeleteMultipleChoiceAnswer(IdDTO dto)
         {
             if (!ModelState.IsValid)
@@ -259,6 +319,7 @@ namespace QuizSystem.API.Controllers
 
         [HttpPatch]
         [Route("MultipleChoice/Answer/Update")]
+        [Authorize(Roles = ("Professor"))]
         public IActionResult UpdateMultipleChoiceAnswer(MultipleChoiceAnswerUpdateDTO dto)
         {
             if (!ModelState.IsValid)
@@ -282,6 +343,7 @@ namespace QuizSystem.API.Controllers
 
         [HttpPost]
         [Route("MultipleChoice/Answer/GetByQuestionId")]
+        [Authorize(Roles = ("Professor,Student"))]
         public IActionResult GetMultipleChoiceAnswersByQuestionId(IdDTO dto)
         {
             if (!ModelState.IsValid)
@@ -306,6 +368,7 @@ namespace QuizSystem.API.Controllers
 
         [HttpPost]
         [Route("GradedQuestion/Create")]
+        [Authorize(Roles = ("Professor"))]
         public IActionResult CreateGradedQuestion(GradedQuestionCreateDTO dto)
         {
             if (!ModelState.IsValid)
@@ -329,6 +392,7 @@ namespace QuizSystem.API.Controllers
 
         [HttpDelete]
         [Route("GradedQuestion/Delete")]
+        [Authorize(Roles = ("Professor"))]
         public IActionResult DeleteGradedQuestion(IdDTO dto)
         {
             if (!ModelState.IsValid)
@@ -352,6 +416,7 @@ namespace QuizSystem.API.Controllers
 
         [HttpPost]
         [Route("GradedQuestion/GetAllByExamId")]
+        [Authorize(Roles = ("Professor,Student"))]
         public IActionResult GradedQuestionGetAllByExamId(IdDTO dto)
         {
             if (!ModelState.IsValid)
@@ -374,6 +439,7 @@ namespace QuizSystem.API.Controllers
         }
         [HttpPatch]
         [Route("GradedQuestion/Update")]
+        [Authorize(Roles = ("Professor"))]
         public IActionResult GradedQuestionUpdateGrade(GradedQuestionUpdateDTO dto)
         {
             if (!ModelState.IsValid)
@@ -397,6 +463,7 @@ namespace QuizSystem.API.Controllers
 
         [HttpPost]
         [Route("GradedQuestion/GetByQuestionId")]
+        [Authorize(Roles = ("Professor,Student"))]
         public IActionResult GradedQuestionGetByQuestionId(IdDTO dto)
         {
             if (!ModelState.IsValid)
@@ -409,6 +476,102 @@ namespace QuizSystem.API.Controllers
                 Log.Information($"Graded question GetByExamAndQuestionId successful");
 
                 return Ok(gradedQuestionService.GetByQuestionId(dto));
+            }
+            catch (Exception ex)
+            {
+                var errorObject = new ObjectResult(ex.Message);
+                errorObject.StatusCode = StatusCodes.Status500InternalServerError;
+                return errorObject;
+            }
+        }
+
+        [HttpPost]
+        [Route("GradedQuestion/GetDescriptiveQuestionsOnly")]
+        [Authorize(Roles = ("Professor,Student"))]
+        public IActionResult GradedQuestionGetDescriptiveQuestionsOnly(IdDTO dto)
+        {
+            if (!ModelState.IsValid)
+            {
+                Log.Error("Graded question GetDescriptiveQuestionsOnly modelstate error.");
+                return BadRequest(ModelState);
+            }
+            try
+            {
+                Log.Information($"Graded question GetDescriptiveQuestionsOnly  successful");
+
+                return Ok(gradedQuestionService.GetDescriptiveQuestionsOnly(dto));
+            }
+            catch (Exception ex)
+            {
+                var errorObject = new ObjectResult(ex.Message);
+                errorObject.StatusCode = StatusCodes.Status500InternalServerError;
+                return errorObject;
+            }
+        }
+
+        [HttpPost]
+        [Route("GradedQuestion/GetMultipleChoiceQuestionsOnly")]
+        [Authorize(Roles = ("Professor,Student"))]
+        public IActionResult GradedQuestionGetMultipleChoiceQuestionsOnly(IdDTO dto)
+        {
+            if (!ModelState.IsValid)
+            {
+                Log.Error("Graded question GetMultipleChoiceQuestionsOnly modelstate error.");
+                return BadRequest(ModelState);
+            }
+            try
+            {
+                Log.Information($"Graded question GetMultipleChoiceQuestionsOnly successful");
+
+                return Ok(gradedQuestionService.GetMultipleChoiceQuestionsOnly(dto));
+            }
+            catch (Exception ex)
+            {
+                var errorObject = new ObjectResult(ex.Message);
+                errorObject.StatusCode = StatusCodes.Status500InternalServerError;
+                return errorObject;
+            }
+        }
+
+        [HttpPost]
+        [Route("ExamStudentQuestion/Get")]
+        [Authorize(Roles = "Student")]
+        public IActionResult GetExamStudentQuestion(ExamStudentQuestionGetDTO dto)
+        {
+            if (!ModelState.IsValid)
+            {
+                Log.Error("Get examStudentQuestion modelstate error");
+                return BadRequest(ModelState);
+            }
+
+            try
+            {
+                Log.Information("Get examStudentQuestion successful");
+                return Ok(examStudentService.GetQuestion(dto));
+            }
+            catch (Exception ex)
+            {
+                var errorObject = new ObjectResult(ex.Message);
+                errorObject.StatusCode = StatusCodes.Status500InternalServerError;
+                return errorObject;
+            }
+        }
+
+        [HttpPatch]
+        [Route("ExamStudentQuestion/Update")]
+        [Authorize(Roles = "Student")]
+        public IActionResult UpdateExamStudentQuestion(ExamStudentQuestionUpdateDTO dto)
+        {
+            if (!ModelState.IsValid)
+            {
+                Log.Error("Update examStudentQuestion modelstate error");
+                return BadRequest(ModelState);
+            }
+
+            try
+            {
+                Log.Information("Update examStudentQuestion was successful");
+                return Ok(examStudentService.UpdateQuestion(dto));
             }
             catch (Exception ex)
             {
