@@ -12,8 +12,6 @@ import {
 import React, { useEffect, useState } from "react";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import GradedQuestionService from "../../services/GradedQuestionService";
-import MultipleChoiceQuestionService from "../../services/MultipleChoiceQuestionService";
-import DescriptiveQuestionService from "../../services/DescriptiveQuestionService";
 import ExamStudentService from "../../services/ExamStudentService";
 
 const StudentExamTakingPage = () => {
@@ -27,14 +25,19 @@ const StudentExamTakingPage = () => {
   const [error, setError] = useState();
   const state = useLocation().state;
   const [activeQuestionId, setActiveQuestionId] = useState("");
-  const { GetByExamAndStudentId, Create } = new ExamStudentService();
-  const [examStudentQuestion, setExamStudentQuestion] = useState();
+  const [finished, setFinished] = useState(false);
+  const { GetByExamAndStudentId, Finished } = new ExamStudentService();
   const [examStudent, setExamStudent] = useState<{
     id: string;
-    startTime: string;
-    endTime: string;
+    startTime: Date;
+    endTime: Date;
   }>();
+
+  const [minutes, setMinutes] = useState<number>();
+  const [second, setSeconds] = useState<number>();
+
   const navigate = useNavigate();
+
   useEffect(() => {
     GetDescriptiveQuestionsOnly(
       state.examId,
@@ -46,7 +49,38 @@ const StudentExamTakingPage = () => {
       setMutltipleChoiceQuestions,
       setError
     );
+    Finished(state.examId, setFinished, setError);
     GetByExamAndStudentId(state.examId, setExamStudent, setError);
+    const secondTimer = setInterval(() => {
+      if (!finished) {
+        Finished(state.examId, setFinished, setError);
+        const endtime = examStudent?.endTime.toString().slice(11, 19);
+        const nowHours = new Date().getHours();
+        const nowMinutes = new Date().getMinutes();
+        const nowSeconds = new Date().getSeconds();
+        setSeconds(
+          (parseInt(endtime?.slice(0, 2) ? endtime?.slice(0, 2) : "") * 3600 +
+            parseInt(endtime?.slice(3, 5) ? endtime?.slice(3, 5) : "") * 60 +
+            parseInt(endtime?.slice(6, 8) ? endtime?.slice(6, 8) : "") -
+            (nowHours * 3600 + nowMinutes * 60 + nowSeconds)) %
+            60
+        );
+        setMinutes(
+          (parseInt(endtime?.slice(0, 2) ? endtime?.slice(0, 2) : "") * 3600 +
+            parseInt(endtime?.slice(3, 5) ? endtime?.slice(3, 5) : "") * 60 +
+            parseInt(endtime?.slice(6, 8) ? endtime?.slice(6, 8) : "") -
+            (nowHours * 3600 + nowMinutes * 60 + nowSeconds) -
+            ((parseInt(endtime?.slice(0, 2) ? endtime?.slice(0, 2) : "") *
+              3600 +
+              parseInt(endtime?.slice(3, 5) ? endtime?.slice(3, 5) : "") * 60 +
+              parseInt(endtime?.slice(6, 8) ? endtime?.slice(6, 8) : "") -
+              (nowHours * 3600 + nowMinutes * 60 + nowSeconds)) %
+              60)) /
+            60
+        );
+      }
+    }, 1000);
+    return () => clearInterval(secondTimer);
   }, [state]);
   return (
     <Container maxWidth={"70%"}>
@@ -58,11 +92,30 @@ const StudentExamTakingPage = () => {
         <HStack>
           {multipleChoiceQuestions && (
             <Box>
-              <Heading p={5} fontSize={22}>
-                Multiple choice questions:{" "}
-              </Heading>
+              <HStack justify={"space-between"}>
+                <Heading p={5} fontSize={22}>
+                  Multiple choice questions:{" "}
+                </Heading>
+                {!finished && (
+                  <Heading paddingRight={5} fontSize={20}>
+                    Time left: {minutes} {second}
+                  </Heading>
+                )}
+                {finished && (
+                  <Heading
+                    color={"red.400"}
+                    alignSelf={"start"}
+                    paddingRight={5}
+                    fontSize={20}
+                  >
+                    Exam is finished
+                  </Heading>
+                )}
+              </HStack>
+
               {multipleChoiceQuestions?.map((q) => (
                 <Button
+                  marginTop={3}
                   key={q.id}
                   colorScheme={activeQuestionId == q.id ? "whatsapp" : "gray"}
                   marginLeft={2}
@@ -83,10 +136,6 @@ const StudentExamTakingPage = () => {
               ))}
             </Box>
           )}
-          <Spacer></Spacer>
-          <Heading alignSelf={"start"} paddingRight={5} fontSize={20}>
-            Time left: not set
-          </Heading>
         </HStack>
 
         {descriptiveQuestions && (
@@ -96,6 +145,7 @@ const StudentExamTakingPage = () => {
             </Heading>
             {descriptiveQuestions?.map((q) => (
               <Button
+                marginTop={3}
                 key={q.id}
                 colorScheme={activeQuestionId == q.id ? "whatsapp" : "gray"}
                 marginLeft={2}
