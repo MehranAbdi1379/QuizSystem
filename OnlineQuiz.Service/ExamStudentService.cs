@@ -1,4 +1,5 @@
-﻿using QuizSystem.Domain.Models;
+﻿using Microsoft.VisualBasic;
+using QuizSystem.Domain.Models;
 using QuizSystem.Domain.Repository;
 using QuizSystem.Repository;
 using QuizSystem.Service.Contracts.DTO;
@@ -55,6 +56,17 @@ namespace QuizSystem.Service
             return repository.ExamStudentAlreadyExist(dto.ExamId, dto.StudentId);
         }
 
+        public bool isExamFinished(ExamStudentCreateDTO dto)
+        {
+            var examStudent = repository.GetByExamAndStudentId(dto.ExamId, dto.StudentId);
+
+            var now = DateTime.Now;
+
+            if(now>examStudent.EndTime)
+                return true;
+            return false;
+        }
+
         public ExamStudent GetByStudentAndExamId(ExamStudentCreateDTO dto)
         {
             return repository.GetByExamAndStudentId(dto.ExamId, dto.StudentId);
@@ -95,6 +107,13 @@ namespace QuizSystem.Service
         public ExamStudentQuestion UpdateQuestion(ExamStudentQuestionUpdateDTO dto)
         {
             var examStudentQuestion = examStudentQuestionRepository.GetWithId(dto.Id);
+            var examStudent = repository.GetWithId(examStudentQuestion.ExamStudentId);
+
+            if(examStudent.EndTime<DateTime.Now)
+            {
+                return examStudentQuestion;
+            }
+
             examStudentQuestion.Answer = dto.Answer;
 
             examStudentQuestionRepository.Update(examStudentQuestion);
@@ -102,5 +121,7 @@ namespace QuizSystem.Service
 
             return examStudentQuestion;
         }
+
+        
     }
 }
