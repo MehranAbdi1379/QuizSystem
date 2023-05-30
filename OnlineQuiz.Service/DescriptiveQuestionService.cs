@@ -15,11 +15,16 @@ namespace QuizSystem.Service
         private readonly IDescriptiveQuestionRepository descriptiveQuestionRepository;
         private readonly IProfessorRepository professorRepository;
         private readonly ICourseRepository courseRepository;
-        public DescriptiveQuestionService(IDescriptiveQuestionRepository descriptiveQuestionRepository, ICourseRepository courseRepository, IProfessorRepository professorRepository)
+        private readonly IExamRepository examRepository;
+        private readonly IGradedQuestionService gradedQuestionService;
+        public DescriptiveQuestionService(IDescriptiveQuestionRepository descriptiveQuestionRepository,
+             IGradedQuestionService gradedQuestionService,ICourseRepository courseRepository, IProfessorRepository professorRepository, IExamRepository examRepository)
         {
             this.descriptiveQuestionRepository = descriptiveQuestionRepository;
             this.courseRepository = courseRepository;
             this.professorRepository = professorRepository;
+            this.examRepository = examRepository;
+            this.gradedQuestionService = gradedQuestionService;
         }
 
         public DescriptiveQuestion Create(QuestionCreateDTO dto)
@@ -60,6 +65,19 @@ namespace QuizSystem.Service
         public DescriptiveQuestion GetWithId(IdDTO dto)
         {
             return descriptiveQuestionRepository.GetWithId(dto.Id);
+        }
+
+        public List<DescriptiveQuestion> GetWithExamId(IdDTO dto)
+        {
+            var questions = new List<DescriptiveQuestion>();
+            var descriptiveGradedQuestions = gradedQuestionService.GetDescriptiveQuestionsOnly(dto);
+
+            foreach (var item in descriptiveGradedQuestions)
+            {
+                questions.Add(descriptiveQuestionRepository.GetWithId(item.QuestionId));
+            }
+
+            return questions;
         }
     }
 }

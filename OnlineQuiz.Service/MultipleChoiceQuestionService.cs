@@ -16,12 +16,15 @@ namespace QuizSystem.Service
         private readonly IProfessorRepository professorRepository;
         private readonly ICourseRepository courseRepository;
         private readonly IMultipleChoiceAnswerRepository multipleChoiceAnswerRepository;
-        public MultipleChoiceQuestionService(IMultipleChoiceQuestionRepository multipleChoiceQuestionRepository, ICourseRepository courseRepository, IProfessorRepository professorRepository, IMultipleChoiceAnswerRepository multipleChoiceAnswerRepository)
+        private readonly IGradedQuestionService gradedQuestionService;
+        public MultipleChoiceQuestionService(IMultipleChoiceQuestionRepository multipleChoiceQuestionRepository, ICourseRepository courseRepository, IProfessorRepository professorRepository
+            , IMultipleChoiceAnswerRepository multipleChoiceAnswerRepository, IGradedQuestionService gradedQuestionService)
         {
             this.multipleChoiceQuestionRepository = multipleChoiceQuestionRepository;
             this.courseRepository = courseRepository;
             this.professorRepository = professorRepository;
             this.multipleChoiceAnswerRepository = multipleChoiceAnswerRepository;
+            this.gradedQuestionService = gradedQuestionService;
         }
 
         public MultipleChoiceQuestion Create(QuestionCreateDTO dto)
@@ -58,6 +61,19 @@ namespace QuizSystem.Service
             multipleChoiceAnswerRepository.Save();
             multipleChoiceQuestionRepository.Delete(question);
             multipleChoiceQuestionRepository.Save();
+        }
+
+        public List<MultipleChoiceQuestion> GetWithExamId(IdDTO dto)
+        {
+            var questions = new List<MultipleChoiceQuestion>();
+            var multipleChoiceQuestions = gradedQuestionService.GetDescriptiveQuestionsOnly(dto);
+
+            foreach (var item in multipleChoiceQuestions)
+            {
+                questions.Add(multipleChoiceQuestionRepository.GetWithId(item.QuestionId));
+            }
+
+            return questions;
         }
 
         public List<MultipleChoiceQuestion> GetWithCourseAndProfessorId(CourseAndProfessorIdDTO dto)
