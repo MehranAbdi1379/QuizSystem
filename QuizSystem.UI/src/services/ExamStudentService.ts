@@ -15,6 +15,11 @@ class ExamStudentService{
     {
         authApiClient().post('Exam/ExamStudent/Exist' , {examId , studentId: localStorage.getItem('userId')}).then(res => setExist(res.data)).catch(err => setError(err.response.data))
     }
+    GetAllByExamId(examId: any , setExamStudents: any , setError: any)
+    {
+        authApiClient().post('Exam/ExamStudent/GetAllByExamId' , {id:examId}).then(res => setExamStudents(res.data))
+        .catch(err => setError(err.response.data))
+    }
     Finished(examId:any , setFinished: any , setError: any)
     {
         authApiClient().post('Exam/ExamStudent/Finished' , {examId , studentId: localStorage.getItem('userId')}).then(res => setFinished(res.data)).catch(err => setError(err.response.data))
@@ -36,6 +41,11 @@ class ExamStudentService{
     UpdateQuestion(id: any , answer: any , setError: any)
     {
         authApiClient().patch('Question/ExamStudentQuestion/Update', {id, answer}).catch(err => setError(err.response.data))
+    }
+    GetAllQuestionsByExamAndStudentId(examId: any , studentId: any , setExamStudentQuestions: any , setError: any)
+    {
+        authApiClient().post('Question/ExamStudentQuestion/GetAllByExamAndStudentId' , {examId , studentId})
+        .then(res => setExamStudentQuestions(res.data)).catch(err => setError(err.response.data))
     }
 }
 

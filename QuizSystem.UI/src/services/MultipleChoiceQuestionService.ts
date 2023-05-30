@@ -29,6 +29,10 @@ class MultipleChoiceQuestionService{
     {
         authApiClient().post('Question/MultipleChoice/GetById' , {id}).then(res => setQuestion(res.data)).catch(err => setError(err.response.data))
     }
+    GetAllByExamId(id: any , setQuestions: any , setError: any)
+    {
+        authApiClient().post('Question/MultipleChoice/GetAllByExamId' , {id}).then(res => setQuestions(res.data)).catch(err => setError(err.response.data))
+    }
     CreateAnswer(answer: any,setError: any )
     {
         return authApiClient().post('Question/MultipleChoice/Answer/Create' , answer).catch(err => setError(err.response.data));
