@@ -71,6 +71,22 @@ namespace QuizSystem.Service
         {
             return repository.GetByExamAndStudentId(dto.ExamId, dto.StudentId);
         }
+        
+        public List<ExamStudent> GetAllByExamId(IdDTO dto)
+        {
+            return repository.GetAllByExamId(dto.Id);
+        }
+
+        //public List<Student> GetAllStudentsByExamId(IdDTO dto)
+        //{
+        //    var examStudents = repository.GetAllByExamId(dto.Id);
+        //    var students = new List<Student>();
+
+        //    foreach (var item in examStudents)
+        //    {
+        //        students.Add(studentRepository.GetWithId(item.StudentId));
+        //    }
+        //}
 
         public ExamStudent UpdateGrade(IdDTO dto)
         {
@@ -122,6 +138,12 @@ namespace QuizSystem.Service
             return examStudentQuestion;
         }
 
+        public List<ExamStudentQuestion> GetAllQuestionsByExamAndStudentId(ExamStudentQuestionsGetByExamAndStudentIdDTO dto)
+        {
+            var examStudent = repository.GetByExamAndStudentId(dto.ExamId, dto.StudentId);
+
+            return examStudentQuestionRepository.GetAllWithExamStudentId(examStudent.Id);
+        }
         
     }
 }
