@@ -100,6 +100,31 @@ namespace QuizSystem.API.Controllers
         }
 
         [HttpPost]
+        [Route("Descriptive/GetAllByExamId")]
+        [Authorize(Roles = ("Professor"))]
+        public IActionResult GetDescriptiveQuestionByExamId(IdDTO dto)
+        {
+            if (!ModelState.IsValid)
+            {
+                Log.Error("GetDescriptiveQuestionByExamId modelstate error.");
+                return BadRequest(ModelState);
+
+            }
+            try
+            {
+                Log.Information($"GetDescriptiveQuestionByExamId was successful");
+                return Ok(descriptiveQuestionService.GetWithExamId(dto));
+            }
+            catch (Exception ex)
+            {
+                var errorObject = new ObjectResult(ex.Message);
+                errorObject.StatusCode = StatusCodes.Status500InternalServerError;
+                return errorObject;
+            }
+
+        }
+
+        [HttpPost]
         [Route("Descriptive/GetByCourseAndProfessorId")]
         [Authorize(Roles = ("Professor"))]
         public IActionResult GetDescriptiveQuestionByCourseAndProfessorId(CourseAndProfessorIdDTO dto)
@@ -218,6 +243,31 @@ namespace QuizSystem.API.Controllers
                 errorObject.StatusCode = StatusCodes.Status500InternalServerError;
                 return errorObject;
             }
+        }
+
+        [HttpPost]
+        [Route("MultipleChoice/GetAllByExamId")]
+        [Authorize(Roles = ("Professor"))]
+        public IActionResult GetMultipleChoiceQuestionByExamId(IdDTO dto)
+        {
+            if (!ModelState.IsValid)
+            {
+                Log.Error("GetMultipleChoiceQuestionByExamId modelstate error.");
+                return BadRequest(ModelState);
+
+            }
+            try
+            {
+                Log.Information($"GetMultipleChoiceQuestionByExamId was successful");
+                return Ok(multipleChoiceQuestionService.GetWithExamId(dto));
+            }
+            catch (Exception ex)
+            {
+                var errorObject = new ObjectResult(ex.Message);
+                errorObject.StatusCode = StatusCodes.Status500InternalServerError;
+                return errorObject;
+            }
+
         }
 
         [HttpPost]
@@ -580,5 +630,30 @@ namespace QuizSystem.API.Controllers
                 return errorObject;
             }
         }
+
+        [HttpPost]
+        [Route("ExamStudentQuestion/GetAllByExamAndStudentId")]
+        [Authorize(Roles = "Student,Professor")]
+        public IActionResult ExamStudentQuestionGetAllByExamAndStudentId(ExamStudentQuestionsGetByExamAndStudentIdDTO dto)
+        {
+            if (!ModelState.IsValid)
+            {
+                Log.Error("ExamStudentQuestionGetAllByExamAndStudentId modelstate error");
+                return BadRequest(ModelState);
+            }
+
+            try
+            {
+                Log.Information("ExamStudentQuestionGetAllByExamAndStudentId was successful");
+                return Ok(examStudentService.GetAllQuestionsByExamAndStudentId(dto));
+            }
+            catch (Exception ex)
+            {
+                var errorObject = new ObjectResult(ex.Message);
+                errorObject.StatusCode = StatusCodes.Status500InternalServerError;
+                return errorObject;
+            }
+        }
+        
     }
 }

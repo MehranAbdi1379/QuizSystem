@@ -201,7 +201,7 @@ namespace QuizSystem.API.Controllers
 
         [HttpPatch]
         [Route("ExamStudent/UpdateGrade")]
-        [Authorize(Roles = "Student")]
+        [Authorize(Roles = "Professor")]
         public IActionResult UpdateExamStudentGrade(IdDTO dto)
         {
             if (!ModelState.IsValid)
@@ -225,7 +225,7 @@ namespace QuizSystem.API.Controllers
 
         [HttpDelete]
         [Route("ExamStudent/Delete")]
-        [Authorize(Roles = "Student,Professor")]
+        [Authorize(Roles = "Professor")]
         public IActionResult DeleteExamStudent(IdDTO dto)
         {
             if (!ModelState.IsValid)
@@ -265,6 +265,30 @@ namespace QuizSystem.API.Controllers
             {
                 Log.Information("ExamStudentFinished successful");
                 return Ok(examStudentService.isExamFinished(dto));
+            }
+            catch (Exception ex)
+            {
+                var errorObject = new ObjectResult(ex.Message);
+                errorObject.StatusCode = StatusCodes.Status500InternalServerError;
+                return errorObject;
+            }
+        }
+
+        [HttpPost]
+        [Route("ExamStudent/GetAllByExamId")]
+        [Authorize(Roles = "Professor")]
+        public IActionResult ExamStudentGetAllByExamId(IdDTO dto)
+        {
+            if (!ModelState.IsValid)
+            {
+                Log.Error("ExamStudentGetAllByExamId modelstate error");
+                return BadRequest(ModelState);
+            }
+
+            try
+            {
+                Log.Information("ExamStudentGetAllByExamId is successful");
+                return Ok(examStudentService.GetAllByExamId(dto));
             }
             catch (Exception ex)
             {

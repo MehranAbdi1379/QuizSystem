@@ -10,5 +10,6 @@ namespace QuizSystem.Service
         List<DescriptiveQuestion> GetWithCourseAndProfessorId(CourseAndProfessorIdDTO dto);
         DescriptiveQuestion Update(QuestionUpdateDTO dto);
         public DescriptiveQuestion GetWithId(IdDTO dto);
+        List<DescriptiveQuestion> GetWithExamId(IdDTO dto);
     }
 }
