@@ -36,9 +36,13 @@ const StudentExamDescriptiveQuestionPage = () => {
   } = useForm<FormData>({ resolver: zodResolver(schema) });
   const [question, setQuestion] = useState<Question>();
   const { GetById } = new DescriptiveQuestionService();
-  const { GetQuestion, UpdateQuestion } = new ExamStudentService();
+  const [finished, setFinished] = useState(false);
+  const { GetQuestion, UpdateQuestion, GetByExamAndStudentId, Finished } =
+    new ExamStudentService();
+  const [examStudent, setExamStudent] = useState<{ endTime: string }>();
 
   useEffect(() => {
+    GetByExamAndStudentId(state.examId, setExamStudent, setError);
     GetById(state.questionId, setQuestion, setError);
     GetQuestion(
       state.gradedQuestionId,
@@ -46,6 +50,7 @@ const StudentExamDescriptiveQuestionPage = () => {
       setExamStudentQuestion,
       setError
     );
+    Finished(state.examId, setFinished, setError);
   }, [state]);
   return (
     <Form
@@ -59,6 +64,7 @@ const StudentExamDescriptiveQuestionPage = () => {
 
         <FormControl marginTop={8}>
           <Textarea
+            disabled={finished}
             {...register("answer")}
             defaultValue={examStudentQuestion?.answer}
           ></Textarea>
@@ -66,9 +72,11 @@ const StudentExamDescriptiveQuestionPage = () => {
         <Text marginTop={2} color={"red.400"}>
           {errors.answer?.message}
         </Text>
-        <FormControl marginTop={5}>
-          <Button type="submit">Submit</Button>
-        </FormControl>
+        {!finished && (
+          <FormControl marginTop={5}>
+            <Button type="submit">Submit</Button>
+          </FormControl>
+        )}
       </Box>
     </Form>
   );

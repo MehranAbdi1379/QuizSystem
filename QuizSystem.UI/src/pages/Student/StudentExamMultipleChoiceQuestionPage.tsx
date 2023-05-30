@@ -34,6 +34,7 @@ const StudentExamMultipleChoiceQuestionPage = () => {
     id: string;
     answer: string;
   }>();
+  const [finished, setFinished] = useState();
   const {
     register,
     formState: { errors },
@@ -43,7 +44,7 @@ const StudentExamMultipleChoiceQuestionPage = () => {
   const { GetById, GetAnswerByQuestionId } =
     new MultipleChoiceQuestionService();
   const [answers, setAnswers] = useState<Answer[]>();
-  const { GetQuestion, UpdateQuestion } = new ExamStudentService();
+  const { GetQuestion, UpdateQuestion, Finished } = new ExamStudentService();
 
   useEffect(() => {
     GetById(state.questionId, setQuestion, setError);
@@ -56,6 +57,7 @@ const StudentExamMultipleChoiceQuestionPage = () => {
       setExamStudentQuestion,
       setError
     );
+    Finished(state.examId, setFinished, setError);
   }, [state]);
   return (
     <Form
@@ -72,6 +74,7 @@ const StudentExamMultipleChoiceQuestionPage = () => {
             {answers?.map((answer) => (
               <HStack key={answer.id}>
                 <input
+                  disabled={finished}
                   type="radio"
                   {...register("answer")}
                   value={answer.title}
@@ -83,9 +86,11 @@ const StudentExamMultipleChoiceQuestionPage = () => {
           </Box>
         </FormControl>
         <Text>{errors.answer?.message}</Text>
-        <FormControl marginTop={5}>
-          <Button type="submit">Submit</Button>
-        </FormControl>
+        {!finished && (
+          <FormControl marginTop={5}>
+            <Button type="submit">Submit</Button>
+          </FormControl>
+        )}
       </Box>
     </Form>
   );

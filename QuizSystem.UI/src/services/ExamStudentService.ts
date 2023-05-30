@@ -15,6 +15,10 @@ class ExamStudentService{
     {
         authApiClient().post('Exam/ExamStudent/Exist' , {examId , studentId: localStorage.getItem('userId')}).then(res => setExist(res.data)).catch(err => setError(err.response.data))
     }
+    Finished(examId:any , setFinished: any , setError: any)
+    {
+        authApiClient().post('Exam/ExamStudent/Finished' , {examId , studentId: localStorage.getItem('userId')}).then(res => setFinished(res.data)).catch(err => setError(err.response.data))
+    }
     CountDownTimeLift(examStudentId: any , setError: any)
     {
         authApiClient().post('Exam/ExamStudent/UpdateTimeLeft', {id: examStudentId}).catch(err => setError(err.response.data))

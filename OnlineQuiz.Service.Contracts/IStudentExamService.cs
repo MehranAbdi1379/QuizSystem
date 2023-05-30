@@ -12,6 +12,7 @@ namespace QuizSystem.Service
         public ExamStudent GetByStudentAndExamId(ExamStudentCreateDTO dto);
         public ExamStudentQuestion GetQuestion(ExamStudentQuestionGetDTO dto);
         public bool StudentExamExist(ExamStudentCreateDTO dto);
+        public bool isExamFinished(ExamStudentCreateDTO dto);
 
 
     }

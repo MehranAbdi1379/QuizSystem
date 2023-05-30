@@ -250,6 +250,28 @@ namespace QuizSystem.API.Controllers
             
         }
 
-        
+        [HttpPost]
+        [Route("ExamStudent/Finished")]
+        [Authorize(Roles = "Student")]
+        public IActionResult ExamStudentFinished(ExamStudentCreateDTO dto)
+        {
+            if (!ModelState.IsValid)
+            {
+                Log.Error("ExamStudentFinished modelstate error");
+                return BadRequest(ModelState);
+            }
+
+            try
+            {
+                Log.Information("ExamStudentFinished successful");
+                return Ok(examStudentService.isExamFinished(dto));
+            }
+            catch (Exception ex)
+            {
+                var errorObject = new ObjectResult(ex.Message);
+                errorObject.StatusCode = StatusCodes.Status500InternalServerError;
+                return errorObject;
+            }
+        }
     }
 }

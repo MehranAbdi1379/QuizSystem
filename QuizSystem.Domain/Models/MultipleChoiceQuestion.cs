@@ -1,4 +1,5 @@
-﻿using QuizSystem.Domain.Repository;
+﻿using QuizSystem.Domain.Exceptions;
+using QuizSystem.Domain.Repository;
 using QuizSystem.Domain.Test.Models;
 using QuizSystem.Repository;
 using System;
@@ -24,10 +25,12 @@ namespace QuizSystem.Domain.Models
         }
         public string Title { get; private set; }
 
-        public void SetTitle(string title , IMultipleChoiceQuestionRepository repository, Guid professorId , Guid courseId)
+        public void SetTitle(string title, IMultipleChoiceQuestionRepository repository, Guid courseId, Guid professorId)
         {
-            if (repository.TitleExist(title , professorId , courseId))
+            if (repository.TitleExist(title, courseId, professorId))
                 throw new QuestionTitleExistsException();
+            else if (title.Length > 20)
+                throw new QuestionTitleLengthLongException();
             Title = title;
         }
     }
