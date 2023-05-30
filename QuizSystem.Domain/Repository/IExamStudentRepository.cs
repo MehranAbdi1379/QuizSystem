@@ -12,6 +12,7 @@ namespace QuizSystem.Domain.Repository
     {
         public bool ExamStudentAlreadyExist(Guid examId, Guid studentId);
         public ExamStudent GetByExamAndStudentId(Guid examId, Guid studentId);
+        List<ExamStudent> GetAllByExamId(Guid examId);
 
     }
 }

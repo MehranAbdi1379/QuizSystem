@@ -62,7 +62,7 @@ namespace QuizSystem.Domain.Models
 
             if(grade>maxGrade)
             {
-                throw new Exception();
+                throw new ExamStudentGradeMoreThanMaxException();
             }
 
             Grade = grade;

@@ -46,7 +46,7 @@ namespace QuizSystem.Domain.Models
         public void SetGrade(double grade ,Guid gradedQuestionId, IGradedQuestionRepository gradedQuestionRepository)
         {
             if (gradedQuestionRepository.GetWithId(gradedQuestionId).Grade < grade)
-                throw new Exception();
+                throw new ExamStudentGradeMoreThanMaxException();
             Grade = grade;
         }
     }

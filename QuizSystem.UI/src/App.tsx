@@ -44,6 +44,7 @@ import StudentExamInformationPage from "./pages/Student/StudentExamInformationPa
 import StudentExamTakingPage from "./pages/Student/StudentExamTakingPage";
 import StudentExamDescriptiveQuestionPage from "./pages/Student/StudentExamDescriptiveQuestionPage";
 import StudentExamMultipleChoiceQuestionPage from "./pages/Student/StudentExamMultipleChoiceQuestionPage";
+import ProfessorExamMarkPage from "./pages/Professor/ProfessorExamMarkPage";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -83,6 +84,7 @@ const router = createBrowserRouter(
               <Route path="create"></Route>
               <Route path="exam">
                 <Route index element={<ProfessorExamPage />}></Route>
+                <Route path="mark" element={<ProfessorExamMarkPage />}></Route>
                 <Route
                   path="create"
                   element={<ProfessorExamCreatePage />}

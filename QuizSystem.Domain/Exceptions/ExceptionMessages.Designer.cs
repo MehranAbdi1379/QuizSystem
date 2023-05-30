@@ -178,6 +178,15 @@ namespace QuizSystem.Domain.Exceptions {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Grade is more than maximum value.
+        /// </summary>
+        public static string ExamStudentGradeMoreThanMaxExceptionMessage {
+            get {
+                return ResourceManager.GetString("ExamStudentGradeMoreThanMaxExceptionMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ExamStudent doestn&apos;t exist.
         /// </summary>
         public static string ExamStudentNotExistExceptionMessage {

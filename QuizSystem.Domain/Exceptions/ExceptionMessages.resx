@@ -156,6 +156,9 @@
   <data name="ExamStudentExamIdNotExistExceptionMessage" xml:space="preserve">
     <value>ExamStudent Exam not exist</value>
   </data>
+  <data name="ExamStudentGradeMoreThanMaxExceptionMessage" xml:space="preserve">
+    <value>Grade is more than maximum value</value>
+  </data>
   <data name="ExamStudentNotExistExceptionMessage" xml:space="preserve">
     <value>ExamStudent doestn't exist</value>
   </data>
