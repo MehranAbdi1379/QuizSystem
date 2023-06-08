@@ -654,6 +654,29 @@ namespace QuizSystem.API.Controllers
                 return errorObject;
             }
         }
-        
+
+        [HttpPatch]
+        [Route("ExamStudentQuestion/UpdateGrade")]
+        [Authorize(Roles = "Student,Professor")]
+        public IActionResult UpdateExamStudentQuestionGrade(ExamStudentQuestionUpdateGradeDTO dto)
+        {
+            if (!ModelState.IsValid)
+            {
+                Log.Error("Update ExamStudentQuestionGrade modelstate error");
+                return BadRequest(ModelState);
+            }
+
+            try
+            {
+                Log.Information("Update ExamStudentQuestionGrade was successful");
+                return Ok(examStudentService.UpdateGrade(dto));
+            }
+            catch (Exception ex)
+            {
+                var errorObject = new ObjectResult(ex.Message);
+                errorObject.StatusCode = StatusCodes.Status500InternalServerError;
+                return errorObject;
+            }
+        }
     }
 }

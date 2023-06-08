@@ -5,7 +5,7 @@ namespace QuizSystem.Service
 {
     public interface IExamStudentService
     {
-        ExamStudent UpdateGrade(IdDTO dto);
+        public ExamStudentQuestion UpdateGrade(ExamStudentQuestionUpdateGradeDTO dto);
         void Delete(IdDTO dto);
         ExamStudentQuestion UpdateQuestion(ExamStudentQuestionUpdateDTO dto);
         public ExamStudent Create(ExamStudentCreateDTO dto);

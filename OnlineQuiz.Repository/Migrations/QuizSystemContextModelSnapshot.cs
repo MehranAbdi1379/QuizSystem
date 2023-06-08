@@ -359,9 +359,6 @@ namespace QuizSystem.Repository.Migrations
                     b.Property<Guid>("ExamId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<double>("Grade")
-                        .HasColumnType("float");
-
                     b.Property<DateTime>("StartTime")
                         .HasColumnType("datetime2");
 

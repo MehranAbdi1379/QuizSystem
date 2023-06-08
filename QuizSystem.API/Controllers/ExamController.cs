@@ -199,30 +199,6 @@ namespace QuizSystem.API.Controllers
             }
         }
 
-        [HttpPatch]
-        [Route("ExamStudent/UpdateGrade")]
-        [Authorize(Roles = "Professor")]
-        public IActionResult UpdateExamStudentGrade(IdDTO dto)
-        {
-            if (!ModelState.IsValid)
-            {
-                Log.Error("Update examStudent Grade modelstate error");
-                return BadRequest(ModelState);
-            }
-
-            try
-            {
-                Log.Information("Update examStudent Grade was successful");
-                return Ok(examStudentService.UpdateGrade(dto));
-            }
-            catch (Exception ex)
-            {
-                var errorObject = new ObjectResult(ex.Message);
-                errorObject.StatusCode = StatusCodes.Status500InternalServerError;
-                return errorObject;
-            }
-        }
-
         [HttpDelete]
         [Route("ExamStudent/Delete")]
         [Authorize(Roles = "Professor")]

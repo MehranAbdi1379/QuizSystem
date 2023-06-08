@@ -19,8 +19,11 @@ namespace QuizSystem.Service
         protected readonly IGradedQuestionRepository gradedQuestionRepository;
         protected readonly IExamStudentQuestionRepository examStudentQuestionRepository;
         protected readonly IExamStudentRepository examStudentRepository;
+        protected readonly IGradedQuestionService gradedQuestionService;
+        protected readonly IMultipleChoiceAnswerRepository multipleChoiceAnswerRepository;
 
-        public ExamStudentService(IStudentRepository studentRepository, IExamRepository examRepository, IExamStudentRepository repository, IGradedQuestionRepository gradedQuestionRepository, IExamStudentQuestionRepository examStudentQuestionRepository, IExamStudentRepository examStudentRepository)
+        public ExamStudentService(IStudentRepository studentRepository, IExamRepository examRepository, IExamStudentRepository repository, IGradedQuestionRepository gradedQuestionRepository, IExamStudentQuestionRepository examStudentQuestionRepository
+            , IGradedQuestionService gradedQuestionService, IExamStudentRepository examStudentRepository, IMultipleChoiceAnswerRepository multipleChoiceAnswerRepository)
         {
             this.studentRepository = studentRepository;
             this.examRepository = examRepository;
@@ -28,6 +31,8 @@ namespace QuizSystem.Service
             this.gradedQuestionRepository = gradedQuestionRepository;
             this.examStudentQuestionRepository = examStudentQuestionRepository;
             this.examStudentRepository = examStudentRepository;
+            this.gradedQuestionService = gradedQuestionService;
+            this.multipleChoiceAnswerRepository = multipleChoiceAnswerRepository;
         }
 
 
@@ -88,23 +93,15 @@ namespace QuizSystem.Service
         //    }
         //}
 
-        public ExamStudent UpdateGrade(IdDTO dto)
+        public ExamStudentQuestion UpdateGrade(ExamStudentQuestionUpdateGradeDTO dto)
         {
-            var examStudent = repository.GetWithId(dto.Id);
-            var questions = examStudentQuestionRepository.GetAllWithExamStudentId(dto.Id);
-            double grade = 0;
+            var examStudentQuestion = examStudentQuestionRepository.GetWithId(dto.Id);
+            examStudentQuestion.SetGrade(dto.Grade, examStudentQuestion.GradedQuestionId, gradedQuestionRepository);
 
-            foreach (var item in questions)
-            {
-                grade += item.Grade;
-            }
+            examStudentQuestionRepository.Update(examStudentQuestion);
+            examStudentQuestionRepository.Save();
 
-            examStudent.SetGrade(grade, examStudent.ExamId , gradedQuestionRepository);
-
-            repository.Update(examStudent);
-            repository.Save();
-
-            return examStudent;
+            return examStudentQuestion;
         }
 
         public void Delete(IdDTO dto)
@@ -125,10 +122,37 @@ namespace QuizSystem.Service
             var examStudentQuestion = examStudentQuestionRepository.GetWithId(dto.Id);
             var examStudent = repository.GetWithId(examStudentQuestion.ExamStudentId);
 
+            
+
             if(examStudent.EndTime<DateTime.Now)
             {
                 return examStudentQuestion;
             }
+
+            var gradedMultipleChoiceQuestions = gradedQuestionService.GetMultipleChoiceQuestionsOnly(new IdDTO { Id = examStudent.ExamId });
+
+            foreach (var item in gradedMultipleChoiceQuestions)
+            {
+                if (examStudentQuestion.GradedQuestionId == item.Id)
+                {
+                    var answers = multipleChoiceAnswerRepository.GetByQuestionId(item.QuestionId);
+
+                    foreach (var answer in answers)
+                    {
+                        if (answer.RightAnswer == true)
+                        {
+                            if (examStudentQuestion.Answer == answer.Title)
+                            {
+                                examStudentQuestion.SetGrade(item.Grade, item.Id, gradedQuestionRepository);
+                                examStudentQuestionRepository.Update(examStudentQuestion);
+                            }
+                        }
+                    }
+                }
+
+            }
+
+            examStudentQuestionRepository.Save();
 
             examStudentQuestion.Answer = dto.Answer;
 
