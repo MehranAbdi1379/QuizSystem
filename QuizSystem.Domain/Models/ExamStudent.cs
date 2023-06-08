@@ -22,12 +22,10 @@ namespace QuizSystem.Domain.Models
             ValidateUniqueExamStudent(examStudentRepository, examId, studentId);
             SetExamId(examId, examRepository);
             SetStudentId(studentId, studentRepository);
-            SetGrade(grade, examId, gradedQuestionRepository);
             SetTime( examId, examRepository);
         }
         public Guid ExamId { get; private set; }
         public Guid StudentId { get; private set; }
-        public double Grade { get; private set; }
         public DateTime StartTime{ get; private set; }
         public DateTime EndTime { get; private set; }
 
@@ -49,23 +47,6 @@ namespace QuizSystem.Domain.Models
         {
             if (examStudentRepository.ExamStudentAlreadyExist(examId, studentId))
                 throw new ExamStudentAlreadyExistException();
-        }
-
-        public void SetGrade(double grade , Guid examId, IGradedQuestionRepository gradedQuestionRepository)
-        {
-            var questions = gradedQuestionRepository.GetAllByExamId(examId);
-            double maxGrade = 0;
-            foreach (var item in questions)
-            {
-                maxGrade += item.Grade;
-            }
-
-            if(grade>maxGrade)
-            {
-                throw new ExamStudentGradeMoreThanMaxException();
-            }
-
-            Grade = grade;
         }
 
         public void SetTime(Guid examId, IExamRepository examRepository)

@@ -65,14 +65,6 @@ namespace QuizSystem.Domain.Test.Models
             Assert.AreEqual(endTime , examStudent.EndTime);
         }
 
-        [TestMethod]
-        public void SetGrade_Retrieve()
-        {
-            var grade = 5;
-            var examStudent = InitialExamStudent(Guid.NewGuid(), Guid.NewGuid(), grade);
-            Assert.AreEqual(grade, examStudent.Grade);
-        }
-
 
         public ExamStudent InitialExamStudent(Guid examId , Guid studentId , double grade = 0 , double timeLeft = 100)
         {

@@ -36,12 +36,8 @@ const ProfessorExamMarkPage = () => {
     useState<Question[]>();
   const [multipleChoiceQuestions, setMultipleChoiceQuestions] =
     useState<Question[]>();
-  const {
-    Update,
-    Delete,
-    GetDescriptiveQuestionsOnly,
-    GetMultipleChoiceQuestionsOnly,
-  } = new GradedQuestionService();
+  const { GetDescriptiveQuestionsOnly, GetMultipleChoiceQuestionsOnly } =
+    new GradedQuestionService();
 
   const [examStudentQuestions, setExamStudentQuestions] = useState<
     {
@@ -49,9 +45,11 @@ const ProfessorExamMarkPage = () => {
       examStudentId: string;
       gradedQuestionId: string;
       grade: number;
+      answer: string;
     }[]
   >();
-  const { GetAllQuestionsByExamAndStudentId } = new ExamStudentService();
+  const { GetAllQuestionsByExamAndStudentId, UpdateQuestionGrade } =
+    new ExamStudentService();
   const { GetAllByExamId: GetDescriptiveQuestionsByExamId } =
     new DescriptiveQuestionService();
   const { GetAllByExamId: GetMutlipleChoiceQuestionByExamId } =
@@ -64,6 +62,61 @@ const ProfessorExamMarkPage = () => {
   });
   gradedDescriptiveQuestions?.forEach((element) => {
     gradeSum += element.grade;
+  });
+
+  var gradedDescriptiveQuestionsTemp: {
+    gradedQuestionId: string;
+    title: string;
+    description: string;
+    answer: string;
+    questionId: string;
+    examStudentQuestionId: string;
+    grade: number;
+    maxGrade: number;
+  }[] = [];
+
+  descriptiveQuestions?.forEach((descriptiveQuestion) => {
+    var newGradeDescriptiveQuestion: {
+      gradedQuestionId: string;
+      title: string;
+      description: string;
+      answer: string;
+      questionId: string;
+      examStudentQuestionId: string;
+      grade: number;
+      maxGrade: number;
+    } = {
+      gradedQuestionId: "",
+      answer: "",
+      title: "",
+      description: "",
+      questionId: "",
+      examStudentQuestionId: "",
+      grade: 0,
+      maxGrade: 0,
+    };
+    gradedDescriptiveQuestions?.forEach((gradedDescriptiveQuestion) => {
+      if (gradedDescriptiveQuestion.questionId == descriptiveQuestion.id) {
+        newGradeDescriptiveQuestion.gradedQuestionId =
+          gradedDescriptiveQuestion.id;
+        newGradeDescriptiveQuestion.maxGrade = gradedDescriptiveQuestion.grade;
+        examStudentQuestions?.forEach((examStudentQuestion) => {
+          if (
+            examStudentQuestion.gradedQuestionId == gradedDescriptiveQuestion.id
+          ) {
+            newGradeDescriptiveQuestion.answer = examStudentQuestion.answer;
+            newGradeDescriptiveQuestion.examStudentQuestionId =
+              examStudentQuestion.id;
+            newGradeDescriptiveQuestion.grade = examStudentQuestion.grade;
+          }
+        });
+      }
+    });
+    newGradeDescriptiveQuestion.description = descriptiveQuestion.description;
+    newGradeDescriptiveQuestion.title = descriptiveQuestion.title;
+    newGradeDescriptiveQuestion.questionId = descriptiveQuestion.id;
+
+    gradedDescriptiveQuestionsTemp.push(newGradeDescriptiveQuestion);
   });
 
   useEffect(() => {
@@ -97,66 +150,45 @@ const ProfessorExamMarkPage = () => {
   return (
     <Container marginTop={10} maxWidth={600}>
       <List spacing={5}>
-        {descriptiveQuestions
-          ?.map((q) => q)
-          .filter(function (q) {
-            return gradedDescriptiveQuestions
-              ?.map((q) => q.questionId)
-              .includes(q.id);
-          }).length && (
-          <Box
-            p={5}
-            bg={colorMode == "dark" ? "gray.600" : "gray.100"}
-            borderRadius={20}
-          >
-            <Heading>Descriptive Questions: </Heading>
-            {descriptiveQuestions
-              ?.map((q) => q)
-              .filter(function (q) {
-                return gradedDescriptiveQuestions
-                  ?.map((q) => q.questionId)
-                  .includes(q.id);
-              })
-              .map((descriptiveQuestion) => (
-                <Card key={descriptiveQuestion.id} margin={5}>
-                  <CardBody>
-                    <Heading fontSize={24}>{descriptiveQuestion.title}</Heading>
-                    <Text>{descriptiveQuestion.description}</Text>
-                    {examStudentQuestions
-                      ?.filter(function (examStudentQuestion) {
-                        return gradedDescriptiveQuestions
-                          ?.filter(function (gradedDescriptiveQuestion) {
-                            return descriptiveQuestions
-                              ?.map((q) => q.id)
-                              .includes(descriptiveQuestion.id);
-                          })
-                          .map((q) => q.id)
-                          .includes(examStudentQuestion.gradedQuestionId);
-                      })
-                      .map((que) => (
-                        <Box key={que.id}>
-                          <Text>Grade: </Text>
-                          <Input
-                            type="number"
-                            required
-                            defaultValue={que.grade}
-                            onChange={(e) => {
-                              if (e.target.value) {
-                                Update(
-                                  { id: que.id, grade: e.target.value },
-                                  setError
-                                );
-                              }
-                            }}
-                          ></Input>
-                        </Box>
-                      ))}
-                  </CardBody>
-                </Card>
-              ))}
-          </Box>
-        )}
+        <Box
+          p={5}
+          bg={colorMode == "dark" ? "gray.600" : "gray.100"}
+          borderRadius={20}
+        >
+          <Heading>Descriptive Questions: </Heading>
 
+          {gradedDescriptiveQuestionsTemp.map((q) => (
+            <Card key={q.questionId} margin={5}>
+              <CardBody>
+                <Heading fontSize={24}>{q.title}</Heading>
+                <Text>{q.description}</Text>
+                <Box marginTop={5}>
+                  <Text>Answer: </Text>
+                  <Text>{q.answer}</Text>
+                </Box>
+
+                <Box marginTop={5}>
+                  <Text>Max Grade: {q.maxGrade}</Text>
+                  <Text>Grade: </Text>
+                  <Input
+                    type="number"
+                    required
+                    defaultValue={q.grade}
+                    onChange={(e) => {
+                      if (e.target.value) {
+                        UpdateQuestionGrade(
+                          q.examStudentQuestionId,
+                          e.target.value,
+                          setError
+                        );
+                      }
+                    }}
+                  ></Input>
+                </Box>
+              </CardBody>
+            </Card>
+          ))}
+        </Box>
         <Box
           p={5}
           bg={colorMode == "dark" ? "gray.600" : "gray.100"}

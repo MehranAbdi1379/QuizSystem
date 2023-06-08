@@ -42,6 +42,10 @@ class ExamStudentService{
     {
         authApiClient().patch('Question/ExamStudentQuestion/Update', {id, answer}).catch(err => setError(err.response.data))
     }
+    UpdateQuestionGrade(id: any , grade: any , setError: any)
+    {
+        authApiClient().patch('Question/ExamStudentQuestion/UpdateGrade', {id , grade}).catch(err => setError(err.response.data))
+    }
     GetAllQuestionsByExamAndStudentId(examId: any , studentId: any , setExamStudentQuestions: any , setError: any)
     {
         authApiClient().post('Question/ExamStudentQuestion/GetAllByExamAndStudentId' , {examId , studentId})
