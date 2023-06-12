@@ -58,7 +58,7 @@ const ProfessorAllQuestionsPage = () => {
           bg={colorMode == "dark" ? "gray.600" : "gray.100"}
           borderRadius={20}
         >
-          <Heading>Descriptive Questions: </Heading>
+          <Heading fontSize={28}>Descriptive Questions: </Heading>
           {descriptiveQuestions?.map((q) => (
             <Card key={q.id} margin={5}>
               <CardHeader>
@@ -85,14 +85,6 @@ const ProfessorAllQuestionsPage = () => {
                   marginLeft={5}
                   onClick={() => {
                     Delete(q.id)
-                      .then(() =>
-                        GetByQuestionId(q.id).then((res) => {
-                          var result: { id: string }[] = res.data;
-                          result.forEach((element) => {
-                            DeleteGradedQuestion(element.id, setError);
-                          });
-                        })
-                      )
                       .then(() => setDeleteCounter(deleteCounter + 1))
                       .catch((err) => setError(err.response.data));
                   }}
@@ -108,7 +100,7 @@ const ProfessorAllQuestionsPage = () => {
           borderRadius={20}
           bg={colorMode == "dark" ? "gray.600" : "gray.100"}
         >
-          <Heading>Multiple Choice Questions: </Heading>
+          <Heading fontSize={28}>Multiple Choice Questions: </Heading>
           {multipleChoiceQuestions?.map((q) => (
             <Card key={q.id} margin={5}>
               <CardHeader>
