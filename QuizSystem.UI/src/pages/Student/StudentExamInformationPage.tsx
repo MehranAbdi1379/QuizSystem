@@ -99,7 +99,7 @@ const StudentExamInformationPage = () => {
           }}
           marginTop={7}
         >
-          Start the exam
+          Take/View the exam
         </Button>
       </Box>
     </Container>

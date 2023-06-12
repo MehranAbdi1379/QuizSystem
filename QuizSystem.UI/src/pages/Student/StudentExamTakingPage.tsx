@@ -33,8 +33,8 @@ const StudentExamTakingPage = () => {
     endTime: Date;
   }>();
 
-  const [minutes, setMinutes] = useState<number>();
-  const [second, setSeconds] = useState<number>();
+  const [minutes, setMinutes] = useState<number>(0);
+  const [second, setSeconds] = useState<number>(0);
 
   const navigate = useNavigate();
 
@@ -50,7 +50,36 @@ const StudentExamTakingPage = () => {
       setError
     );
     Finished(state.examId, setFinished, setError);
+
     GetByExamAndStudentId(state.examId, setExamStudent, setError);
+
+    if (!finished) {
+      Finished(state.examId, setFinished, setError);
+      const endtime = examStudent?.endTime.toString().slice(11, 19);
+      const nowHours = new Date().getHours();
+      const nowMinutes = new Date().getMinutes();
+      const nowSeconds = new Date().getSeconds();
+      setSeconds(
+        (parseInt(endtime?.slice(0, 2) ? endtime?.slice(0, 2) : "") * 3600 +
+          parseInt(endtime?.slice(3, 5) ? endtime?.slice(3, 5) : "") * 60 +
+          parseInt(endtime?.slice(6, 8) ? endtime?.slice(6, 8) : "") -
+          (nowHours * 3600 + nowMinutes * 60 + nowSeconds)) %
+          60
+      );
+      setMinutes(
+        (parseInt(endtime?.slice(0, 2) ? endtime?.slice(0, 2) : "") * 3600 +
+          parseInt(endtime?.slice(3, 5) ? endtime?.slice(3, 5) : "") * 60 +
+          parseInt(endtime?.slice(6, 8) ? endtime?.slice(6, 8) : "") -
+          (nowHours * 3600 + nowMinutes * 60 + nowSeconds) -
+          ((parseInt(endtime?.slice(0, 2) ? endtime?.slice(0, 2) : "") * 3600 +
+            parseInt(endtime?.slice(3, 5) ? endtime?.slice(3, 5) : "") * 60 +
+            parseInt(endtime?.slice(6, 8) ? endtime?.slice(6, 8) : "") -
+            (nowHours * 3600 + nowMinutes * 60 + nowSeconds)) %
+            60)) /
+          60
+      );
+    }
+
     const secondTimer = setInterval(() => {
       if (!finished) {
         Finished(state.examId, setFinished, setError);
@@ -89,54 +118,54 @@ const StudentExamTakingPage = () => {
         p={5}
         borderRadius={50}
       >
-        <HStack>
-          {multipleChoiceQuestions && (
-            <Box>
-              <HStack justify={"space-between"}>
-                <Heading p={5} fontSize={22}>
-                  Multiple choice questions:{" "}
+        {multipleChoiceQuestions && (
+          <Box>
+            <HStack justifyContent={"space-between"}>
+              <Heading p={5} fontSize={22}>
+                Multiple choice questions:{" "}
+              </Heading>
+              {!finished &&
+                (minutes || minutes == 0) &&
+                (second || second == 0) && (
+                  <Heading color={"green.200"} paddingRight={5} fontSize={20}>
+                    Time left: {minutes}:{second}
+                  </Heading>
+                )}
+              {!finished && !minutes && !second && (
+                <Heading color={"red.400"} paddingRight={5} fontSize={20}>
+                  Exam is started. Please select a question.
                 </Heading>
-                {!finished && (
-                  <Heading paddingRight={5} fontSize={20}>
-                    Time left: {minutes} {second}
-                  </Heading>
-                )}
-                {finished && (
-                  <Heading
-                    color={"red.400"}
-                    alignSelf={"start"}
-                    paddingRight={5}
-                    fontSize={20}
-                  >
-                    Exam is finished
-                  </Heading>
-                )}
-              </HStack>
+              )}
+              {finished && (
+                <Heading color={"red.400"} paddingRight={5} fontSize={20}>
+                  Exam is finished
+                </Heading>
+              )}
+            </HStack>
 
-              {multipleChoiceQuestions?.map((q) => (
-                <Button
-                  marginTop={3}
-                  key={q.id}
-                  colorScheme={activeQuestionId == q.id ? "whatsapp" : "gray"}
-                  marginLeft={2}
-                  onClick={() => {
-                    setActiveQuestionId(q.id);
-                    navigate("multiple-choice-question", {
-                      state: {
-                        examStudentId: examStudent?.id,
-                        gradedQuestionId: q.id,
-                        questionId: q.questionId,
-                        examId: state.examId,
-                      },
-                    });
-                  }}
-                >
-                  {multipleChoiceQuestions.indexOf(q) + 1}
-                </Button>
-              ))}
-            </Box>
-          )}
-        </HStack>
+            {multipleChoiceQuestions?.map((q) => (
+              <Button
+                marginTop={3}
+                key={q.id}
+                colorScheme={activeQuestionId == q.id ? "whatsapp" : "gray"}
+                marginLeft={2}
+                onClick={() => {
+                  setActiveQuestionId(q.id);
+                  navigate("multiple-choice-question", {
+                    state: {
+                      examStudentId: examStudent?.id,
+                      gradedQuestionId: q.id,
+                      questionId: q.questionId,
+                      examId: state.examId,
+                    },
+                  });
+                }}
+              >
+                {multipleChoiceQuestions.indexOf(q) + 1}
+              </Button>
+            ))}
+          </Box>
+        )}
 
         {descriptiveQuestions && (
           <Box>

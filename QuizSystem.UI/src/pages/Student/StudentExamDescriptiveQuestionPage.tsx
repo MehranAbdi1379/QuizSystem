@@ -72,6 +72,11 @@ const StudentExamDescriptiveQuestionPage = () => {
         <Text marginTop={2} color={"red.400"}>
           {errors.answer?.message}
         </Text>
+        {examStudentQuestion?.answer != "" && (
+          <Text marginTop={5} color="green.400">
+            Submited
+          </Text>
+        )}
         {!finished && (
           <FormControl marginTop={5}>
             <Button type="submit">Submit</Button>

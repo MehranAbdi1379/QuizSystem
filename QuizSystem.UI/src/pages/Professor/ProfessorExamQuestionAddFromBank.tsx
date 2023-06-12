@@ -130,7 +130,7 @@ const ProfessorExamQuestionAddFromBank = () => {
           bg={colorMode == "dark" ? "gray.600" : "gray.100"}
           borderRadius={20}
         >
-          <Heading>Descriptive Questions: </Heading>
+          <Heading fontSize={28}>Descriptive Questions: </Heading>
           {descriptiveQuestions
             ?.map((q) => q)
             .filter(function (q) {
@@ -163,7 +163,7 @@ const ProfessorExamQuestionAddFromBank = () => {
           borderRadius={20}
           bg={colorMode == "dark" ? "gray.600" : "gray.100"}
         >
-          <Heading>Multiple Choice Questions: </Heading>
+          <Heading fontSize={28}>Multiple Choice Questions: </Heading>
           {multipleChoiceQuestions
             ?.map((q) => q)
             .filter(function (q) {

@@ -52,7 +52,6 @@ class MultipleChoiceQuestionService{
     DeleteMultipleChoiceQuestionAndAnswers(questionId: any , setError: any)
     {
         const {Delete , GetAnswerByQuestionId , DeleteAnswer} = new MultipleChoiceQuestionService()
-        const {Delete:DeleteGradedQuestion , GetByQuestionId:GetGradedQuestionByQuestionId} = new GradedQuestionService()
         return Delete(questionId)
                     .then(() => GetAnswerByQuestionId(questionId,setError).then(res => {
                         var result : {id: string, rightAnswer: boolean, title: string, questionId: string}[] = res.data;
@@ -61,12 +60,6 @@ class MultipleChoiceQuestionService{
                             DeleteAnswer(element.id , setError);
                         });
                     }))
-                    .then(()=> GetGradedQuestionByQuestionId(questionId).then((res) => {
-                        var result: { id: string }[] = res.data;
-                        result.forEach((element) => {
-                          DeleteGradedQuestion(element.id, setError);
-                        });
-                      }))
                       .catch((err) => setError(err.response.data));
     }
 }

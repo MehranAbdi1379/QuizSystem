@@ -30,7 +30,7 @@ const ProfessorExamPage = () => {
     GetById(state.examId, setExam);
     GetAllByExamId(state.examId, setExamStudents, setError);
   }, [state]);
-  if (examStudents)
+  if (examStudents?.length && examStudents?.length > 0)
     return (
       <Container>
         <Box
