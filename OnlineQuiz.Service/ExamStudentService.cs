@@ -108,6 +108,14 @@ namespace QuizSystem.Service
         {
             var examStudent = repository.GetWithId(dto.Id);
 
+            var examStudentQuestions = examStudentQuestionRepository.GetAllWithExamStudentId(dto.Id);
+
+            foreach (var item in examStudentQuestions)
+            {
+                examStudentQuestionRepository.Delete(item);
+            }
+
+            examStudentQuestionRepository.Save();
             repository.Delete(examStudent);
             repository.Save();
         }
@@ -123,7 +131,6 @@ namespace QuizSystem.Service
             var examStudent = repository.GetWithId(examStudentQuestion.ExamStudentId);
 
             
-
             if(examStudent.EndTime<DateTime.Now)
             {
                 return examStudentQuestion;
@@ -141,7 +148,7 @@ namespace QuizSystem.Service
                     {
                         if (answer.RightAnswer == true)
                         {
-                            if (examStudentQuestion.Answer == answer.Title)
+                            if (dto.Answer == answer.Title)
                             {
                                 examStudentQuestion.SetGrade(item.Grade, item.Id, gradedQuestionRepository);
                                 examStudentQuestionRepository.Update(examStudentQuestion);

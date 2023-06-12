@@ -17,14 +17,17 @@ namespace QuizSystem.Service
         private readonly IMultipleChoiceQuestionRepository multipleChoiceQuestionRepository;
         private readonly IExamRepository examRepository;
         private readonly ICourseRepository courseRepository;
+        private readonly IExamStudentQuestionRepository examStudentQuestionRepository;
         public GradedQuestionService(IGradedQuestionRepository gradedQuestionRepository , IDescriptiveQuestionRepository descriptiveQuestionRepository , 
-            IMultipleChoiceQuestionRepository multipleChoiceQuestionRepository, IExamRepository examRepository, ICourseRepository courseRepository)
+            IMultipleChoiceQuestionRepository multipleChoiceQuestionRepository, IExamRepository examRepository, ICourseRepository courseRepository, 
+            IExamStudentQuestionRepository examStudentQuestionRepository)
         {
             this.examRepository = examRepository;
             this.gradedQuestionRepository = gradedQuestionRepository;
             this.descriptiveQuestionRepository = descriptiveQuestionRepository;
             this.multipleChoiceQuestionRepository  = multipleChoiceQuestionRepository;
             this.courseRepository = courseRepository;
+            this.examStudentQuestionRepository = examStudentQuestionRepository;
         }
 
         public GradedQuestion Create(GradedQuestionCreateDTO dto)
@@ -37,6 +40,13 @@ namespace QuizSystem.Service
 
         public void Delete(IdDTO dto)
         {
+            var examStudentQuestions = examStudentQuestionRepository.GetAllWithGradedQuestionId(dto.Id);
+
+            foreach (var item in examStudentQuestions)
+            {
+                examStudentQuestionRepository.Delete(item);
+            }
+            examStudentQuestionRepository.Save();   
             var answer = gradedQuestionRepository.GetWithId(dto.Id);
             gradedQuestionRepository.Delete(answer);
             gradedQuestionRepository.Save();

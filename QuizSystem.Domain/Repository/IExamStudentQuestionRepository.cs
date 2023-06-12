@@ -8,5 +8,6 @@ namespace QuizSystem.Repository
         bool ExamStudentQuestionAlreadyExist(Guid examStudentId, Guid gradedQuestionId);
         ExamStudentQuestion GetWithExamStudentAndGradedQuestionId(Guid examStudentId, Guid gradedQuestionId);
         List<ExamStudentQuestion> GetAllWithExamStudentId(Guid examStudentId);
+        List<ExamStudentQuestion> GetAllWithGradedQuestionId(Guid gradedQuestionId);
     }
 }

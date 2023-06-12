@@ -15,11 +15,15 @@ namespace QuizSystem.Service
         private readonly IExamRepository repository;
         private readonly ICourseRepository courseRepository;
         private readonly IGradedQuestionRepository gradedQuestionRepository;
-        public ExamService(ICourseRepository courseRepository, IExamRepository repository, IGradedQuestionRepository gradedQuestionRepository)
+        private readonly IExamStudentService examStudentService;
+        private readonly IExamStudentRepository examStudentRepository;
+        public ExamService(ICourseRepository courseRepository, IExamRepository repository, IGradedQuestionRepository gradedQuestionRepository,IExamStudentService examStudentService, IExamStudentRepository examStudentRepository)
         {
             this.courseRepository = courseRepository;
             this.repository = repository;
             this.gradedQuestionRepository = gradedQuestionRepository;
+            this.examStudentService = examStudentService;
+            this.examStudentRepository = examStudentRepository;
         }
 
         public Exam CreateExam(ExamCreateDTO dto)
@@ -64,6 +68,13 @@ namespace QuizSystem.Service
                 gradedQuestionRepository.Delete(item);
             }
             gradedQuestionRepository.Save();
+
+            var examStudents = examStudentRepository.GetAllByExamId(dto.Id);
+
+            foreach (var item in examStudents)
+            {
+                examStudentService.Delete(new IdDTO { Id = item.Id }) ;
+            }
         }
 
     }

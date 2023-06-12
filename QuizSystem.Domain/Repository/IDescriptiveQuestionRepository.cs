@@ -7,5 +7,6 @@ namespace QuizSystem.Repository
     {
         public bool TitleExists(string title, Guid courseId, Guid professorId);
         public List<DescriptiveQuestion> GetWithCourseAndProfessorId(Guid courseId, Guid professorId);
+        List<DescriptiveQuestion> GetAllWithCourseId(Guid courseId);
     }
 }

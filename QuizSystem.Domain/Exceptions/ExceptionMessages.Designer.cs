@@ -124,7 +124,7 @@ namespace QuizSystem.Domain.Exceptions {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Start time for course is in the past.
+        ///   Looks up a localized string similar to Start date for course is in the past.
         /// </summary>
         public static string CourseStartTimeInThePastExceptionMessage {
             get {

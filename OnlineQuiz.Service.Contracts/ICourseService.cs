@@ -12,7 +12,7 @@ namespace QuizSystem.Service
         public Course GetCourseById(CourseIdStringDTO dto);
         public List<UserIdDTO> GetStudentsByCourseId(CourseIdStringDTO dto);
         public List<Course> GetCoursesByProfessorId(UserIdDTO dto);
-        public void RemoveCourse(CourseRemoveDTO dto);
+        public void RemoveCourse(IdDTO dto);
         public List<Course> GetCourseByStudentId(UserIdDTO dto);
 
     }

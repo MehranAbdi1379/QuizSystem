@@ -20,6 +20,8 @@ public class CourseService : ICourseService
     protected readonly IDescriptiveQuestionRepository descriptiveQuestionRepository;
     protected readonly IMultipleChoiceQuestionService multipleChoiceQuestionService;
     protected readonly IMultipleChoiceQuestionRepository multipleChoiceQuestionRepository;
+    protected readonly IDescriptiveQuestionService descriptiveQuestionService;
+    protected readonly IExamService examService;
 
     public CourseService(ICourseRepository repository,
         IProfessorRepository professorRepository,
@@ -28,7 +30,9 @@ public class CourseService : ICourseService
         IExamRepository examRepository,
         IDescriptiveQuestionRepository descriptiveQuestionRepository,
         IMultipleChoiceQuestionService multipleChoiceQuestionService
-        ,IMultipleChoiceQuestionRepository multipleChoiceQuestionRepository)
+        ,IMultipleChoiceQuestionRepository multipleChoiceQuestionRepository,
+        IDescriptiveQuestionService descriptiveQuestionService,
+        IExamService examService)
     {
         this.repository = repository;
         this.professorRepository = professorRepository;
@@ -38,6 +42,8 @@ public class CourseService : ICourseService
         this.descriptiveQuestionRepository = descriptiveQuestionRepository;
         this.multipleChoiceQuestionService = multipleChoiceQuestionService;
         this.multipleChoiceQuestionRepository = multipleChoiceQuestionRepository;
+        this.descriptiveQuestionService = descriptiveQuestionService;
+        this.examService = examService;
     }
 
     public Guid CreateCourse(CourseCreateDTO dto)
@@ -63,7 +69,7 @@ public class CourseService : ICourseService
         return course.Id;
     }
     
-    public void RemoveCourse(CourseRemoveDTO dto)
+    public void RemoveCourse(IdDTO dto)
     {
         var course = repository.GetWithId(dto.Id);
         var studentCourses = courseStudentRepository.GetWithCourseId(dto.Id);
@@ -76,18 +82,24 @@ public class CourseService : ICourseService
         repository.Delete(course);
         repository.Save();
 
-        var descriptiveQuestions = descriptiveQuestionRepository.GetWithCourseAndProfessorId(dto.Id, dto.ProfessorId);
+        var descriptiveQuestions = descriptiveQuestionRepository.GetAllWithCourseId(dto.Id);
         foreach (var item in descriptiveQuestions)
         {
-            descriptiveQuestionRepository.Delete(item);
+            descriptiveQuestionService.Delete(new IdDTO { Id = item.Id });
         }
-        descriptiveQuestionRepository.Save();
 
-        var multipleChoiceQuestions = multipleChoiceQuestionRepository.GetWithCourseAndProfessorId(dto.Id, dto.ProfessorId);
+        var multipleChoiceQuestions = multipleChoiceQuestionRepository.GetAllWithCourseId(dto.Id);
 
         foreach (var item in multipleChoiceQuestions)
         {
             multipleChoiceQuestionService.Delete(new IdDTO { Id = item.Id });
+        }
+
+        var exams = examRepository.GetAllExams(dto.Id);
+
+        foreach (var item in exams)
+        {
+            examService.DeleteExam(new IdDTO { Id = item.Id});;
         }
     }
 

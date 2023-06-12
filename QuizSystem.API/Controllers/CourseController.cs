@@ -169,7 +169,7 @@ namespace QuizSystem.API.Controllers
 
         [HttpDelete]
         [Route("Delete")]
-        public IActionResult DeleteCourse(CourseRemoveDTO dto)
+        public IActionResult DeleteCourse(IdDTO dto)
         {
             if (!ModelState.IsValid)
             {

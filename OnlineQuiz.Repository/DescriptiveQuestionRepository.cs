@@ -24,5 +24,10 @@ namespace QuizSystem.Repository
         {
             return context.Set<DescriptiveQuestion>().Where(x => x.CourseId == courseId && x.ProfessorId == professorId).ToList();
         }
+
+        public List<DescriptiveQuestion> GetAllWithCourseId(Guid courseId)
+        {
+            return context.Set<DescriptiveQuestion>().Where(x => x.CourseId == courseId).ToList();
+        }
     }
 }

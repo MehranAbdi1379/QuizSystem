@@ -59,6 +59,13 @@ namespace QuizSystem.Service
                 multipleChoiceAnswerRepository.Delete(item);
             }
             multipleChoiceAnswerRepository.Save();
+
+            var gradedQuestions = gradedQuestionService.GetByQuestionId(dto);
+
+            foreach (var item in gradedQuestions)
+            {
+                gradedQuestionService.Delete(new IdDTO { Id = item.Id });
+            }
             multipleChoiceQuestionRepository.Delete(question);
             multipleChoiceQuestionRepository.Save();
         }
@@ -66,7 +73,7 @@ namespace QuizSystem.Service
         public List<MultipleChoiceQuestion> GetWithExamId(IdDTO dto)
         {
             var questions = new List<MultipleChoiceQuestion>();
-            var multipleChoiceQuestions = gradedQuestionService.GetDescriptiveQuestionsOnly(dto);
+            var multipleChoiceQuestions = gradedQuestionService.GetMultipleChoiceQuestionsOnly(dto);
 
             foreach (var item in multipleChoiceQuestions)
             {
