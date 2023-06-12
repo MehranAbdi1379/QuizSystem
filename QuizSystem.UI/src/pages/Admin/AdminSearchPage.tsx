@@ -95,7 +95,16 @@ const AdminSearchPage = () => {
         </Container>
       </Form>
       {searchResults && searchResults.length == 0 && (
-        <Text>Sorry. There is no match.</Text>
+        <Container
+          borderRadius={40}
+          marginTop={10}
+          paddingBottom={5}
+          bg={colorMode == "dark" ? "gray.700" : "gray.50"}
+        >
+          <Heading fontSize={22} paddingTop={5} paddingLeft={7}>
+            Sorry. There is no match...
+          </Heading>
+        </Container>
       )}
       {searchResults && searchResults.length > 0 && searchRole == "" && (
         <SimpleGrid p={10} spacing={20} columns={2} minChildWidth={500}>

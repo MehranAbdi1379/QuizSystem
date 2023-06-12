@@ -49,7 +49,7 @@ const AdminCourseEditPage = () => {
   useEffect(() => {
     GetAll(setProfessors);
     GetAllStudents(setStudents);
-  }, []);
+  }, [state]);
   const [submited, setSubmited] = useState(false);
   const {
     register,
@@ -72,7 +72,7 @@ const AdminCourseEditPage = () => {
     Update(newCourse, setError, setSubmited);
   }
 
-  if (submited) return <Navigate to={"/sign-in/admin"}></Navigate>;
+  if (submited) return <Navigate to={"/sign-in/admin"} state={{}}></Navigate>;
   return (
     <Container
       marginTop={5}
