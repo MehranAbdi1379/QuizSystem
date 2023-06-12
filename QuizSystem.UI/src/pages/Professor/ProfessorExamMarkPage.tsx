@@ -56,15 +56,8 @@ const ProfessorExamMarkPage = () => {
     new MultipleChoiceQuestionService();
   const [error, setError] = useState();
   const { colorMode } = useColorMode();
-  var gradeSum: number = 0;
-  GradedMultipleChoiceQuestions?.forEach((element) => {
-    gradeSum += element.grade;
-  });
-  gradedDescriptiveQuestions?.forEach((element) => {
-    gradeSum += element.grade;
-  });
 
-  var gradedDescriptiveQuestionsTemp: {
+  var gradedDescriptiveQuestionsDisplay: {
     gradedQuestionId: string;
     title: string;
     description: string;
@@ -116,10 +109,73 @@ const ProfessorExamMarkPage = () => {
     newGradeDescriptiveQuestion.title = descriptiveQuestion.title;
     newGradeDescriptiveQuestion.questionId = descriptiveQuestion.id;
 
-    gradedDescriptiveQuestionsTemp.push(newGradeDescriptiveQuestion);
+    gradedDescriptiveQuestionsDisplay.push(newGradeDescriptiveQuestion);
   });
 
+  var gradedMultipleChoiceQuestionsDisplay: {
+    gradedQuestionId: string;
+    title: string;
+    description: string;
+    answer: string;
+    questionId: string;
+    examStudentQuestionId: string;
+    grade: number;
+  }[] = [];
+
+  multipleChoiceQuestions?.forEach((multipleChoiceQuestion) => {
+    var newGradedMultipleChoiceQuestion: {
+      gradedQuestionId: string;
+      title: string;
+      description: string;
+      answer: string;
+      questionId: string;
+      examStudentQuestionId: string;
+      grade: number;
+    } = {
+      gradedQuestionId: "",
+      answer: "",
+      title: "",
+      description: "",
+      questionId: "",
+      examStudentQuestionId: "",
+      grade: 0,
+    };
+    GradedMultipleChoiceQuestions?.forEach((gradedMultipleChoiceQuestion) => {
+      if (
+        gradedMultipleChoiceQuestion.questionId == multipleChoiceQuestion.id
+      ) {
+        newGradedMultipleChoiceQuestion.gradedQuestionId =
+          gradedMultipleChoiceQuestion.id;
+        examStudentQuestions?.forEach((examStudentQuestion) => {
+          if (
+            examStudentQuestion.gradedQuestionId ==
+            gradedMultipleChoiceQuestion.id
+          ) {
+            newGradedMultipleChoiceQuestion.answer = examStudentQuestion.answer;
+            newGradedMultipleChoiceQuestion.examStudentQuestionId =
+              examStudentQuestion.id;
+            newGradedMultipleChoiceQuestion.grade = examStudentQuestion.grade;
+          }
+        });
+      }
+    });
+    newGradedMultipleChoiceQuestion.description =
+      multipleChoiceQuestion.description;
+    newGradedMultipleChoiceQuestion.title = multipleChoiceQuestion.title;
+    newGradedMultipleChoiceQuestion.questionId = multipleChoiceQuestion.id;
+
+    gradedMultipleChoiceQuestionsDisplay.push(newGradedMultipleChoiceQuestion);
+  });
+
+  const [gradeSum, setGradeSum] = useState(0);
+  console.log(gradeSum);
+
   useEffect(() => {
+    var gradeSumTemp = 0;
+    examStudentQuestions?.forEach((element) => {
+      gradeSumTemp += element.grade;
+    });
+    setGradeSum(gradeSumTemp);
     GetDescriptiveQuestionsOnly(
       state.examId,
       setGradedDescriptiveQuestions,
@@ -157,7 +213,7 @@ const ProfessorExamMarkPage = () => {
         >
           <Heading>Descriptive Questions: </Heading>
 
-          {gradedDescriptiveQuestionsTemp.map((q) => (
+          {gradedDescriptiveQuestionsDisplay.map((q) => (
             <Card key={q.questionId} margin={5}>
               <CardBody>
                 <Heading fontSize={24}>{q.title}</Heading>
@@ -181,9 +237,35 @@ const ProfessorExamMarkPage = () => {
                           e.target.value,
                           setError
                         );
+                        console.log(examStudentQuestions);
                       }
                     }}
                   ></Input>
+                </Box>
+              </CardBody>
+            </Card>
+          ))}
+        </Box>
+
+        <Box
+          p={5}
+          bg={colorMode == "dark" ? "gray.600" : "gray.100"}
+          borderRadius={20}
+        >
+          <Heading>Multiple Choice Questions: </Heading>
+
+          {gradedMultipleChoiceQuestionsDisplay.map((q) => (
+            <Card key={q.questionId} margin={5}>
+              <CardBody>
+                <Heading fontSize={24}>{q.title}</Heading>
+                <Text>{q.description}</Text>
+                <Box marginTop={5}>
+                  <Text>Answer: </Text>
+                  <Text>{q.answer}</Text>
+                </Box>
+
+                <Box marginTop={5}>
+                  <Text>Grade: {q.grade}</Text>
                 </Box>
               </CardBody>
             </Card>
