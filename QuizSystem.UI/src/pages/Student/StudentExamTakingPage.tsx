@@ -5,7 +5,13 @@ import {
   HStack,
   Heading,
   Spacer,
+  Tab,
+  TabList,
+  TabPanel,
+  TabPanels,
+  Tabs,
   Text,
+  Textarea,
   useColorMode,
   useStatStyles,
 } from "@chakra-ui/react";
@@ -13,6 +19,11 @@ import React, { useEffect, useState } from "react";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import GradedQuestionService from "../../services/GradedQuestionService";
 import ExamStudentService from "../../services/ExamStudentService";
+import StudentMultipleChoiceQuestionAnswers from "../../components/Student/StudentMultipleChoiceQuestionAnswers";
+import DescriptiveQuestionService from "../../services/DescriptiveQuestionService";
+import MultipleChoiceQuestionService from "../../services/MultipleChoiceQuestionService";
+import { Question } from "../../services/QuestionService";
+import StudentExamTimeCounter from "../../components/Student/StudentExamTimeCounter";
 
 const StudentExamTakingPage = () => {
   const { colorMode } = useColorMode();
@@ -24,21 +35,85 @@ const StudentExamTakingPage = () => {
     new GradedQuestionService();
   const [error, setError] = useState();
   const state = useLocation().state;
-  const [activeQuestionId, setActiveQuestionId] = useState("");
   const [finished, setFinished] = useState(false);
-  const { GetByExamAndStudentId, Finished } = new ExamStudentService();
+  const {
+    GetByExamAndStudentId,
+    Finished,
+    GetAllQuestionsByExamAndStudentId,
+    UpdateQuestion,
+  } = new ExamStudentService();
+  const { GetById: GetDescriptiveQuestionById } =
+    new DescriptiveQuestionService();
+  const { GetById: GetMultipleChoiceQuestionById } =
+    new MultipleChoiceQuestionService();
   const [examStudent, setExamStudent] = useState<{
     id: string;
     startTime: Date;
     endTime: Date;
   }>();
+  const [examStudentQuestions, setExamStudentQuestions] =
+    useState<{ answer: string; gradedQuestionId: string; id: string }[]>();
 
-  const [minutes, setMinutes] = useState<number>(0);
-  const [second, setSeconds] = useState<number>(0);
+  const [selectedQuestion, setSelectedQuestion] = useState<Question>();
 
-  const navigate = useNavigate();
+  var multipleChoiceQuestionsWithAnswers: {
+    grade: number;
+    id: string;
+    questionId: string;
+    answer: string;
+    examStudentQuestionId: string;
+  }[] = [];
+
+  multipleChoiceQuestions?.forEach((element) => {
+    var multipleChoiceQuestionWithAnswer = {
+      ...element,
+      answer: "",
+      examStudentQuestionId: "",
+    };
+
+    examStudentQuestions?.forEach((examStudentQuestion) => {
+      if (examStudentQuestion.gradedQuestionId == element.id) {
+        multipleChoiceQuestionWithAnswer.answer = examStudentQuestion.answer;
+        multipleChoiceQuestionWithAnswer.examStudentQuestionId =
+          examStudentQuestion.id;
+      }
+    });
+    multipleChoiceQuestionsWithAnswers.push(multipleChoiceQuestionWithAnswer);
+  });
+
+  var descriptiveQuestionsWithAnswers: {
+    grade: number;
+    id: string;
+    questionId: string;
+    answer: string;
+    examStudentQuestionId: string;
+  }[] = [];
+
+  descriptiveQuestions?.forEach((element) => {
+    var descriptiveQuestionWithAnswer = {
+      ...element,
+      answer: "",
+      examStudentQuestionId: "",
+    };
+
+    examStudentQuestions?.forEach((examStudentQuestion) => {
+      if (examStudentQuestion.gradedQuestionId == element.id) {
+        descriptiveQuestionWithAnswer.answer = examStudentQuestion.answer;
+        descriptiveQuestionWithAnswer.examStudentQuestionId =
+          examStudentQuestion.id;
+      }
+    });
+    descriptiveQuestionsWithAnswers.push(descriptiveQuestionWithAnswer);
+  });
+  const [questionAnswered, setQuestionAnswered] = useState(0);
 
   useEffect(() => {
+    GetAllQuestionsByExamAndStudentId(
+      state.examId,
+      localStorage.getItem("userId"),
+      setExamStudentQuestions,
+      setError
+    );
     GetDescriptiveQuestionsOnly(
       state.examId,
       setDescriptiveQuestions,
@@ -52,160 +127,105 @@ const StudentExamTakingPage = () => {
     Finished(state.examId, setFinished, setError);
 
     GetByExamAndStudentId(state.examId, setExamStudent, setError);
-
-    if (!finished) {
-      Finished(state.examId, setFinished, setError);
-      const endtime = examStudent?.endTime.toString().slice(11, 19);
-      const nowHours = new Date().getHours();
-      const nowMinutes = new Date().getMinutes();
-      const nowSeconds = new Date().getSeconds();
-      setSeconds(
-        (parseInt(endtime?.slice(0, 2) ? endtime?.slice(0, 2) : "") * 3600 +
-          parseInt(endtime?.slice(3, 5) ? endtime?.slice(3, 5) : "") * 60 +
-          parseInt(endtime?.slice(6, 8) ? endtime?.slice(6, 8) : "") -
-          (nowHours * 3600 + nowMinutes * 60 + nowSeconds)) %
-          60
-      );
-      setMinutes(
-        (parseInt(endtime?.slice(0, 2) ? endtime?.slice(0, 2) : "") * 3600 +
-          parseInt(endtime?.slice(3, 5) ? endtime?.slice(3, 5) : "") * 60 +
-          parseInt(endtime?.slice(6, 8) ? endtime?.slice(6, 8) : "") -
-          (nowHours * 3600 + nowMinutes * 60 + nowSeconds) -
-          ((parseInt(endtime?.slice(0, 2) ? endtime?.slice(0, 2) : "") * 3600 +
-            parseInt(endtime?.slice(3, 5) ? endtime?.slice(3, 5) : "") * 60 +
-            parseInt(endtime?.slice(6, 8) ? endtime?.slice(6, 8) : "") -
-            (nowHours * 3600 + nowMinutes * 60 + nowSeconds)) %
-            60)) /
-          60
-      );
-    }
-
-    const secondTimer = setInterval(() => {
-      if (!finished) {
-        Finished(state.examId, setFinished, setError);
-        const endtime = examStudent?.endTime.toString().slice(11, 19);
-        const nowHours = new Date().getHours();
-        const nowMinutes = new Date().getMinutes();
-        const nowSeconds = new Date().getSeconds();
-        setSeconds(
-          (parseInt(endtime?.slice(0, 2) ? endtime?.slice(0, 2) : "") * 3600 +
-            parseInt(endtime?.slice(3, 5) ? endtime?.slice(3, 5) : "") * 60 +
-            parseInt(endtime?.slice(6, 8) ? endtime?.slice(6, 8) : "") -
-            (nowHours * 3600 + nowMinutes * 60 + nowSeconds)) %
-            60
-        );
-        setMinutes(
-          (parseInt(endtime?.slice(0, 2) ? endtime?.slice(0, 2) : "") * 3600 +
-            parseInt(endtime?.slice(3, 5) ? endtime?.slice(3, 5) : "") * 60 +
-            parseInt(endtime?.slice(6, 8) ? endtime?.slice(6, 8) : "") -
-            (nowHours * 3600 + nowMinutes * 60 + nowSeconds) -
-            ((parseInt(endtime?.slice(0, 2) ? endtime?.slice(0, 2) : "") *
-              3600 +
-              parseInt(endtime?.slice(3, 5) ? endtime?.slice(3, 5) : "") * 60 +
-              parseInt(endtime?.slice(6, 8) ? endtime?.slice(6, 8) : "") -
-              (nowHours * 3600 + nowMinutes * 60 + nowSeconds)) %
-              60)) /
-            60
-        );
-      }
-    }, 1000);
-    return () => clearInterval(secondTimer);
   }, [state]);
   return (
-    <Container maxWidth={"70%"}>
-      <Box
-        bg={colorMode == "dark" ? "gray.700" : "gray.50"}
-        p={5}
-        borderRadius={50}
-      >
-        {multipleChoiceQuestions && (
-          <Box>
-            <HStack justifyContent={"space-between"}>
-              <Heading p={5} fontSize={22}>
-                Multiple choice questions:{" "}
-              </Heading>
-              {!finished &&
-                (minutes || minutes == 0) &&
-                (second || second == 0) && (
-                  <Heading color={"green.200"} paddingRight={5} fontSize={20}>
-                    Time left: {minutes}:{second}
-                  </Heading>
-                )}
-              {!finished && !minutes && !second && (
-                <Heading color={"red.400"} paddingRight={5} fontSize={20}>
-                  Exam is started. Please select a question.
-                </Heading>
-              )}
-              {finished && (
-                <Heading color={"red.400"} paddingRight={5} fontSize={20}>
-                  Exam is finished
-                </Heading>
-              )}
-            </HStack>
+    <Container
+      maxWidth={"70%"}
+      bg={colorMode == "dark" ? "gray.700" : "gray.50"}
+      p={5}
+      borderRadius={50}
+    >
+      <Tabs>
+        <HStack justifyContent={"space-between"}>
+          <Heading>Questions: </Heading>
 
-            {multipleChoiceQuestions?.map((q) => (
-              <Button
-                marginTop={3}
-                key={q.id}
-                colorScheme={activeQuestionId == q.id ? "whatsapp" : "gray"}
-                marginLeft={2}
-                onClick={() => {
-                  setActiveQuestionId(q.id);
-                  navigate("multiple-choice-question", {
-                    state: {
-                      examStudentId: examStudent?.id,
-                      gradedQuestionId: q.id,
-                      questionId: q.questionId,
-                      examId: state.examId,
-                    },
-                  });
+          {examStudent?.endTime && (
+            <StudentExamTimeCounter
+              examId={state.examId}
+              endTime={examStudent.endTime}
+            />
+          )}
+        </HStack>
+
+        <Text marginTop={5} alignSelf={"center"} fontSize={20}>
+          Multiple choice:{" "}
+        </Text>
+        <TabList>
+          {multipleChoiceQuestionsWithAnswers.map((q) => (
+            <Tab
+              color={q.answer != "" ? "green.400" : ""}
+              key={q.id}
+              onClick={() =>
+                GetMultipleChoiceQuestionById(
+                  q.questionId,
+                  setSelectedQuestion,
+                  setError
+                )
+              }
+            >
+              {multipleChoiceQuestionsWithAnswers.indexOf(q) + 1}
+            </Tab>
+          ))}
+        </TabList>
+        <Text marginTop={5} alignSelf={"center"} fontSize={20}>
+          Descriptive:{" "}
+        </Text>
+        <TabList>
+          {descriptiveQuestionsWithAnswers.map((q) => (
+            <Tab
+              color={q.answer != "" ? "green.400" : ""}
+              key={q.id}
+              onClick={() =>
+                GetDescriptiveQuestionById(
+                  q.questionId,
+                  setSelectedQuestion,
+                  setError
+                )
+              }
+            >
+              {descriptiveQuestionsWithAnswers.indexOf(q) + 1}
+            </Tab>
+          ))}
+        </TabList>
+
+        <TabPanels marginTop={5}>
+          {multipleChoiceQuestionsWithAnswers.map((q) => (
+            <TabPanel key={q.id}>
+              <Heading fontSize={22}>{selectedQuestion?.title}</Heading>
+              <Text marginBottom={4} fontSize={18}>
+                {selectedQuestion?.description}
+              </Text>
+              <StudentMultipleChoiceQuestionAnswers
+                finished
+                examStudentQuestionId={q.examStudentQuestionId}
+                answer={q.answer}
+                questionId={q.questionId}
+              ></StudentMultipleChoiceQuestionAnswers>
+            </TabPanel>
+          ))}
+
+          {descriptiveQuestionsWithAnswers.map((q) => (
+            <TabPanel key={q.id}>
+              <Heading fontSize={22}>{selectedQuestion?.title}</Heading>
+              <Text marginBottom={4} fontSize={18}>
+                {selectedQuestion?.description}
+              </Text>
+              <Textarea
+                disabled={finished}
+                onChange={(e) => {
+                  UpdateQuestion(
+                    q.examStudentQuestionId,
+                    e.target.value,
+                    setError
+                  );
+                  setQuestionAnswered(questionAnswered + 1);
                 }}
-              >
-                {multipleChoiceQuestions.indexOf(q) + 1}
-              </Button>
-            ))}
-          </Box>
-        )}
-
-        {descriptiveQuestions && (
-          <Box>
-            <Heading p={5} fontSize={22}>
-              Descriptive questions:{" "}
-            </Heading>
-            {descriptiveQuestions?.map((q) => (
-              <Button
-                marginTop={3}
-                key={q.id}
-                colorScheme={activeQuestionId == q.id ? "whatsapp" : "gray"}
-                marginLeft={2}
-                onClick={() => {
-                  setActiveQuestionId(q.id);
-
-                  navigate("descriptive-question", {
-                    state: {
-                      examStudentId: examStudent?.id,
-                      gradedQuestionId: q.id,
-                      questionId: q.questionId,
-                      examId: state.examId,
-                    },
-                  });
-                }}
-              >
-                {descriptiveQuestions.indexOf(q) + 1}
-              </Button>
-            ))}
-          </Box>
-        )}
-      </Box>
-
-      <Box
-        bg={colorMode == "dark" ? "gray.700" : "gray.50"}
-        marginTop={5}
-        p={10}
-        borderRadius={50}
-      >
-        <Outlet></Outlet>
-      </Box>
+                defaultValue={q.answer}
+              ></Textarea>
+            </TabPanel>
+          ))}
+        </TabPanels>
+      </Tabs>
     </Container>
   );
 };
