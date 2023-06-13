@@ -47,6 +47,8 @@ namespace QuizSystem.Domain.Models
         {
             if (gradedQuestionRepository.GetWithId(gradedQuestionId).Grade < grade)
                 throw new ExamStudentGradeMoreThanMaxException();
+            if (grade < 0)
+                throw new GradeQuestionGradeException();
             Grade = grade;
         }
     }

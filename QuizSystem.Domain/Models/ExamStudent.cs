@@ -17,7 +17,7 @@ namespace QuizSystem.Domain.Models
 
         }
 
-        public ExamStudent(Guid examId , Guid studentId , double grade ,IExamRepository examRepository , IStudentRepository studentRepository , IExamStudentRepository examStudentRepository, IGradedQuestionRepository gradedQuestionRepository)
+        public ExamStudent(Guid examId , Guid studentId ,IExamRepository examRepository , IStudentRepository studentRepository , IExamStudentRepository examStudentRepository, IGradedQuestionRepository gradedQuestionRepository)
         {
             ValidateUniqueExamStudent(examStudentRepository, examId, studentId);
             SetExamId(examId, examRepository);

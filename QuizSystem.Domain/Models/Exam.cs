@@ -40,7 +40,7 @@ namespace QuizSystem.Domain.Models
         }
         public void SetCourseId(Guid courseId , ICourseRepository courseRepository)
         {
-            if (courseRepository.GetWithId(courseId) == null)
+            if (!courseRepository.IsExist(courseId))
                 throw new CourseNotExistException();
             CourseId = courseId;
         }
