@@ -18,11 +18,15 @@ namespace QuizSystem.Domain.Test.Models
         private readonly Mock<IStudentRepository> studentRepositoryMock = new Mock<IStudentRepository>();
         private readonly Mock<IExamStudentRepository> examStudentRepositoryMock= new Mock<IExamStudentRepository>();
         private readonly Mock<IGradedQuestionRepository> gradedQuestionRepositoryMock= new Mock<IGradedQuestionRepository>();
+        private readonly Mock<ICourseRepository> courseRepositoryMock = new Mock<ICourseRepository>();
 
         public ExamStudentTest()
         {
             examRepositoryMock.Setup(x => x.IsExist(It.IsAny<Guid>())).Returns(true);
             studentRepositoryMock.Setup(x => x.IsExist(It.IsAny<Guid>())).Returns(true);
+            courseRepositoryMock.Setup(x => x.IsExist(It.IsAny<Guid>())).Returns(true);
+            var exam = new Exam(courseRepositoryMock.Object, examRepositoryMock.Object, "a", Guid.NewGuid(), "a", 5);
+            examRepositoryMock.Setup(x => x.GetWithId(It.IsAny<Guid>())).Returns(exam);
         }
 
         [TestMethod]
@@ -58,17 +62,22 @@ namespace QuizSystem.Domain.Test.Models
         [TestMethod]
         public void SetTime_Retrieve()
         {
+            
             var startTime = DateTime.Now;
             var endTime = DateTime.Now.AddMinutes(5);
-            var examStudent = InitialExamStudent(Guid.NewGuid() , Guid.NewGuid() , 5 );
-            Assert.AreEqual(startTime , examStudent.StartTime);
-            Assert.AreEqual(endTime , examStudent.EndTime);
+            var examStudent = InitialExamStudent(Guid.NewGuid() , Guid.NewGuid());
+            Assert.AreEqual(startTime.Hour , examStudent.StartTime.Hour);
+            Assert.AreEqual(startTime.Minute, examStudent.StartTime.Minute);
+            Assert.AreEqual(startTime.Second, examStudent.StartTime.Second);
+            Assert.AreEqual(endTime.Hour , examStudent.EndTime.Hour);
+            Assert.AreEqual(endTime.Minute, examStudent.EndTime.Minute);
+            Assert.AreEqual(endTime.Second, examStudent.EndTime.Second);
         }
 
 
-        public ExamStudent InitialExamStudent(Guid examId , Guid studentId , double grade = 0 , double timeLeft = 100)
+        public ExamStudent InitialExamStudent(Guid examId , Guid studentId )
         {
-            return new ExamStudent(examId, studentId, grade, examRepositoryMock.Object, studentRepositoryMock.Object ,examStudentRepositoryMock.Object, gradedQuestionRepositoryMock.Object );
+            return new ExamStudent(examId, studentId, examRepositoryMock.Object, studentRepositoryMock.Object ,examStudentRepositoryMock.Object, gradedQuestionRepositoryMock.Object );
         }
     }
 }
