@@ -23,15 +23,10 @@ import {
 } from "react-router-dom";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import DescriptiveQuestionService from "../../services/DescriptiveQuestionService";
-import MultipleChoiceQuestionService, {
-  Answer,
-} from "../../services/MultipleChoiceQuestionService";
-import GradedQuestionService from "../../services/GradedQuestionService";
 import QuestionService from "../../services/QuestionService";
 
 const schema = z.object({
-  title: z.string().min(3),
+  title: z.string().min(3).max(20),
   description: z.string().min(5),
   type: z.string(),
   multipleChoiceAnswers: z.string().min(2).array().optional(),
@@ -50,7 +45,6 @@ const ProfessorExamQuestionCreatePage = () => {
   const [multipleChoiceModeOn, setMultipleChoiceModeOn] = useState(false);
   const [error, setError] = useState();
   const { CreateAndAddQuestion } = new QuestionService();
-  const [answerError, setAnswerError] = useState(false);
   const {
     register,
     formState: { errors },

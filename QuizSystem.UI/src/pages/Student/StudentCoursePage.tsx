@@ -45,6 +45,15 @@ const StudentCoursePage = () => {
           <Text>{course?.timePeriod.endDate.toString().slice(0, 10)}</Text>
         </HStack>
 
+        <HStack marginTop={5}>
+          <Heading fontSize={22}>Professor:</Heading>
+          {course?.professorId && (
+            <Text fontSize={18}>
+              <UserDisplay id={course.professorId}></UserDisplay>
+            </Text>
+          )}
+        </HStack>
+
         <Heading paddingTop={5} fontSize={22}>
           Exams
         </Heading>
