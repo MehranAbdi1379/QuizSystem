@@ -38,7 +38,7 @@ namespace QuizSystem.Service
 
         public ExamStudent Create(ExamStudentCreateDTO dto)
         {
-            var examStudent = new ExamStudent(dto.ExamId, dto.StudentId, 0, examRepository, studentRepository,examStudentRepository,gradedQuestionRepository);
+            var examStudent = new ExamStudent(dto.ExamId, dto.StudentId, examRepository, studentRepository,examStudentRepository,gradedQuestionRepository);
             var gradedQuestions = gradedQuestionRepository.GetAllByExamId(dto.ExamId);
             repository.Create(examStudent);
             repository.Save();
@@ -151,6 +151,11 @@ namespace QuizSystem.Service
                             if (dto.Answer == answer.Title)
                             {
                                 examStudentQuestion.SetGrade(item.Grade, item.Id, gradedQuestionRepository);
+                                examStudentQuestionRepository.Update(examStudentQuestion);
+                            }
+                            else
+                            {
+                                examStudentQuestion.SetGrade(0, item.Id, gradedQuestionRepository);
                                 examStudentQuestionRepository.Update(examStudentQuestion);
                             }
                         }
