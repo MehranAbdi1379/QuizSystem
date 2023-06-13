@@ -44,26 +44,6 @@ const ProfessorCoursePage = () => {
           <Text>{course?.timePeriod.endDate.toString().slice(0, 10)}</Text>
         </HStack>
 
-        <Heading paddingTop={5} fontSize={22}>
-          Exams
-        </Heading>
-
-        <VStack align={"start"}>
-          {exams?.map((exam) => (
-            <Button
-              key={exam.id}
-              onClick={() =>
-                navigate("/sign-in/professor/course/exam", {
-                  state: { examId: exam.id, courseId: course?.id },
-                })
-              }
-              variant={"ghost"}
-            >
-              {exam.title}
-            </Button>
-          ))}
-        </VStack>
-
         <Link
           to="/sign-in/professor/course/exam/create"
           state={{ courseId: course?.id, examCreated: false }}
@@ -78,6 +58,26 @@ const ProfessorCoursePage = () => {
             <Button>Questions</Button>
           </Link>
         </Box>
+
+        <Heading paddingTop={5} fontSize={22}>
+          Exams
+        </Heading>
+
+        <VStack marginTop={2} align={"start"}>
+          {exams?.map((exam) => (
+            <Button
+              key={exam.id}
+              onClick={() =>
+                navigate("/sign-in/professor/course/exam", {
+                  state: { examId: exam.id, courseId: course?.id },
+                })
+              }
+              variant={"ghost"}
+            >
+              {exam.title}
+            </Button>
+          ))}
+        </VStack>
       </Box>
     </Container>
   );

@@ -104,7 +104,7 @@ const AdminCourseCreatePage = () => {
             )}
           </FormControl>
 
-          <SimpleGrid columns={3} minChildWidth={140}>
+          <SimpleGrid columns={3} minChildWidth={170}>
             {state.students?.sort().map((student) => (
               <FormControl>
                 <HStack align={"stretch"} key={student.id}>

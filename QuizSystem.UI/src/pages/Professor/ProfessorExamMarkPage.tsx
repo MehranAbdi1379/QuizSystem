@@ -7,10 +7,15 @@ import {
   Button,
   Card,
   CardBody,
+  CardFooter,
+  CardHeader,
   Container,
+  GridItem,
+  HStack,
   Heading,
   Input,
   List,
+  SimpleGrid,
   Text,
   useColorMode,
 } from "@chakra-ui/react";
@@ -167,15 +172,18 @@ const ProfessorExamMarkPage = () => {
     gradedMultipleChoiceQuestionsDisplay.push(newGradedMultipleChoiceQuestion);
   });
 
-  const [gradeSum, setGradeSum] = useState(0);
-  console.log(gradeSum);
+  var gradeSum = 0;
+  examStudentQuestions?.forEach((element) => {
+    gradeSum += element.grade;
+  });
+
+  const [gradeSumCounter, setGradeSumCounter] = useState(0);
 
   useEffect(() => {
-    var gradeSumTemp = 0;
+    gradeSum = 0;
     examStudentQuestions?.forEach((element) => {
-      gradeSumTemp += element.grade;
+      gradeSum += element.grade;
     });
-    setGradeSum(gradeSumTemp);
     GetDescriptiveQuestionsOnly(
       state.examId,
       setGradedDescriptiveQuestions,
@@ -202,9 +210,9 @@ const ProfessorExamMarkPage = () => {
       setMultipleChoiceQuestions,
       setError
     );
-  }, [state]);
+  }, [state, gradeSumCounter]);
   return (
-    <Container marginTop={10} maxWidth={600}>
+    <Container marginTop={10} maxWidth={1200}>
       <List spacing={5}>
         <Box
           p={5}
@@ -213,38 +221,48 @@ const ProfessorExamMarkPage = () => {
         >
           <Heading>Descriptive Questions: </Heading>
 
-          {gradedDescriptiveQuestionsDisplay.map((q) => (
-            <Card key={q.questionId} margin={5}>
-              <CardBody>
-                <Heading fontSize={24}>{q.title}</Heading>
-                <Text>{q.description}</Text>
-                <Box marginTop={5}>
-                  <Text>Answer: </Text>
-                  <Text>{q.answer}</Text>
-                </Box>
-
-                <Box marginTop={5}>
-                  <Text>Max Grade: {q.maxGrade}</Text>
-                  <Text>Grade: </Text>
-                  <Input
-                    type="number"
-                    required
-                    defaultValue={q.grade}
-                    onChange={(e) => {
-                      if (e.target.value) {
-                        UpdateQuestionGrade(
-                          q.examStudentQuestionId,
-                          e.target.value,
-                          setError
-                        );
-                        console.log(examStudentQuestions);
-                      }
-                    }}
-                  ></Input>
-                </Box>
-              </CardBody>
-            </Card>
-          ))}
+          <SimpleGrid columns={2} minChildWidth={400}>
+            {gradedDescriptiveQuestionsDisplay.map((q) => (
+              <Card key={q.questionId} margin={5}>
+                <CardHeader>
+                  <Heading fontSize={24}>{q.title}</Heading>
+                  <Text>{q.description}</Text>
+                </CardHeader>
+                <CardBody>
+                  <Box>
+                    <Text>Answer: </Text>
+                    <Text>{q.answer}</Text>
+                  </Box>
+                </CardBody>
+                <CardFooter>
+                  <Box width={"100%"}>
+                    <Text>Max Grade: {q.maxGrade}</Text>
+                    <HStack marginTop={2}>
+                      <Text>Grade: </Text>
+                      <Input
+                        type="number"
+                        required
+                        defaultValue={q.grade}
+                        onChange={(e) => {
+                          if (parseFloat(e.target.value) > q.maxGrade) {
+                            alert("Grade can not be more than max grade.");
+                            e.target.value = q.grade.toString();
+                          } else if (e.target.value) {
+                            UpdateQuestionGrade(
+                              q.examStudentQuestionId,
+                              e.target.value,
+                              setError
+                            );
+                            setGradeSumCounter(gradeSumCounter + 1);
+                          }
+                        }}
+                      ></Input>
+                    </HStack>
+                  </Box>
+                </CardFooter>
+              </Card>
+            ))}
+          </SimpleGrid>
         </Box>
 
         <Box
@@ -254,22 +272,29 @@ const ProfessorExamMarkPage = () => {
         >
           <Heading>Multiple Choice Questions: </Heading>
 
-          {gradedMultipleChoiceQuestionsDisplay.map((q) => (
-            <Card key={q.questionId} margin={5}>
-              <CardBody>
-                <Heading fontSize={24}>{q.title}</Heading>
-                <Text>{q.description}</Text>
-                <Box marginTop={5}>
-                  <Text>Answer: </Text>
-                  <Text>{q.answer}</Text>
-                </Box>
-
-                <Box marginTop={5}>
-                  <Text>Grade: {q.grade}</Text>
-                </Box>
-              </CardBody>
-            </Card>
-          ))}
+          <SimpleGrid columns={2} minChildWidth={400}>
+            {gradedMultipleChoiceQuestionsDisplay.map((q) => (
+              <GridItem>
+                <Card key={q.questionId} margin={5}>
+                  <CardHeader>
+                    <Heading fontSize={24}>{q.title}</Heading>
+                    <Text>{q.description}</Text>
+                  </CardHeader>
+                  <CardBody>
+                    <Box>
+                      <Text>Answer: </Text>
+                      <Text>{q.answer}</Text>
+                    </Box>
+                  </CardBody>
+                  <CardFooter>
+                    <Box>
+                      <Text>Grade: {q.grade}</Text>
+                    </Box>
+                  </CardFooter>
+                </Card>
+              </GridItem>
+            ))}
+          </SimpleGrid>
         </Box>
         <Box
           p={5}
