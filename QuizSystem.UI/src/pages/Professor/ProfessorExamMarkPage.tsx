@@ -215,15 +215,21 @@ const ProfessorExamMarkPage = () => {
     <Container marginTop={10} maxWidth={1200}>
       <List spacing={5}>
         <Box
-          p={5}
+          paddingLeft={5}
+          paddingTop={5}
           bg={colorMode == "dark" ? "gray.600" : "gray.100"}
           borderRadius={20}
         >
           <Heading>Descriptive Questions: </Heading>
 
-          <SimpleGrid columns={2} minChildWidth={400}>
+          <SimpleGrid columns={2} minChildWidth={300}>
             {gradedDescriptiveQuestionsDisplay.map((q) => (
-              <Card key={q.questionId} margin={5}>
+              <Card
+                key={q.questionId}
+                marginTop={5}
+                marginRight={5}
+                marginBottom={5}
+              >
                 <CardHeader>
                   <Heading fontSize={24}>{q.title}</Heading>
                   <Text>{q.description}</Text>
@@ -246,6 +252,9 @@ const ProfessorExamMarkPage = () => {
                         onChange={(e) => {
                           if (parseFloat(e.target.value) > q.maxGrade) {
                             alert("Grade can not be more than max grade.");
+                            e.target.value = q.grade.toString();
+                          } else if (parseFloat(e.target.value) < 0) {
+                            alert("Grade can not be negative.");
                             e.target.value = q.grade.toString();
                           } else if (e.target.value) {
                             UpdateQuestionGrade(
@@ -272,10 +281,15 @@ const ProfessorExamMarkPage = () => {
         >
           <Heading>Multiple Choice Questions: </Heading>
 
-          <SimpleGrid columns={2} minChildWidth={400}>
+          <SimpleGrid columns={2} minChildWidth={300}>
             {gradedMultipleChoiceQuestionsDisplay.map((q) => (
               <GridItem>
-                <Card key={q.questionId} margin={5}>
+                <Card
+                  key={q.questionId}
+                  marginTop={5}
+                  marginRight={5}
+                  marginBottom={5}
+                >
                   <CardHeader>
                     <Heading fontSize={24}>{q.title}</Heading>
                     <Text>{q.description}</Text>
