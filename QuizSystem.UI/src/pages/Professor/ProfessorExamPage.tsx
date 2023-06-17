@@ -10,7 +10,7 @@ import {
 
 import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import UserDisplay from "../../components/Global/UserDisplay";
+import UserFirstNameLastNameDisplay from "../../components/Global/UserFirstNameLastNameDisplay";
 import ExamService, { Exam } from "../../services/ExamService";
 import ExamStudentService from "../../services/ExamStudentService";
 
@@ -64,7 +64,9 @@ const ProfessorExamPage = () => {
               }}
             >
               <Button>
-                <UserDisplay id={es.studentId}></UserDisplay>
+                <UserFirstNameLastNameDisplay
+                  id={es.studentId}
+                ></UserFirstNameLastNameDisplay>
               </Button>
             </Link>
           ))}

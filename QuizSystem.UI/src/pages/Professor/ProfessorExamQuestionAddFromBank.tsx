@@ -56,7 +56,7 @@ const ProfessorExamQuestionAddFromBank = () => {
     register,
   } = useForm<FormData>({ resolver: zodResolver(schema) });
   const [questionId, setQuestionId] = useState<string>();
-  const [add, setAdd] = useState(false);
+  const [gradePageOn, setGradePageOn] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -74,7 +74,7 @@ const ProfessorExamQuestionAddFromBank = () => {
     );
     GetAllByExamId(state.examId, setGradedQuestions, setError);
   }, [state]);
-  if (add == true)
+  if (gradePageOn == true)
     return (
       <Box
         position={"fixed"}
@@ -116,7 +116,7 @@ const ProfessorExamQuestionAddFromBank = () => {
                 </Button>
               </FormControl>
               <Text color={"red.400"}>{errors.grade?.message}</Text>
-              <Button onClick={() => setAdd(false)}>Back</Button>
+              <Button onClick={() => setGradePageOn(false)}>Back</Button>
             </VStack>
           </Form>
         </Box>
@@ -147,7 +147,7 @@ const ProfessorExamQuestionAddFromBank = () => {
                 <CardFooter>
                   <Button
                     onClick={() => {
-                      setAdd(true);
+                      setGradePageOn(true);
                       setQuestionId(q.id);
                     }}
                   >
@@ -180,7 +180,7 @@ const ProfessorExamQuestionAddFromBank = () => {
                 <CardFooter>
                   <Button
                     onClick={() => {
-                      setAdd(true);
+                      setGradePageOn(true);
                       setQuestionId(q.id);
                     }}
                   >

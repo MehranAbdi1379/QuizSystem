@@ -13,7 +13,7 @@ import {
   Box,
   Text,
 } from "@chakra-ui/react";
-import UserDisplay from "../../components/Global/UserDisplay";
+import UserFirstNameLastNameDisplay from "../../components/Global/UserFirstNameLastNameDisplay";
 import AllCourses from "../../components/Global/AllCourses";
 
 const StudentAllCoursesPage = () => {
