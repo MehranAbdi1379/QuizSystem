@@ -1,19 +1,7 @@
-import {
-  Box,
-  Button,
-  Card,
-  CardBody,
-  GridItem,
-  HStack,
-  Heading,
-  SimpleGrid,
-  Text,
-  useColorMode,
-} from "@chakra-ui/react";
+import { Box, Heading, useColorMode } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import CourseService, { Course } from "../../services/CourseService";
-import { Link } from "react-router-dom";
-import UserDisplay from "../../components/Global/UserDisplay";
+import AllCourses from "../../components/Global/AllCourses";
 
 const AdminAllCoursesPage = () => {
   const { GetAll } = new CourseService();
@@ -27,44 +15,9 @@ const AdminAllCoursesPage = () => {
     <Box paddingLeft={10} paddingTop={5} paddingRight={10}>
       <Heading paddingBottom={4}>Courses</Heading>
 
-      <SimpleGrid
-        columns={4}
-        minChildWidth={260}
-        spacing={"40px"}
-        paddingTop={5}
-      >
-        {courses?.map((course) => (
-          <GridItem>
-            <Card bg={colorMode == "dark" ? "gray.600" : "gray.100"}>
-              <CardBody>
-                <Link
-                  to={"/sign-in/admin/course"}
-                  state={{ courseId: course.id }}
-                >
-                  <Button bg={colorMode == "dark" ? "gray.500" : "gray.300"}>
-                    {course.title}
-                  </Button>
-                </Link>
-                <HStack paddingTop={5}>
-                  <Text>Start Date: </Text>
-                  <Text>
-                    {course.timePeriod.startDate.toString().slice(0, 10)}
-                  </Text>
-                </HStack>
-                <HStack>
-                  <Text>End Date: </Text>
-                  <Text>
-                    {course.timePeriod.endDate.toString().slice(0, 10)}
-                  </Text>
-                </HStack>
-                <Box paddingTop={5} fontSize={20}>
-                  <UserDisplay id={course.professorId}></UserDisplay>
-                </Box>
-              </CardBody>
-            </Card>
-          </GridItem>
-        ))}
-      </SimpleGrid>
+      {courses && (
+        <AllCourses colorMode={colorMode} courses={courses}></AllCourses>
+      )}
     </Box>
   );
 };

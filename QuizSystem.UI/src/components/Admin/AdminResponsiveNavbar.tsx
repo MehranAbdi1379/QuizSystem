@@ -60,6 +60,12 @@ const AdminResponsiveNavbar = () => {
           to="/sign-in/admin/student/all"
           name="Students"
         ></NavButton>
+
+        <NavButton
+          onClick={() => setSideNavbar(false)}
+          to="/sign-in/admin/search"
+          name="Search"
+        ></NavButton>
         <NavButton
           onClick={() => setSideNavbar(false)}
           to={"/sign-in/about-us"}

@@ -34,7 +34,8 @@ const AdminSidebar = () => {
   return (
     <Box
       p={5}
-      minHeight={{ base: "200px", md: "100vh" }}
+      minHeight={{ base: "200px", md: "100%" }}
+      height={{ base: "200px", md: "100vh" }}
       bg={colorMode == "dark" ? "gray.700" : "gray.50"}
       borderTopRightRadius={20}
     >

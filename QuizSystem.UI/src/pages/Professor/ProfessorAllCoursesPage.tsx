@@ -14,6 +14,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 import UserDisplay from "../../components/Global/UserDisplay";
+import AllCourses from "../../components/Global/AllCourses";
 
 const ProfessorAllCoursesPage = () => {
   const { GetByProfessorId } = new CourseService();
@@ -28,41 +29,9 @@ const ProfessorAllCoursesPage = () => {
     <Box paddingLeft={10} paddingTop={5} paddingRight={10}>
       <Heading paddingBottom={4}>Courses</Heading>
 
-      <SimpleGrid
-        columns={4}
-        minChildWidth={260}
-        spacing={"40px"}
-        paddingTop={5}
-      >
-        {courses?.map((course) => (
-          <GridItem key={course.id}>
-            <Card bg={colorMode == "dark" ? "gray.600" : "gray.100"}>
-              <CardBody>
-                <Link
-                  to={"/sign-in/professor/course"}
-                  state={{ courseId: course.id }}
-                >
-                  <Button bg={colorMode == "dark" ? "gray.500" : "gray.300"}>
-                    {course.title}
-                  </Button>
-                </Link>
-                <HStack paddingTop={5}>
-                  <Text>Start Date: </Text>
-                  <Text>
-                    {course.timePeriod.startDate.toString().slice(0, 10)}
-                  </Text>
-                </HStack>
-                <HStack>
-                  <Text>End Date: </Text>
-                  <Text>
-                    {course.timePeriod.endDate.toString().slice(0, 10)}
-                  </Text>
-                </HStack>
-              </CardBody>
-            </Card>
-          </GridItem>
-        ))}
-      </SimpleGrid>
+      {courses && (
+        <AllCourses colorMode={colorMode} courses={courses}></AllCourses>
+      )}
     </Box>
   );
 };
