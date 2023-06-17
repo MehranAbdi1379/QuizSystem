@@ -8,6 +8,8 @@ interface Props {
   answer: string;
   examStudentQuestionId: string;
   finished: boolean;
+  setAnsweredQuestionUpdater: (number: number) => void;
+  answeredQuestionUpdater: number;
 }
 
 const StudentMultipleChoiceQuestionAnswers = ({
@@ -15,10 +17,13 @@ const StudentMultipleChoiceQuestionAnswers = ({
   answer,
   examStudentQuestionId,
   finished,
+  answeredQuestionUpdater: answerUpdater,
+  setAnsweredQuestionUpdater: setAnswerUpdater,
 }: Props) => {
   const { GetAnswerByQuestionId } = new MultipleChoiceQuestionService();
   const { UpdateQuestion } = new ExamStudentService();
-  const [answers, setAnswers] = useState<{ title: string }[]>();
+  const [answers, setAnswers] =
+    useState<{ title: string; rightAnswer: boolean }[]>();
   const [error, setError] = useState();
   const [setAnswer, setSetAnswer] = useState("");
   useEffect(() => {
@@ -29,17 +34,31 @@ const StudentMultipleChoiceQuestionAnswers = ({
   return (
     <RadioGroup>
       {answers?.map((a) => (
-        <Box>
+        <Box key={a.title}>
           <Radio
-            isDisabled={!finished}
+            isDisabled={finished}
             onChange={() => {
               UpdateQuestion(examStudentQuestionId, a.title, setError);
               setSetAnswer(a.title);
+              setAnswerUpdater(answerUpdater + 1);
             }}
             value={a.title}
           >
-            {a.title == answer && <Text color={"red.400"}>{a.title}</Text>}
-            {a.title != answer && <Text>{a.title}</Text>}
+            {!finished && a.title == answer && (
+              <Text color={"red.400"}>{a.title}</Text>
+            )}
+            {finished && a.title == answer && a.rightAnswer == false && (
+              <Text color={"red.400"}>{a.title}</Text>
+            )}
+            {!finished && a.rightAnswer == true && a.title != answer && (
+              <Text>{a.title}</Text>
+            )}
+            {a.rightAnswer == false && a.title != answer && (
+              <Text>{a.title}</Text>
+            )}
+            {finished && a.rightAnswer && (
+              <Text color={"green.400"}>{a.title}</Text>
+            )}
           </Radio>
         </Box>
       ))}
