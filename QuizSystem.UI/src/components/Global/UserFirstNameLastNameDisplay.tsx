@@ -6,7 +6,7 @@ interface Props {
   id: string;
 }
 
-const UserDisplay = ({ id }: Props) => {
+const UserFirstNameLastNameDisplay = ({ id }: Props) => {
   const { GetNameById } = new UserServices();
   const [user, setUser] = useState<{
     firstName: string;
@@ -22,4 +22,4 @@ const UserDisplay = ({ id }: Props) => {
   );
 };
 
-export default UserDisplay;
+export default UserFirstNameLastNameDisplay;

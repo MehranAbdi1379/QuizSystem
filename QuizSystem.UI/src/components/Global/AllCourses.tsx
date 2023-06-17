@@ -11,7 +11,7 @@ import {
   Box,
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
-import UserDisplay from "./UserDisplay";
+import UserFirstNameLastNameDisplay from "./UserFirstNameLastNameDisplay";
 
 interface Props {
   courses: Course[];
@@ -44,7 +44,9 @@ const AllCourses = ({ courses, colorMode }: Props) => {
                 <Text>{course.timePeriod.endDate.toString().slice(0, 10)}</Text>
               </HStack>
               <Box paddingTop={5} fontSize={20}>
-                <UserDisplay id={course.professorId}></UserDisplay>
+                <UserFirstNameLastNameDisplay
+                  id={course.professorId}
+                ></UserFirstNameLastNameDisplay>
               </Box>
             </CardBody>
           </Card>
