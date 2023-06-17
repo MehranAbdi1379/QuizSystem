@@ -146,7 +146,7 @@ const StudentExamTakingPage = () => {
   }, [state, answeredQuestionUpdater]);
   return (
     <Container
-      maxWidth={"70%"}
+      minWidth={"70%"}
       bg={colorMode == "dark" ? "gray.700" : "gray.50"}
       p={5}
       borderRadius={50}

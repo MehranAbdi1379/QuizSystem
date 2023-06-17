@@ -23,7 +23,7 @@ import ProfessorService, { Professor } from "../../services/ProfessorService";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import DeleteYesOrNo from "../../components/Global/Delete";
+import DeleteYesOrNo from "../../components/Global/DeleteYesOrNo";
 
 const schema = z.object({
   title: z.string().min(3),

@@ -107,7 +107,7 @@ const AdminSearchPage = () => {
         </Container>
       )}
       {searchResults && searchResults.length > 0 && searchRole == "" && (
-        <SimpleGrid p={10} spacing={20} columns={2} minChildWidth={500}>
+        <SimpleGrid p={10} spacing={20} columns={2} minChildWidth={300}>
           <GridItem
             borderRadius={40}
             bg={colorMode == "dark" ? "gray.700" : "gray.50"}

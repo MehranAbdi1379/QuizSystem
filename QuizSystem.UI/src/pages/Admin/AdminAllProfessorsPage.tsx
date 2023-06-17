@@ -10,10 +10,9 @@ import {
   Text,
   useColorMode,
 } from "@chakra-ui/react";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import ProfessorService, { Professor } from "../../services/ProfessorService";
-import { Link, useParams } from "react-router-dom";
-import UserDisplay from "../../components/Global/UserDisplay";
+import { Link } from "react-router-dom";
 
 const AdminAllProfessorsPage = () => {
   const { GetAll } = new ProfessorService();
