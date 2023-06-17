@@ -56,27 +56,25 @@ const AdminProfessorsPage = () => {
           </Heading>
         )}
         {courses &&
-          courses
-            ?.map((x) => x)
-            .filter(function (x) {
-              return professor?.id.includes(x.professorId);
-            }).length > 0 && (
+          courses.filter((course) => course.professorId == professor?.id)
+            .length > 0 && (
             <Heading marginTop={5} marginBottom={2} fontSize={22}>
               Courses
             </Heading>
           )}
 
         <VStack marginBottom={5} align={"start"}>
-          {courses
-            ?.map((x) => x)
-            .filter(function (x) {
-              return professor?.id.includes(x.professorId);
-            })
-            .map((course) => (
-              <Link to="/sign-in/admin/course" state={{ courseId: course.id }}>
-                <Button variant={"ghost"}>{course.title}</Button>
-              </Link>
-            ))}
+          {courses &&
+            courses
+              .filter((course) => course.professorId == professor?.id)
+              .map((course) => (
+                <Link
+                  to="/sign-in/admin/course"
+                  state={{ courseId: course.id }}
+                >
+                  <Button variant={"ghost"}>{course.title}</Button>
+                </Link>
+              ))}
         </VStack>
         {professor?.accepted && (
           <Button

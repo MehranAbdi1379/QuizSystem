@@ -10,7 +10,7 @@ import {
   Text,
   useColorMode,
 } from "@chakra-ui/react";
-import UserDisplay from "../../components/Global/UserDisplay";
+import UserFirstNameLastNameDisplay from "../../components/Global/UserFirstNameLastNameDisplay";
 
 const AdminCoursePage = () => {
   const { colorMode } = useColorMode();
@@ -45,7 +45,9 @@ const AdminCoursePage = () => {
         </Heading>
         {course && (
           <Heading fontSize={25}>
-            <UserDisplay id={course.professorId}></UserDisplay>
+            <UserFirstNameLastNameDisplay
+              id={course.professorId}
+            ></UserFirstNameLastNameDisplay>
           </Heading>
         )}
 
@@ -55,7 +57,10 @@ const AdminCoursePage = () => {
 
         <Box marginTop={1}>
           {courseStudents?.map((studentId) => (
-            <UserDisplay key={studentId.id} id={studentId.id}></UserDisplay>
+            <UserFirstNameLastNameDisplay
+              key={studentId.id}
+              id={studentId.id}
+            ></UserFirstNameLastNameDisplay>
           ))}
         </Box>
 

@@ -16,14 +16,14 @@ import {
   List,
   SimpleGrid,
 } from "@chakra-ui/react";
-import UserDisplay from "../../components/Global/UserDisplay";
+import UserFirstNameLastNameDisplay from "../../components/Global/UserFirstNameLastNameDisplay";
 import { Form, Navigate, useLocation } from "react-router-dom";
 import StudentService, { Student } from "../../services/StudentService";
 import ProfessorService, { Professor } from "../../services/ProfessorService";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import DeleteYesOrNo from "../../components/Global/DeleteYesOrNo";
+import DeleteYesOrNo from "../../components/Global/Delete";
 
 const schema = z.object({
   title: z.string().min(3),
