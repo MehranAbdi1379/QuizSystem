@@ -23,7 +23,7 @@ import ProfessorService, { Professor } from "../../services/ProfessorService";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForceUpdate } from "framer-motion";
+import DeleteYesOrNo from "../../components/Global/Delete";
 
 const schema = z.object({
   title: z.string().min(3),
@@ -200,51 +200,16 @@ const AdminCourseEditPage = () => {
           </Button>
         </Container>
       </Form>
+
       {deleteOn && (
-        <Box
-          position={"fixed"}
-          paddingLeft={"45%"}
-          paddingTop={"20%"}
-          left={0}
-          top={0}
-          right={0}
-          width={"100vw"}
-          height={"100vh"}
-          bg={"blackAlpha.700"}
-          zIndex={0}
-        >
-          <Box margin={"auto"}>
-            <Heading marginBottom={3} fontSize={25} color={"white"}>
-              Are you sure?{" "}
-            </Heading>
-            <Button
-              colorScheme="red"
-              fontSize={20}
-              marginRight={3}
-              p={7}
-              paddingLeft={10}
-              paddingRight={10}
-              onClick={() => {
-                Delete(state.course.id);
-                setSubmited(true);
-                setDeleteOn(false);
-              }}
-            >
-              Yes
-            </Button>
-            <Button
-              colorScheme="green"
-              fontSize={20}
-              marginRight={3}
-              p={7}
-              paddingLeft={10}
-              paddingRight={10}
-              onClick={() => setDeleteOn(false)}
-            >
-              No
-            </Button>
-          </Box>
-        </Box>
+        <DeleteYesOrNo
+          onClick={() => {
+            Delete(state.course.id);
+            setSubmited(true);
+            setDeleteOn(false);
+          }}
+          setDeleteOn={setDeleteOn}
+        ></DeleteYesOrNo>
       )}
     </Container>
   );

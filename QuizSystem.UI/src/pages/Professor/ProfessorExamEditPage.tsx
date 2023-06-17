@@ -24,6 +24,7 @@ import {
 import { z } from "zod";
 import ExamService, { Exam } from "../../services/ExamService";
 import GradedQuestionService from "../../services/GradedQuestionService";
+import DeleteYesOrNo from "../../components/Global/Delete";
 
 const schema = z.object({
   title: z.string(),
@@ -171,51 +172,18 @@ const ProfessorExamEditPage = () => {
           </Button>
         </List>
       </Container>
+
       {deleteOn && (
-        <Box
-          position={"fixed"}
-          left={0}
-          top={0}
-          right={0}
-          width={"100vw"}
-          height={"100vh"}
-          bg={"blackAlpha.700"}
-          zIndex={0}
-        >
-          <Box paddingLeft={"45vw"} paddingTop={"40vh"} margin={"auto"}>
-            <Heading marginBottom={3} fontSize={25} color={"white"}>
-              Are you sure?{" "}
-            </Heading>
-            <Button
-              colorScheme="red"
-              fontSize={20}
-              marginRight={3}
-              p={7}
-              paddingLeft={10}
-              paddingRight={10}
-              onClick={() => {
-                Delete(exam?.id);
-                console.log(state.courseId);
-                navigate("/sign-in/professor/course", {
-                  state: { courseId: state.courseId },
-                });
-              }}
-            >
-              Yes
-            </Button>
-            <Button
-              colorScheme="green"
-              fontSize={20}
-              marginRight={3}
-              p={7}
-              paddingLeft={10}
-              paddingRight={10}
-              onClick={() => setDeleteOn(false)}
-            >
-              No
-            </Button>
-          </Box>
-        </Box>
+        <DeleteYesOrNo
+          onClick={() => {
+            Delete(exam?.id);
+            console.log(state.courseId);
+            navigate("/sign-in/professor/course", {
+              state: { courseId: state.courseId },
+            });
+          }}
+          setDeleteOn={setDeleteOn}
+        ></DeleteYesOrNo>
       )}
     </Form>
   );
