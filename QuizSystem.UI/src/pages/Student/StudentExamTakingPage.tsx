@@ -12,6 +12,7 @@ import {
   Tabs,
   Text,
   Textarea,
+  VStack,
   useColorMode,
   useStatStyles,
 } from "@chakra-ui/react";
@@ -52,7 +53,9 @@ const StudentExamTakingPage = () => {
     endTime: Date;
   }>();
   const [examStudentQuestions, setExamStudentQuestions] =
-    useState<{ answer: string; gradedQuestionId: string; id: string }[]>();
+    useState<
+      { answer: string; gradedQuestionId: string; id: string; grade: number }[]
+    >();
 
   const [selectedQuestion, setSelectedQuestion] = useState<Question>();
 
@@ -62,6 +65,7 @@ const StudentExamTakingPage = () => {
     questionId: string;
     answer: string;
     examStudentQuestionId: string;
+    studentGrade: number;
   }[] = [];
 
   multipleChoiceQuestions?.forEach((element) => {
@@ -69,6 +73,7 @@ const StudentExamTakingPage = () => {
       ...element,
       answer: "",
       examStudentQuestionId: "",
+      studentGrade: 0,
     };
 
     examStudentQuestions?.forEach((examStudentQuestion) => {
@@ -76,6 +81,8 @@ const StudentExamTakingPage = () => {
         multipleChoiceQuestionWithAnswer.answer = examStudentQuestion.answer;
         multipleChoiceQuestionWithAnswer.examStudentQuestionId =
           examStudentQuestion.id;
+        multipleChoiceQuestionWithAnswer.studentGrade =
+          examStudentQuestion.grade;
       }
     });
     multipleChoiceQuestionsWithAnswers.push(multipleChoiceQuestionWithAnswer);
@@ -87,6 +94,7 @@ const StudentExamTakingPage = () => {
     questionId: string;
     answer: string;
     examStudentQuestionId: string;
+    studentGrade: number;
   }[] = [];
 
   descriptiveQuestions?.forEach((element) => {
@@ -94,6 +102,7 @@ const StudentExamTakingPage = () => {
       ...element,
       answer: "",
       examStudentQuestionId: "",
+      studentGrade: 0,
     };
 
     examStudentQuestions?.forEach((examStudentQuestion) => {
@@ -101,11 +110,18 @@ const StudentExamTakingPage = () => {
         descriptiveQuestionWithAnswer.answer = examStudentQuestion.answer;
         descriptiveQuestionWithAnswer.examStudentQuestionId =
           examStudentQuestion.id;
+        descriptiveQuestionWithAnswer.studentGrade = examStudentQuestion.grade;
       }
     });
     descriptiveQuestionsWithAnswers.push(descriptiveQuestionWithAnswer);
   });
-  const [questionAnswered, setQuestionAnswered] = useState(0);
+
+  var gradeSum: number = 0;
+  examStudentQuestions?.forEach((examStudentQuestion) => {
+    gradeSum += examStudentQuestion.grade;
+  });
+
+  const [answeredQuestionUpdater, setAnsweredQuestionUpdater] = useState(0);
 
   useEffect(() => {
     GetAllQuestionsByExamAndStudentId(
@@ -127,7 +143,7 @@ const StudentExamTakingPage = () => {
     Finished(state.examId, setFinished, setError);
 
     GetByExamAndStudentId(state.examId, setExamStudent, setError);
-  }, [state]);
+  }, [state, answeredQuestionUpdater]);
   return (
     <Container
       maxWidth={"70%"}
@@ -139,12 +155,15 @@ const StudentExamTakingPage = () => {
         <HStack justifyContent={"space-between"}>
           <Heading>Questions: </Heading>
 
-          {examStudent?.endTime && (
-            <StudentExamTimeCounter
-              examId={state.examId}
-              endTime={examStudent.endTime}
-            />
-          )}
+          <VStack>
+            {examStudent?.endTime && (
+              <StudentExamTimeCounter
+                examId={state.examId}
+                endTime={examStudent.endTime}
+              />
+            )}
+            {finished && gradeSum != 0 && <Text>Exam grade: {gradeSum}</Text>}
+          </VStack>
         </HStack>
 
         <Text marginTop={5} alignSelf={"center"} fontSize={20}>
@@ -196,11 +215,15 @@ const StudentExamTakingPage = () => {
                 {selectedQuestion?.description}
               </Text>
               <StudentMultipleChoiceQuestionAnswers
-                finished
+                answeredQuestionUpdater={answeredQuestionUpdater}
+                setAnsweredQuestionUpdater={setAnsweredQuestionUpdater}
+                finished={finished}
                 examStudentQuestionId={q.examStudentQuestionId}
                 answer={q.answer}
                 questionId={q.questionId}
               ></StudentMultipleChoiceQuestionAnswers>
+              <Text marginTop={5}>Question grade: {q.grade}</Text>
+              {finished && <Text>Your Grade: {q.studentGrade}</Text>}
             </TabPanel>
           ))}
 
@@ -218,10 +241,14 @@ const StudentExamTakingPage = () => {
                     e.target.value,
                     setError
                   );
-                  setQuestionAnswered(questionAnswered + 1);
+                  if (q.answer == "" || e.target.value == "") {
+                    setAnsweredQuestionUpdater(answeredQuestionUpdater + 1);
+                  }
                 }}
                 defaultValue={q.answer}
               ></Textarea>
+              <Text marginTop={5}>Question grade: {q.grade}</Text>
+              {finished && <Text>Your Grade: {q.studentGrade}</Text>}
             </TabPanel>
           ))}
         </TabPanels>
