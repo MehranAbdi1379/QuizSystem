@@ -54,7 +54,7 @@ namespace QuizSystem.Domain.Models
 
         public void ValidateQuestionNotDuplicate(Guid questionId , Guid examId,IGradedQuestionRepository repository)
         {
-            if (repository.QuestionIsDuplicate(questionId, examId))
+            if (repository.IsQuestionDuplicate(questionId, examId))
                 throw new GradedQuestionDuplicateException();
         }
     }

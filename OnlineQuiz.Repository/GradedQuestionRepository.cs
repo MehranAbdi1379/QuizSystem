@@ -15,7 +15,7 @@ namespace QuizSystem.Repository
         {
         }
 
-        public bool QuestionIsDuplicate(Guid questionId, Guid examId)
+        public bool IsQuestionDuplicate(Guid questionId, Guid examId)
         {
             return context.Set<GradedQuestion>().Any(x => x.ExamId == examId && x.QuestionId == questionId);
         }

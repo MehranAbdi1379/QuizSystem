@@ -10,7 +10,7 @@ namespace QuizSystem.Domain.Repository
 {
     public interface IExamStudentRepository: IBaseRepository<ExamStudent>
     {
-        public bool ExamStudentAlreadyExist(Guid examId, Guid studentId);
+        public bool IsExamStudentAlreadyExist(Guid examId, Guid studentId);
         public ExamStudent GetByExamAndStudentId(Guid examId, Guid studentId);
         List<ExamStudent> GetAllByExamId(Guid examId);
 

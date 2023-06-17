@@ -30,7 +30,7 @@ namespace QuizSystem.Domain.Models
         {
             if(rightAnswer)
             {
-                if (repository.RightAnswerExist(questionId))
+                if (repository.IsRightAnswerExist(questionId))
                     throw new MultipleChoiceAnswerAlreadyHasRightAnswerException();
                 RightAnswer = rightAnswer;
             }
@@ -42,7 +42,7 @@ namespace QuizSystem.Domain.Models
 
         public void SetTitle(string title , IMultipleChoiceAnswerRepository repository , Guid questionId)
         {
-            if (repository.TitleExist(title, questionId))
+            if (repository.IsTitleExist(title, questionId))
                 throw new AnswerTitleAlreadyExistsException();
             Title = title;
         }

@@ -5,8 +5,8 @@ namespace QuizSystem.Repository
 {
     public interface IMultipleChoiceAnswerRepository: IBaseRepository<MultipleChoiceAnswer>
     {
-        public bool TitleExist(string title, Guid questionId);
-        public bool RightAnswerExist(Guid questionId);
+        public bool IsTitleExist(string title, Guid questionId);
+        public bool IsRightAnswerExist(Guid questionId);
         public List<MultipleChoiceAnswer> GetByQuestionId(Guid questionId);
 
     }

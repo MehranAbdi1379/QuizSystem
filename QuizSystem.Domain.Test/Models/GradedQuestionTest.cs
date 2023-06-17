@@ -75,7 +75,7 @@ namespace QuizSystem.Domain.Test.Models
         [TestMethod]
         public void ValidateDuplicate_GradedQuestionIsDuplicate_ThrowException()
         {
-            repository.Setup(x => x.QuestionIsDuplicate(It.IsAny<Guid>() , It.IsAny<Guid>())).Returns(true);
+            repository.Setup(x => x.IsQuestionDuplicate(It.IsAny<Guid>() , It.IsAny<Guid>())).Returns(true);
             Assert.ThrowsException<GradedQuestionDuplicateException>(() => initialQuestion(Guid.NewGuid(), Guid.NewGuid()));
         }
 

@@ -42,7 +42,7 @@ namespace QuizSystem.Service
         {
             Student student = repository.GetWithId(dto.Id);
 
-            foreach (var item in courseStudentRepository.GetWithStudentId(dto.Id))
+            foreach (var item in courseStudentRepository.GetByStudentId(dto.Id))
             {
                 courseStudentRepository.Delete(item);
             }
@@ -87,7 +87,7 @@ namespace QuizSystem.Service
             repository.Delete(student);
             repository.Save();
 
-            foreach (var item in courseStudentRepository.GetWithStudentId(dto.Id))
+            foreach (var item in courseStudentRepository.GetByStudentId(dto.Id))
             {
                 courseStudentRepository.Delete(item);
             }
@@ -98,7 +98,7 @@ namespace QuizSystem.Service
         public async Task<StudentGetDTO> GetStudentById(UserIdStringDTO dto)
         {
             var data = await userManager.FindByIdAsync(dto.Id);
-            var courses = courseStudentRepository.GetWithStudentId(Guid.Parse(dto.Id));
+            var courses = courseStudentRepository.GetByStudentId(Guid.Parse(dto.Id));
             var courseIds = new List<Guid>();
             foreach (var item in courses)
             {
@@ -123,7 +123,7 @@ namespace QuizSystem.Service
 
             foreach (var student in data)
             {
-                var courses = courseStudentRepository.GetWithStudentId(Guid.Parse(student.Id));
+                var courses = courseStudentRepository.GetByStudentId(Guid.Parse(student.Id));
                 var courseIds = new List<Guid>();
                 foreach (var item in courses)
                 {

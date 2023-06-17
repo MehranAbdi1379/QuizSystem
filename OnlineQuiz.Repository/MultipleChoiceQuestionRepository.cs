@@ -16,17 +16,17 @@ namespace QuizSystem.Repository
 
         }
 
-        public bool TitleExist(string title , Guid professorId , Guid courseId)
+        public bool IsTitleExist(string title , Guid professorId , Guid courseId)
         {
             return context.Set<MultipleChoiceQuestion>().Any(x => x.Title == title && x.ProfessorId == professorId && x.CourseId ==courseId);
         }
 
-        public List<MultipleChoiceQuestion> GetWithCourseAndProfessorId(Guid courseId, Guid professorId)
+        public List<MultipleChoiceQuestion> GetByCourseAndProfessorId(Guid courseId, Guid professorId)
         {
             return context.Set<MultipleChoiceQuestion>().Where(x => x.CourseId == courseId && x.ProfessorId == professorId).ToList();
         }
 
-        public List<MultipleChoiceQuestion> GetAllWithCourseId(Guid courseId)
+        public List<MultipleChoiceQuestion> GetAllByCourseId(Guid courseId)
         {
             return context.Set<MultipleChoiceQuestion>().Where(x => x.CourseId == courseId).ToList();
         }

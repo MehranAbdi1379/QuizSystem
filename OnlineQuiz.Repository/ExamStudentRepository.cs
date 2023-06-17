@@ -16,7 +16,7 @@ namespace QuizSystem.Repository
         {
         }
 
-        public bool ExamStudentAlreadyExist(Guid examId , Guid studentId)
+        public bool IsExamStudentAlreadyExist(Guid examId , Guid studentId)
         {
             return context.Set<ExamStudent>().Any(x => x.ExamId == examId && x.StudentId == studentId);
         }

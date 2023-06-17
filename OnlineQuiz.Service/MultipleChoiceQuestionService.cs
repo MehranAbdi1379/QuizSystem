@@ -85,7 +85,7 @@ namespace QuizSystem.Service
 
         public List<MultipleChoiceQuestion> GetWithCourseAndProfessorId(CourseAndProfessorIdDTO dto)
         {
-            return multipleChoiceQuestionRepository.GetWithCourseAndProfessorId(dto.CourseId, dto.ProfessorId);
+            return multipleChoiceQuestionRepository.GetByCourseAndProfessorId(dto.CourseId, dto.ProfessorId);
         }
 
         public MultipleChoiceAnswer CreateAnswer(MultipleChoiceAnswerCreateDTO dto)

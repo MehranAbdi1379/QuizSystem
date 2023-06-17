@@ -40,7 +40,7 @@ namespace QuizSystem.Service
 
         public void Delete(IdDTO dto)
         {
-            var examStudentQuestions = examStudentQuestionRepository.GetAllWithGradedQuestionId(dto.Id);
+            var examStudentQuestions = examStudentQuestionRepository.GetAllByGradedQuestionId(dto.Id);
 
             foreach (var item in examStudentQuestions)
             {
@@ -77,7 +77,7 @@ namespace QuizSystem.Service
         {
             var courseId = examRepository.GetWithId(dto.Id).CourseId;
             var professorId = courseRepository.GetWithId(courseId).ProfessorId;
-            var descriptiveQuestions = descriptiveQuestionRepository.GetWithCourseAndProfessorId(courseId, professorId);
+            var descriptiveQuestions = descriptiveQuestionRepository.GetByCourseAndProfessorId(courseId, professorId);
             var gradedQuestions = gradedQuestionRepository.GetAllByExamId(dto.Id);
             var result = new List<GradedQuestion>();
             foreach (var gradedQuestion in gradedQuestions)
@@ -96,7 +96,7 @@ namespace QuizSystem.Service
         {
             var courseId = examRepository.GetWithId(dto.Id).CourseId;
             var professorId = courseRepository.GetWithId(courseId).ProfessorId;
-            var multipleChoiceQuestions = multipleChoiceQuestionRepository.GetWithCourseAndProfessorId(courseId, professorId);
+            var multipleChoiceQuestions = multipleChoiceQuestionRepository.GetByCourseAndProfessorId(courseId, professorId);
             var gradedQuestions = gradedQuestionRepository.GetAllByExamId(dto.Id);
             var result = new List<GradedQuestion>();
             foreach (var gradedQuestion in gradedQuestions)

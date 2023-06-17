@@ -5,9 +5,9 @@ namespace QuizSystem.Repository
 {
     public interface IExamStudentQuestionRepository: IBaseRepository<ExamStudentQuestion>
     {
-        bool ExamStudentQuestionAlreadyExist(Guid examStudentId, Guid gradedQuestionId);
-        ExamStudentQuestion GetWithExamStudentAndGradedQuestionId(Guid examStudentId, Guid gradedQuestionId);
-        List<ExamStudentQuestion> GetAllWithExamStudentId(Guid examStudentId);
-        List<ExamStudentQuestion> GetAllWithGradedQuestionId(Guid gradedQuestionId);
+        bool IsExamStudentQuestionAlreadyExist(Guid examStudentId, Guid gradedQuestionId);
+        ExamStudentQuestion GetByExamStudentAndGradedQuestionId(Guid examStudentId, Guid gradedQuestionId);
+        List<ExamStudentQuestion> GetAllByExamStudentId(Guid examStudentId);
+        List<ExamStudentQuestion> GetAllByGradedQuestionId(Guid gradedQuestionId);
     }
 }

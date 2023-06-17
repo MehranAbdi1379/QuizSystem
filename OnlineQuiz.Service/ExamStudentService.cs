@@ -58,7 +58,7 @@ namespace QuizSystem.Service
 
         public bool StudentExamExist(ExamStudentCreateDTO dto)
         {
-            return repository.ExamStudentAlreadyExist(dto.ExamId, dto.StudentId);
+            return repository.IsExamStudentAlreadyExist(dto.ExamId, dto.StudentId);
         }
 
         public bool isExamFinished(ExamStudentCreateDTO dto)
@@ -108,7 +108,7 @@ namespace QuizSystem.Service
         {
             var examStudent = repository.GetWithId(dto.Id);
 
-            var examStudentQuestions = examStudentQuestionRepository.GetAllWithExamStudentId(dto.Id);
+            var examStudentQuestions = examStudentQuestionRepository.GetAllByExamStudentId(dto.Id);
 
             foreach (var item in examStudentQuestions)
             {
@@ -122,7 +122,7 @@ namespace QuizSystem.Service
 
         public ExamStudentQuestion GetQuestion(ExamStudentQuestionGetDTO dto)
         {
-            return examStudentQuestionRepository.GetWithExamStudentAndGradedQuestionId(dto.ExamStudentId , dto.GradedQuestionId);
+            return examStudentQuestionRepository.GetByExamStudentAndGradedQuestionId(dto.ExamStudentId , dto.GradedQuestionId);
         }
 
         public ExamStudentQuestion UpdateQuestion(ExamStudentQuestionUpdateDTO dto)
@@ -178,7 +178,7 @@ namespace QuizSystem.Service
         {
             var examStudent = repository.GetByExamAndStudentId(dto.ExamId, dto.StudentId);
 
-            return examStudentQuestionRepository.GetAllWithExamStudentId(examStudent.Id);
+            return examStudentQuestionRepository.GetAllByExamStudentId(examStudent.Id);
         }
         
     }

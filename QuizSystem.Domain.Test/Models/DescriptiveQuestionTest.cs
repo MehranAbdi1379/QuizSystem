@@ -33,7 +33,7 @@ namespace QuizSystem.Domain.Test.Models
         [TestMethod]
         public void SetTitle_QuestionTitleExists_ThrowException()
         {
-            descriptiveQuestionRepositoryMock.Setup(x => x.TitleExists(It.IsAny<string>() , It.IsAny<Guid>(),It.IsAny<Guid>())).Returns(true);
+            descriptiveQuestionRepositoryMock.Setup(x => x.IsTitleExist(It.IsAny<string>() , It.IsAny<Guid>(),It.IsAny<Guid>())).Returns(true);
             Assert.ThrowsException<QuestionTitleExistsException>(() => InitialQuestion());
         }
 

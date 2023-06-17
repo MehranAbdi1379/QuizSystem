@@ -30,7 +30,7 @@ namespace QuizSystem.Domain.Models
 
         public void SetTitle(string title , IExamRepository examRepository)
         {
-            if (examRepository.ExamTitleExists(title, CourseId))
+            if (examRepository.IsExamTitleExist(title, CourseId))
                 throw new ExamTitleExistException();
             Title = title;
         }

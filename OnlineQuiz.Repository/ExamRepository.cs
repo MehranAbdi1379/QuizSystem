@@ -17,7 +17,7 @@ namespace QuizSystem.Repository
 
         }
 
-        public bool ExamTitleExists(string title, Guid courseId)
+        public bool IsExamTitleExist(string title, Guid courseId)
         {
             return context.Set<Exam>().Where(s => s.CourseId == courseId).Any(s => s.Title == title);
         }

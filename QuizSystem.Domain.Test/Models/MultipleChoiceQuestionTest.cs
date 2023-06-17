@@ -33,7 +33,7 @@ namespace QuizSystem.Domain.Test.Models
         [TestMethod]
         public void SetTitle_TitleAlreadyExists_ThrowException()
         {
-            multipleChoiceQuestionRepositoryMock.Setup(x => x.TitleExist(It.IsAny<string>(), It.IsAny<Guid>(), It.IsAny<Guid>())).Returns(true);
+            multipleChoiceQuestionRepositoryMock.Setup(x => x.IsTitleExist(It.IsAny<string>(), It.IsAny<Guid>(), It.IsAny<Guid>())).Returns(true);
             Assert.ThrowsException<QuestionTitleExistsException>(() => InitialQuestion());
         }
 

@@ -10,7 +10,7 @@ namespace QuizSystem.Domain.Repository
 {
     public interface ICourseRepository : IBaseRepository<Course>
     {
-        bool CourseTitleExists(string title);
+        bool IsCourseTitleExist(string title);
         public List<Course> GetByProfessorId(Guid professorID);
         public List<Course> GetAllCourses();
     }

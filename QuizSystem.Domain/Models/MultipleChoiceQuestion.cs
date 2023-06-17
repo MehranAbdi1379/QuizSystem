@@ -27,7 +27,7 @@ namespace QuizSystem.Domain.Models
 
         public void SetTitle(string title, IMultipleChoiceQuestionRepository repository, Guid courseId, Guid professorId)
         {
-            if (repository.TitleExist(title, courseId, professorId))
+            if (repository.IsTitleExist(title, courseId, professorId))
                 throw new QuestionTitleExistsException();
             else if (title.Length > 20)
                 throw new QuestionTitleLengthLongException();

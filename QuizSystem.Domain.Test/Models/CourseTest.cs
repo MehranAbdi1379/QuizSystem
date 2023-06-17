@@ -15,7 +15,7 @@ public class CourseTest
 
     public CourseTest()
     {
-        courseRepositoryMock.Setup(c => c.CourseTitleExists(It.IsAny<string>())).Returns(false);
+        courseRepositoryMock.Setup(c => c.IsCourseTitleExist(It.IsAny<string>())).Returns(false);
         studentRepositoryMock.Setup(c => c.IsExist(It.IsAny<Guid>())).Returns(false);
         professorRepositoryMock.Setup(c => c.IsExist(It.IsAny<Guid>())).Returns(true);
     }
@@ -23,7 +23,7 @@ public class CourseTest
     [TestMethod]
     public void SetTitle_CourseTitleExist_ThrowException()
     {
-        courseRepositoryMock.Setup(c => c.CourseTitleExists(It.IsAny<string>())).Returns(true);
+        courseRepositoryMock.Setup(c => c.IsCourseTitleExist(It.IsAny<string>())).Returns(true);
         Assert.ThrowsException<CourseTitleExistsException>(() => InitialCourse());
     }
 

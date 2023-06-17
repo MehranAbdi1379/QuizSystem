@@ -35,7 +35,7 @@ namespace QuizSystem.Domain.Models
 
         public void SetTitle(string title , ICourseRepository repository)
         {
-            if (repository.CourseTitleExists(title))
+            if (repository.IsCourseTitleExist(title))
                 throw new CourseTitleExistsException();
             Title = title;
         }

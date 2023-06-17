@@ -5,7 +5,7 @@ namespace QuizSystem.Domain.Repository
 {
     public interface IExamRepository : IBaseRepository<Exam>
     {
-        bool ExamTitleExists(string title, Guid courseId);
+        bool IsExamTitleExist(string title, Guid courseId);
         List<Exam> GetAllExams(Guid courseId);
     }
 }

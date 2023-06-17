@@ -5,8 +5,8 @@ namespace QuizSystem.Repository
 {
     public interface IDescriptiveQuestionRepository: IBaseRepository<DescriptiveQuestion>
     {
-        public bool TitleExists(string title, Guid courseId, Guid professorId);
-        public List<DescriptiveQuestion> GetWithCourseAndProfessorId(Guid courseId, Guid professorId);
-        List<DescriptiveQuestion> GetAllWithCourseId(Guid courseId);
+        public bool IsTitleExist(string title, Guid courseId, Guid professorId);
+        public List<DescriptiveQuestion> GetByCourseAndProfessorId(Guid courseId, Guid professorId);
+        List<DescriptiveQuestion> GetAllByCourseId(Guid courseId);
     }
 }

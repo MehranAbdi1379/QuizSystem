@@ -30,7 +30,7 @@ namespace QuizSystem.Domain.Test.Models
         [TestMethod]
         public void SetTitle_TitleAlreadyExists_ThrowException()
         {
-            multipleChoiceAnswerRepositoryMock.Setup(x=>x.TitleExist(It.IsAny<string>() , It.IsAny<Guid>())).Returns(true);
+            multipleChoiceAnswerRepositoryMock.Setup(x=>x.IsTitleExist(It.IsAny<string>() , It.IsAny<Guid>())).Returns(true);
             Assert.ThrowsException<AnswerTitleAlreadyExistsException>(() => InitialAnswer(Guid.NewGuid()));
         }
 
@@ -60,7 +60,7 @@ namespace QuizSystem.Domain.Test.Models
         [TestMethod]
         public void SetRightAnswer_RightAnswerAlreadyExist_ThrowException()
         {
-            multipleChoiceAnswerRepositoryMock.Setup(x => x.RightAnswerExist(It.IsAny<Guid>())).Returns(true);
+            multipleChoiceAnswerRepositoryMock.Setup(x => x.IsRightAnswerExist(It.IsAny<Guid>())).Returns(true);
             Assert.ThrowsException<MultipleChoiceAnswerAlreadyHasRightAnswerException>(() => InitialAnswer(Guid.NewGuid() , rightAnswer: true));
         }
 

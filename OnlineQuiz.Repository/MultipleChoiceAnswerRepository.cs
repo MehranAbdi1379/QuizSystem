@@ -16,12 +16,12 @@ namespace QuizSystem.Repository
 
         }
 
-        public bool TitleExist(string title, Guid questionId)
+        public bool IsTitleExist(string title, Guid questionId)
         {
             return context.Set<MultipleChoiceAnswer>().Any(x => x.QuestionId == questionId && x.Title == title);
         }
 
-        public bool RightAnswerExist(Guid questionId)
+        public bool IsRightAnswerExist(Guid questionId)
         {
             return context.Set<MultipleChoiceAnswer>().Where(x => x.QuestionId == questionId).Any(x => x.RightAnswer == true);
         }

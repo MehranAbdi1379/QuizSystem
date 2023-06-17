@@ -15,22 +15,22 @@ namespace QuizSystem.Repository
         {
         }
 
-        public bool ExamStudentQuestionAlreadyExist(Guid examStudentId, Guid gradedQuestionId)
+        public bool IsExamStudentQuestionAlreadyExist(Guid examStudentId, Guid gradedQuestionId)
         {
             return context.Set<ExamStudentQuestion>().Any(x => x.ExamStudentId == examStudentId && x.GradedQuestionId == gradedQuestionId);
         }
 
-        public ExamStudentQuestion GetWithExamStudentAndGradedQuestionId(Guid examStudentId, Guid gradedQuestionId)
+        public ExamStudentQuestion GetByExamStudentAndGradedQuestionId(Guid examStudentId, Guid gradedQuestionId)
         {
             return context.Set<ExamStudentQuestion>().Where(x => x.GradedQuestionId == gradedQuestionId && x.ExamStudentId == examStudentId).First();
         }
 
-        public List<ExamStudentQuestion> GetAllWithExamStudentId(Guid examStudentId)
+        public List<ExamStudentQuestion> GetAllByExamStudentId(Guid examStudentId)
         {
             return context.Set<ExamStudentQuestion>().Where(x => x.ExamStudentId == examStudentId).ToList();
         }
 
-        public List<ExamStudentQuestion> GetAllWithGradedQuestionId(Guid gradedQuestionId)
+        public List<ExamStudentQuestion> GetAllByGradedQuestionId(Guid gradedQuestionId)
         {
             return context.Set<ExamStudentQuestion>().Where(x => x.GradedQuestionId == gradedQuestionId).ToList();
         }

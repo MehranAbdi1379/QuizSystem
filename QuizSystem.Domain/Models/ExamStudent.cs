@@ -45,7 +45,7 @@ namespace QuizSystem.Domain.Models
 
         public void ValidateUniqueExamStudent(IExamStudentRepository examStudentRepository , Guid examId , Guid studentId)
         {
-            if (examStudentRepository.ExamStudentAlreadyExist(examId, studentId))
+            if (examStudentRepository.IsExamStudentAlreadyExist(examId, studentId))
                 throw new ExamStudentAlreadyExistException();
         }
 

@@ -15,17 +15,17 @@ namespace QuizSystem.Repository
         {
         }
 
-        public bool TitleExists(string title , Guid courseId , Guid professorId)
+        public bool IsTitleExist(string title , Guid courseId , Guid professorId)
         {
             return context.Set<DescriptiveQuestion>().Any(x => x.Title == title && x.ProfessorId == professorId && x.CourseId == courseId);
         }
 
-        public List<DescriptiveQuestion> GetWithCourseAndProfessorId(Guid courseId , Guid professorId)
+        public List<DescriptiveQuestion> GetByCourseAndProfessorId(Guid courseId , Guid professorId)
         {
             return context.Set<DescriptiveQuestion>().Where(x => x.CourseId == courseId && x.ProfessorId == professorId).ToList();
         }
 
-        public List<DescriptiveQuestion> GetAllWithCourseId(Guid courseId)
+        public List<DescriptiveQuestion> GetAllByCourseId(Guid courseId)
         {
             return context.Set<DescriptiveQuestion>().Where(x => x.CourseId == courseId).ToList();
         }

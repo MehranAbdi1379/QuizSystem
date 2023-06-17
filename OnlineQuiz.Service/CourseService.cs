@@ -72,7 +72,7 @@ public class CourseService : ICourseService
     public void RemoveCourse(IdDTO dto)
     {
         var course = repository.GetWithId(dto.Id);
-        var studentCourses = courseStudentRepository.GetWithCourseId(dto.Id);
+        var studentCourses = courseStudentRepository.GetByCourseId(dto.Id);
         foreach (var item in studentCourses)
         {
             courseStudentRepository.Delete(item);
@@ -82,13 +82,13 @@ public class CourseService : ICourseService
         repository.Delete(course);
         repository.Save();
 
-        var descriptiveQuestions = descriptiveQuestionRepository.GetAllWithCourseId(dto.Id);
+        var descriptiveQuestions = descriptiveQuestionRepository.GetAllByCourseId(dto.Id);
         foreach (var item in descriptiveQuestions)
         {
             descriptiveQuestionService.Delete(new IdDTO { Id = item.Id });
         }
 
-        var multipleChoiceQuestions = multipleChoiceQuestionRepository.GetAllWithCourseId(dto.Id);
+        var multipleChoiceQuestions = multipleChoiceQuestionRepository.GetAllByCourseId(dto.Id);
 
         foreach (var item in multipleChoiceQuestions)
         {
@@ -110,7 +110,7 @@ public class CourseService : ICourseService
         course.UpdateDate(dto.StartDate, dto.EndDate);
         course.SetProfessor(dto.ProfessorId, professorRepository);
 
-        foreach (var item in courseStudentRepository.GetWithCourseId(course.Id))
+        foreach (var item in courseStudentRepository.GetByCourseId(course.Id))
         {
             courseStudentRepository.Delete(item);
         }
@@ -150,7 +150,7 @@ public class CourseService : ICourseService
 
     public List<UserIdDTO> GetStudentsByCourseId(CourseIdStringDTO dto)
     {
-        var courseStudents = courseStudentRepository.GetWithCourseId(Guid.Parse(dto.Id));
+        var courseStudents = courseStudentRepository.GetByCourseId(Guid.Parse(dto.Id));
         var studentIds = new List<UserIdDTO>();
         foreach (var item in courseStudents)
         {
@@ -165,7 +165,7 @@ public class CourseService : ICourseService
     }
     public List<Course> GetCourseByStudentId(UserIdDTO dto)
     {
-        var courseStudents = courseStudentRepository.GetWithStudentId(dto.Id);
+        var courseStudents = courseStudentRepository.GetByStudentId(dto.Id);
 
         var courses = new List<Course>();
         foreach (var item in courseStudents)
