@@ -20,12 +20,13 @@ import { z } from "zod";
 import ExamService, { Exam } from "../../services/ExamService";
 
 const schema = z.object({
-  title: z.string().min(3),
-  description: z.string(),
+  title: z.string().min(3, "Title should have at least 3 characters"),
+  description: z.string({
+    invalid_type_error: "Descriptiong can not be empty.",
+  }),
   time: z
-    .string()
-    .min(1, "Time should be more than 5 minutes.")
-    .max(3, "Time should be more than 5 minutes."),
+    .number({ invalid_type_error: "Please enter a valid value." })
+    .min(5, "Time should be more than 5 minutes."),
 });
 
 type FormData = z.infer<typeof schema>;
@@ -35,7 +36,6 @@ const ProfessorExamCreatePage = () => {
   const { colorMode } = useColorMode();
   const [submited, setSubmited] = useState(false);
   const [error, setError] = useState();
-  console.log(state);
   const {
     register,
     handleSubmit,
@@ -48,7 +48,7 @@ const ProfessorExamCreatePage = () => {
     const newExam = {
       courseId: state.courseId,
       description: data.description,
-      time: parseInt(data.time),
+      time: data.time,
       title: data.title,
     };
     Create(newExam, setError, setSubmited);
@@ -86,8 +86,11 @@ const ProfessorExamCreatePage = () => {
           </FormControl>
 
           <FormControl>
-            <FormLabel>{"Time(minutes): "} </FormLabel>
-            <Input {...register("time")} type="number"></Input>
+            <FormLabel>{"Time (minutes): "} </FormLabel>
+            <Input
+              {...register("time", { valueAsNumber: true })}
+              type="number"
+            ></Input>
             {errors.time && (
               <Text color={"red.400"}>{errors.time.message}</Text>
             )}
