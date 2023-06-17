@@ -24,7 +24,7 @@ import {
 import { z } from "zod";
 import ExamService, { Exam } from "../../services/ExamService";
 import GradedQuestionService from "../../services/GradedQuestionService";
-import DeleteYesOrNo from "../../components/Global/DeleteYesOrNo";
+import DeleteYesOrNo from "../../components/Global/Delete";
 
 const schema = z.object({
   title: z.string(),

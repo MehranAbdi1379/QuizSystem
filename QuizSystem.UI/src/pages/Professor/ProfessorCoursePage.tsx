@@ -10,7 +10,6 @@ import {
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { useLocation, Link, useNavigate } from "react-router-dom";
-import UserDisplay from "../../components/Global/UserDisplay";
 import CourseService, { Course } from "../../services/CourseService";
 import ExamService, { Exam } from "../../services/ExamService";
 

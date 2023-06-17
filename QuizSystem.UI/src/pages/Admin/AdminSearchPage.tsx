@@ -18,7 +18,7 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Form, Link } from "react-router-dom";
 import UserServices from "../../services/UserServices";
-import UserDisplay from "../../components/Global/UserDisplay";
+import UserFirstNameLastNameDisplay from "../../components/Global/UserFirstNameLastNameDisplay";
 
 interface FieldData {
   firstName: string;
@@ -117,7 +117,7 @@ const AdminSearchPage = () => {
             </Heading>
             <SimpleGrid p={7} spacing={3} columns={3} minChildWidth={180}>
               {searchResults
-                ?.filter((x) => x.role == "Student")
+                ?.filter((searchResult) => searchResult.role == "Student")
                 .map((student) => (
                   <GridItem>
                     <Link
@@ -127,7 +127,9 @@ const AdminSearchPage = () => {
                       <Button
                         bg={colorMode == "dark" ? "gray.600" : "gray.200"}
                       >
-                        <UserDisplay id={student.id}></UserDisplay>
+                        <UserFirstNameLastNameDisplay
+                          id={student.id}
+                        ></UserFirstNameLastNameDisplay>
                       </Button>
                     </Link>
                   </GridItem>
@@ -143,7 +145,7 @@ const AdminSearchPage = () => {
             </Heading>
             <SimpleGrid p={7} spacing={3} columns={3} minChildWidth={180}>
               {searchResults
-                ?.filter((x) => x.role == "Professor")
+                ?.filter((searchResult) => searchResult.role == "Professor")
                 .map((professor) => (
                   <GridItem>
                     <Link
@@ -153,7 +155,9 @@ const AdminSearchPage = () => {
                       <Button
                         bg={colorMode == "dark" ? "gray.600" : "gray.200"}
                       >
-                        <UserDisplay id={professor.id}></UserDisplay>
+                        <UserFirstNameLastNameDisplay
+                          id={professor.id}
+                        ></UserFirstNameLastNameDisplay>
                       </Button>
                     </Link>
                   </GridItem>
@@ -181,7 +185,9 @@ const AdminSearchPage = () => {
                     state={{ studentId: student.id }}
                   >
                     <Button bg={colorMode == "dark" ? "gray.600" : "gray.200"}>
-                      <UserDisplay id={student.id}></UserDisplay>
+                      <UserFirstNameLastNameDisplay
+                        id={student.id}
+                      ></UserFirstNameLastNameDisplay>
                     </Button>
                   </Link>
                 </GridItem>
@@ -212,7 +218,9 @@ const AdminSearchPage = () => {
                       <Button
                         bg={colorMode == "dark" ? "gray.600" : "gray.200"}
                       >
-                        <UserDisplay id={professor.id}></UserDisplay>
+                        <UserFirstNameLastNameDisplay
+                          id={professor.id}
+                        ></UserFirstNameLastNameDisplay>
                       </Button>
                     </Link>
                   </GridItem>

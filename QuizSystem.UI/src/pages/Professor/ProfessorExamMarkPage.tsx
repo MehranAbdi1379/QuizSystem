@@ -22,6 +22,8 @@ import {
 import ExamStudentService from "../../services/ExamStudentService";
 import DescriptiveQuestionService from "../../services/DescriptiveQuestionService";
 import MultipleChoiceQuestionService from "../../services/MultipleChoiceQuestionService";
+import ProfessorDescriptiveQuestionMark from "../../components/Professor/ProfessorDescriptiveQuestionMark";
+import ProfessorMultipleChoiceQuestionMark from "../../components/Professor/ProfessorMultipleChoiceQuestionMark";
 
 const ProfessorExamMarkPage = () => {
   const state: {
@@ -29,20 +31,6 @@ const ProfessorExamMarkPage = () => {
     examId: string;
     studentId: string;
   } = useLocation().state;
-  const [gradedDescriptiveQuestions, setGradedDescriptiveQuestions] =
-    useState<
-      { id: string; questionId: string; examId: string; grade: number }[]
-    >();
-  const [GradedMultipleChoiceQuestions, setGradedMultipleChoiceQuestions] =
-    useState<
-      { id: string; questionId: string; examId: string; grade: number }[]
-    >();
-  const [descriptiveQuestions, setDescriptiveQuestions] =
-    useState<Question[]>();
-  const [multipleChoiceQuestions, setMultipleChoiceQuestions] =
-    useState<Question[]>();
-  const { GetDescriptiveQuestionsOnly, GetMultipleChoiceQuestionsOnly } =
-    new GradedQuestionService();
 
   const [examStudentQuestions, setExamStudentQuestions] = useState<
     {
@@ -53,124 +41,10 @@ const ProfessorExamMarkPage = () => {
       answer: string;
     }[]
   >();
-  const { GetAllQuestionsByExamAndStudentId, UpdateQuestionGrade } =
-    new ExamStudentService();
-  const { GetAllByExamId: GetDescriptiveQuestionsByExamId } =
-    new DescriptiveQuestionService();
-  const { GetAllByExamId: GetMutlipleChoiceQuestionByExamId } =
-    new MultipleChoiceQuestionService();
+  const { GetAllQuestionsByExamAndStudentId } = new ExamStudentService();
+
   const [error, setError] = useState();
   const { colorMode } = useColorMode();
-
-  var gradedDescriptiveQuestionsDisplay: {
-    gradedQuestionId: string;
-    title: string;
-    description: string;
-    answer: string;
-    questionId: string;
-    examStudentQuestionId: string;
-    grade: number;
-    maxGrade: number;
-  }[] = [];
-
-  descriptiveQuestions?.forEach((descriptiveQuestion) => {
-    var newGradeDescriptiveQuestion: {
-      gradedQuestionId: string;
-      title: string;
-      description: string;
-      answer: string;
-      questionId: string;
-      examStudentQuestionId: string;
-      grade: number;
-      maxGrade: number;
-    } = {
-      gradedQuestionId: "",
-      answer: "",
-      title: "",
-      description: "",
-      questionId: "",
-      examStudentQuestionId: "",
-      grade: 0,
-      maxGrade: 0,
-    };
-    gradedDescriptiveQuestions?.forEach((gradedDescriptiveQuestion) => {
-      if (gradedDescriptiveQuestion.questionId == descriptiveQuestion.id) {
-        newGradeDescriptiveQuestion.gradedQuestionId =
-          gradedDescriptiveQuestion.id;
-        newGradeDescriptiveQuestion.maxGrade = gradedDescriptiveQuestion.grade;
-        examStudentQuestions?.forEach((examStudentQuestion) => {
-          if (
-            examStudentQuestion.gradedQuestionId == gradedDescriptiveQuestion.id
-          ) {
-            newGradeDescriptiveQuestion.answer = examStudentQuestion.answer;
-            newGradeDescriptiveQuestion.examStudentQuestionId =
-              examStudentQuestion.id;
-            newGradeDescriptiveQuestion.grade = examStudentQuestion.grade;
-          }
-        });
-      }
-    });
-    newGradeDescriptiveQuestion.description = descriptiveQuestion.description;
-    newGradeDescriptiveQuestion.title = descriptiveQuestion.title;
-    newGradeDescriptiveQuestion.questionId = descriptiveQuestion.id;
-
-    gradedDescriptiveQuestionsDisplay.push(newGradeDescriptiveQuestion);
-  });
-
-  var gradedMultipleChoiceQuestionsDisplay: {
-    gradedQuestionId: string;
-    title: string;
-    description: string;
-    answer: string;
-    questionId: string;
-    examStudentQuestionId: string;
-    grade: number;
-  }[] = [];
-
-  multipleChoiceQuestions?.forEach((multipleChoiceQuestion) => {
-    var newGradedMultipleChoiceQuestion: {
-      gradedQuestionId: string;
-      title: string;
-      description: string;
-      answer: string;
-      questionId: string;
-      examStudentQuestionId: string;
-      grade: number;
-    } = {
-      gradedQuestionId: "",
-      answer: "",
-      title: "",
-      description: "",
-      questionId: "",
-      examStudentQuestionId: "",
-      grade: 0,
-    };
-    GradedMultipleChoiceQuestions?.forEach((gradedMultipleChoiceQuestion) => {
-      if (
-        gradedMultipleChoiceQuestion.questionId == multipleChoiceQuestion.id
-      ) {
-        newGradedMultipleChoiceQuestion.gradedQuestionId =
-          gradedMultipleChoiceQuestion.id;
-        examStudentQuestions?.forEach((examStudentQuestion) => {
-          if (
-            examStudentQuestion.gradedQuestionId ==
-            gradedMultipleChoiceQuestion.id
-          ) {
-            newGradedMultipleChoiceQuestion.answer = examStudentQuestion.answer;
-            newGradedMultipleChoiceQuestion.examStudentQuestionId =
-              examStudentQuestion.id;
-            newGradedMultipleChoiceQuestion.grade = examStudentQuestion.grade;
-          }
-        });
-      }
-    });
-    newGradedMultipleChoiceQuestion.description =
-      multipleChoiceQuestion.description;
-    newGradedMultipleChoiceQuestion.title = multipleChoiceQuestion.title;
-    newGradedMultipleChoiceQuestion.questionId = multipleChoiceQuestion.id;
-
-    gradedMultipleChoiceQuestionsDisplay.push(newGradedMultipleChoiceQuestion);
-  });
 
   var gradeSum = 0;
   examStudentQuestions?.forEach((element) => {
@@ -184,30 +58,11 @@ const ProfessorExamMarkPage = () => {
     examStudentQuestions?.forEach((element) => {
       gradeSum += element.grade;
     });
-    GetDescriptiveQuestionsOnly(
-      state.examId,
-      setGradedDescriptiveQuestions,
-      setError
-    );
-    GetMultipleChoiceQuestionsOnly(
-      state.examId,
-      setGradedMultipleChoiceQuestions,
-      setError
-    );
+
     GetAllQuestionsByExamAndStudentId(
       state.examId,
       state.studentId,
       setExamStudentQuestions,
-      setError
-    );
-    GetDescriptiveQuestionsByExamId(
-      state.examId,
-      setDescriptiveQuestions,
-      setError
-    );
-    GetMutlipleChoiceQuestionByExamId(
-      state.examId,
-      setMultipleChoiceQuestions,
       setError
     );
   }, [state, gradeSumCounter]);
@@ -220,58 +75,13 @@ const ProfessorExamMarkPage = () => {
           bg={colorMode == "dark" ? "gray.600" : "gray.100"}
           borderRadius={20}
         >
-          <Heading>Descriptive Questions: </Heading>
-
-          <SimpleGrid columns={2} minChildWidth={300}>
-            {gradedDescriptiveQuestionsDisplay.map((q) => (
-              <Card
-                key={q.questionId}
-                marginTop={5}
-                marginRight={5}
-                marginBottom={5}
-              >
-                <CardHeader>
-                  <Heading fontSize={24}>{q.title}</Heading>
-                  <Text>{q.description}</Text>
-                </CardHeader>
-                <CardBody>
-                  <Box>
-                    <Text>Answer: </Text>
-                    <Text>{q.answer}</Text>
-                  </Box>
-                </CardBody>
-                <CardFooter>
-                  <Box width={"100%"}>
-                    <Text>Max Grade: {q.maxGrade}</Text>
-                    <HStack marginTop={2}>
-                      <Text>Grade: </Text>
-                      <Input
-                        type="number"
-                        required
-                        defaultValue={q.grade}
-                        onChange={(e) => {
-                          if (parseFloat(e.target.value) > q.maxGrade) {
-                            alert("Grade can not be more than max grade.");
-                            e.target.value = q.grade.toString();
-                          } else if (parseFloat(e.target.value) < 0) {
-                            alert("Grade can not be negative.");
-                            e.target.value = q.grade.toString();
-                          } else if (e.target.value) {
-                            UpdateQuestionGrade(
-                              q.examStudentQuestionId,
-                              e.target.value,
-                              setError
-                            );
-                            setGradeSumCounter(gradeSumCounter + 1);
-                          }
-                        }}
-                      ></Input>
-                    </HStack>
-                  </Box>
-                </CardFooter>
-              </Card>
-            ))}
-          </SimpleGrid>
+          <ProfessorDescriptiveQuestionMark
+            gradeSumCounter={gradeSumCounter}
+            setGradeSumCounter={setGradeSumCounter}
+            examStudentQuestions={examStudentQuestions}
+            setError={setError}
+            state={state}
+          />
         </Box>
 
         <Box
@@ -279,36 +89,11 @@ const ProfessorExamMarkPage = () => {
           bg={colorMode == "dark" ? "gray.600" : "gray.100"}
           borderRadius={20}
         >
-          <Heading>Multiple Choice Questions: </Heading>
-
-          <SimpleGrid columns={2} minChildWidth={300}>
-            {gradedMultipleChoiceQuestionsDisplay.map((q) => (
-              <GridItem>
-                <Card
-                  key={q.questionId}
-                  marginTop={5}
-                  marginRight={5}
-                  marginBottom={5}
-                >
-                  <CardHeader>
-                    <Heading fontSize={24}>{q.title}</Heading>
-                    <Text>{q.description}</Text>
-                  </CardHeader>
-                  <CardBody>
-                    <Box>
-                      <Text>Answer: </Text>
-                      <Text>{q.answer}</Text>
-                    </Box>
-                  </CardBody>
-                  <CardFooter>
-                    <Box>
-                      <Text>Grade: {q.grade}</Text>
-                    </Box>
-                  </CardFooter>
-                </Card>
-              </GridItem>
-            ))}
-          </SimpleGrid>
+          <ProfessorMultipleChoiceQuestionMark
+            setError={setError}
+            examStudentQuestions={examStudentQuestions}
+            state={state}
+          />
         </Box>
         <Box
           p={5}

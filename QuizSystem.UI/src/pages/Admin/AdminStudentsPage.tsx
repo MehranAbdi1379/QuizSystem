@@ -55,6 +55,7 @@ const AdminStudentsPage = () => {
             <Text>{student.nationalCode}</Text>
           </Heading>
         )}
+
         {courses &&
           courses
             ?.map((x) => x)
@@ -66,11 +67,11 @@ const AdminStudentsPage = () => {
             </Heading>
           )}
 
-        <VStack marginBottom={5} align={"startZ"}>
+        <VStack marginBottom={5} align={"start"}>
           {courses
-            ?.map((x) => x)
-            .filter(function (x) {
-              return student?.courseIds.includes(x.id);
+            ?.map((course) => course)
+            .filter(function (course) {
+              return student?.courseIds.includes(course.id);
             })
             .map((course) => (
               <Link to="/sign-in/admin/course" state={{ courseId: course.id }}>

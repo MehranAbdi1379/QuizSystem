@@ -32,8 +32,6 @@ const ProfessorAllQuestionsPage = () => {
   const [error, setError] = useState();
   const state = useLocation().state;
   const { colorMode } = useColorMode();
-  const { Delete: DeleteGradedQuestion, GetByQuestionId } =
-    new GradedQuestionService();
   const [deleteCounter, setDeleteCounter] = useState(0);
 
   useEffect(() => {
@@ -59,22 +57,22 @@ const ProfessorAllQuestionsPage = () => {
           borderRadius={20}
         >
           <Heading fontSize={28}>Descriptive Questions: </Heading>
-          {descriptiveQuestions?.map((q) => (
-            <Card key={q.id} margin={5}>
+          {descriptiveQuestions?.map((descriptiveQuestion) => (
+            <Card key={descriptiveQuestion.id} margin={5}>
               <CardHeader>
-                <Heading fontSize={24}>{q.title}</Heading>
+                <Heading fontSize={24}>{descriptiveQuestion.title}</Heading>
               </CardHeader>
               <CardBody>
-                <Text>{q.description}</Text>
+                <Text>{descriptiveQuestion.description}</Text>
               </CardBody>
               <CardFooter>
                 <Link
                   state={{
-                    courseId: q.courseId,
-                    questionId: q.id,
-                    title: q.title,
-                    description: q.description,
-                    professorId: q.professorId,
+                    courseId: descriptiveQuestion.courseId,
+                    questionId: descriptiveQuestion.id,
+                    title: descriptiveQuestion.title,
+                    description: descriptiveQuestion.description,
+                    professorId: descriptiveQuestion.professorId,
                   }}
                   to={"/sign-in/professor/course/question/descriptive/edit"}
                 >
@@ -84,7 +82,7 @@ const ProfessorAllQuestionsPage = () => {
                   colorScheme="red"
                   marginLeft={5}
                   onClick={() => {
-                    Delete(q.id)
+                    Delete(descriptiveQuestion.id)
                       .then(() => setDeleteCounter(deleteCounter + 1))
                       .catch((err) => setError(err.response.data));
                   }}
@@ -101,22 +99,22 @@ const ProfessorAllQuestionsPage = () => {
           bg={colorMode == "dark" ? "gray.600" : "gray.100"}
         >
           <Heading fontSize={28}>Multiple Choice Questions: </Heading>
-          {multipleChoiceQuestions?.map((q) => (
-            <Card key={q.id} margin={5}>
+          {multipleChoiceQuestions?.map((multipleChoiceQuestion) => (
+            <Card key={multipleChoiceQuestion.id} margin={5}>
               <CardHeader>
-                <Heading fontSize={24}>{q.title}</Heading>
+                <Heading fontSize={24}>{multipleChoiceQuestion.title}</Heading>
               </CardHeader>
               <CardBody>
-                <Text>{q.description}</Text>
+                <Text>{multipleChoiceQuestion.description}</Text>
               </CardBody>
               <CardFooter>
                 <Link
                   state={{
-                    courseId: q.courseId,
-                    questionId: q.id,
-                    title: q.title,
-                    description: q.description,
-                    professorId: q.professorId,
+                    courseId: multipleChoiceQuestion.courseId,
+                    questionId: multipleChoiceQuestion.id,
+                    title: multipleChoiceQuestion.title,
+                    description: multipleChoiceQuestion.description,
+                    professorId: multipleChoiceQuestion.professorId,
                   }}
                   to={"/sign-in/professor/course/question/multiple-choice/edit"}
                 >
@@ -126,9 +124,10 @@ const ProfessorAllQuestionsPage = () => {
                   colorScheme="red"
                   marginLeft={5}
                   onClick={() => {
-                    DeleteMultipleChoiceQuestionAndAnswers(q.id, setError).then(
-                      () => setDeleteCounter(deleteCounter + 1)
-                    );
+                    DeleteMultipleChoiceQuestionAndAnswers(
+                      multipleChoiceQuestion.id,
+                      setError
+                    ).then(() => setDeleteCounter(deleteCounter + 1));
                   }}
                 >
                   Delete
