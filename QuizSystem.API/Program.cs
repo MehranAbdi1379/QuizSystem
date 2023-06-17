@@ -14,29 +14,14 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 
-builder.Services.AddDbContext<QuizSystemContext>(option
-    => option.UseSqlServer(builder.Configuration.GetConnectionString("SQLServer")));
+builder.AddDataBaseContext();
 
-builder.Services.AddCors(options =>
-{
-    var frontendURL = builder.Configuration.GetValue<string>("frontend_url");
+builder.AddCors();
 
-    options.AddDefaultPolicy(builder =>
-    builder.WithOrigins(frontendURL).AllowAnyMethod().AllowAnyHeader());
-});
-
-builder.Services.AddAuthentication();
-builder.Services.ConfigureIdentity();
-builder.Services.ConfigureJWT(builder.Configuration);
-
-Log.Logger = new LoggerConfiguration()
-    .WriteTo.Seq("http://localhost:5341")
-    .CreateLogger();
+builder.AddAuthenticationAndAuthorization();
 
 builder.AddDIForRepositoryClasses();
 builder.AddDIForServiceClasses();
-builder.Services.AddScoped<IAuthManager, AuthManager>();
-
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

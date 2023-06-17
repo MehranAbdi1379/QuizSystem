@@ -5,6 +5,7 @@ using QuizSystem.Service.Contracts.DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Permissions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -46,7 +47,7 @@ public class CourseService : ICourseService
         this.examService = examService;
     }
 
-    public Guid CreateCourse(CourseCreateDTO dto)
+    public Guid Create(CourseCreateDTO dto)
     {
         var course = new Course(dto.Title,
             dto.StartDate,
@@ -58,18 +59,23 @@ public class CourseService : ICourseService
         repository.Create(course);
         repository.Save();
 
+        Create_CreateCourseStudents(dto, course);
+
+        return course.Id;
+    }
+
+    private void Create_CreateCourseStudents(CourseCreateDTO dto , Course course)
+    {
         foreach (var studentId in dto.StudentIds)
         {
-            CourseStudent courseStudent = new CourseStudent(studentId, course.Id, repository, studentRepository);
+            var courseStudent = new CourseStudent(studentId, course.Id, repository, studentRepository);
             courseStudentRepository.Create(courseStudent);
         }
 
         courseStudentRepository.Save();
-
-        return course.Id;
     }
     
-    public void RemoveCourse(IdDTO dto)
+    public void Remove(IdDTO dto)
     {
         var course = repository.GetWithId(dto.Id);
         var studentCourses = courseStudentRepository.GetByCourseId(dto.Id);
@@ -82,55 +88,78 @@ public class CourseService : ICourseService
         repository.Delete(course);
         repository.Save();
 
+        Remove_RemoveDescriptiveQuestions(dto);
+        Remove_RemoveDescriptiveQuestions(dto);
+        Remove_RemoveExams(dto);   
+    }
+
+    private void Remove_RemoveDescriptiveQuestions(IdDTO dto)
+    {
         var descriptiveQuestions = descriptiveQuestionRepository.GetAllByCourseId(dto.Id);
         foreach (var item in descriptiveQuestions)
         {
             descriptiveQuestionService.Delete(new IdDTO { Id = item.Id });
         }
+    }
 
+    public void Remove_RemoveMultipleChoiceQuestions(IdDTO dto)
+    {
         var multipleChoiceQuestions = multipleChoiceQuestionRepository.GetAllByCourseId(dto.Id);
 
         foreach (var item in multipleChoiceQuestions)
         {
             multipleChoiceQuestionService.Delete(new IdDTO { Id = item.Id });
         }
+    }
 
+    public void Remove_RemoveExams(IdDTO dto)
+    {
         var exams = examRepository.GetAllExams(dto.Id);
 
         foreach (var item in exams)
         {
-            examService.DeleteExam(new IdDTO { Id = item.Id});;
+            examService.DeleteExam(new IdDTO { Id = item.Id }); ;
         }
     }
 
-    public Guid UpdateCourse(CourseUpdateDTO dto)
+    public Guid Update(CourseUpdateDTO dto)
     {
-        Course course = repository.GetWithId(dto.Id);
+        var course = repository.GetWithId(dto.Id);
         course.UpdateTitle(dto.Title);
         course.UpdateDate(dto.StartDate, dto.EndDate);
         course.SetProfessor(dto.ProfessorId, professorRepository);
 
-        foreach (var item in courseStudentRepository.GetByCourseId(course.Id))
-        {
-            courseStudentRepository.Delete(item);
-        }
+        Update_RemoveCourseStudents(course);
+        Update_CreateCourseStudents(dto, course);
 
-        foreach (var studentId in dto.StudentIds)
-        {
-            CourseStudent courseStudent = new CourseStudent(studentId, course.Id, repository, studentRepository);
-            courseStudentRepository.Create(courseStudent);
-        }
-
-        courseStudentRepository.Save();
         repository.Update(course);
         repository.Save();
 
         return course.Id;
     }
 
+    private void Update_RemoveCourseStudents(Course course)
+    {
+        foreach (var item in courseStudentRepository.GetByCourseId(course.Id))
+        {
+            courseStudentRepository.Delete(item);
+        }
+    }
+
+    private void Update_CreateCourseStudents(CourseUpdateDTO dto , Course course)
+    {
+        foreach (var studentId in dto.StudentIds)
+        {
+            var courseStudent = new CourseStudent(studentId, course.Id, repository, studentRepository);
+            courseStudentRepository.Create(courseStudent);
+        }
+
+        courseStudentRepository.Save();
+    }
+
     public Guid AddStudentToCourse(CourseAndStudentIdDTO dto)
     {
-        CourseStudent courseStudent = new CourseStudent(dto.StudentId,dto.CourseId,repository,studentRepository);
+        var courseStudent = new CourseStudent(dto.StudentId,dto.CourseId,repository,studentRepository);
 
         courseStudentRepository.Create(courseStudent);
         courseStudentRepository.Save();
@@ -138,12 +167,12 @@ public class CourseService : ICourseService
         return dto.CourseId;
     }
 
-    public List<Course> GetAllCourses()
+    public List<Course> GetAll()
     {
         return repository.GetAllCourses();
     }
 
-    public Course GetCourseById(CourseIdStringDTO dto)
+    public Course GetById(CourseIdStringDTO dto)
     {
         return repository.GetWithId(Guid.Parse(dto.Id));
     }
@@ -159,11 +188,11 @@ public class CourseService : ICourseService
         return studentIds;
     }
 
-    public List<Course> GetCoursesByProfessorId(UserIdDTO dto)
+    public List<Course> GetByProfessorId(UserIdDTO dto)
     {
         return repository.GetByProfessorId(dto.Id);
     }
-    public List<Course> GetCourseByStudentId(UserIdDTO dto)
+    public List<Course> GetByStudentId(UserIdDTO dto)
     {
         var courseStudents = courseStudentRepository.GetByStudentId(dto.Id);
 

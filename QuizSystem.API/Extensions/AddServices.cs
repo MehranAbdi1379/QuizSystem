@@ -13,6 +13,7 @@ using Microsoft.IdentityModel.Logging;
 using Serilog;
 using System.Runtime.CompilerServices;
 using Microsoft.OpenApi.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace QuizSystem.API.Extensions
 {
@@ -29,6 +30,7 @@ namespace QuizSystem.API.Extensions
             builder.Services.AddScoped<IDescriptiveQuestionService, DescriptiveQuestionService>();
             builder.Services.AddScoped<IGradedQuestionService, GradedQuestionService>();
             builder.Services.AddScoped<IExamStudentService, ExamStudentService>();
+            builder.Services.AddScoped<IAuthManager, AuthManager>();
         }
 
         public static void AddDIForRepositoryClasses(this WebApplicationBuilder builder)
@@ -44,6 +46,37 @@ namespace QuizSystem.API.Extensions
             builder.Services.AddScoped<IGradedQuestionRepository, GradedQuestionRepository>();
             builder.Services.AddScoped<IExamStudentRepository, ExamStudentRepository>();
             builder.Services.AddScoped<IExamStudentQuestionRepository, ExamStudentQuestionRepository>();
+        }
+
+        public static void AddAuthenticationAndAuthorization(this WebApplicationBuilder builder)
+        {
+            builder.Services.AddAuthentication();
+            builder.Services.ConfigureIdentity();
+            builder.Services.ConfigureJWT(builder.Configuration);
+        }
+
+        public static void AddLogger()
+        {
+            Log.Logger = new LoggerConfiguration()
+              .WriteTo.Seq("http://localhost:5341")
+              .CreateLogger();
+        }
+
+        public static void AddDataBaseContext(this WebApplicationBuilder builder)
+        {
+            builder.Services.AddDbContext<QuizSystemContext>(option
+    => option.UseSqlServer(builder.Configuration.GetConnectionString("SQLServer")));
+        }
+        
+        public static void AddCors(this WebApplicationBuilder builder)
+        {
+            builder.Services.AddCors(options =>
+            {
+                var frontendURL = builder.Configuration.GetValue<string>("frontend_url");
+
+                options.AddDefaultPolicy(builder =>
+                builder.WithOrigins(frontendURL).AllowAnyMethod().AllowAnyHeader());
+            });
         }
 
         public static void ConfigureIdentity(this IServiceCollection services)

@@ -6,14 +6,14 @@ namespace QuizSystem.Service
     public interface ICourseService
     {
         Guid AddStudentToCourse(CourseAndStudentIdDTO dto);
-        Guid CreateCourse(CourseCreateDTO dto);
-        Guid UpdateCourse(CourseUpdateDTO dto);
-        public List<Course> GetAllCourses();
-        public Course GetCourseById(CourseIdStringDTO dto);
+        Guid Create(CourseCreateDTO dto);
+        Guid Update(CourseUpdateDTO dto);
+        public List<Course> GetAll();
+        public Course GetById(CourseIdStringDTO dto);
         public List<UserIdDTO> GetStudentsByCourseId(CourseIdStringDTO dto);
-        public List<Course> GetCoursesByProfessorId(UserIdDTO dto);
-        public void RemoveCourse(IdDTO dto);
-        public List<Course> GetCourseByStudentId(UserIdDTO dto);
+        public List<Course> GetByProfessorId(UserIdDTO dto);
+        public void Remove(IdDTO dto);
+        public List<Course> GetByStudentId(UserIdDTO dto);
 
     }
 }

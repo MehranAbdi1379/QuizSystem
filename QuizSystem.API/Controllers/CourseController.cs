@@ -34,7 +34,7 @@ namespace QuizSystem.API.Controllers
             try
             {
                 Log.Information($"A new course is created with the title of {dto.Title}.");
-                return Ok(courseService.CreateCourse(dto));
+                return Ok(courseService.Create(dto));
             }
             catch (Exception ex)
             {
@@ -58,7 +58,7 @@ namespace QuizSystem.API.Controllers
             try
             {
                 Log.Information($"Course with id of {dto.Id} is updated");
-                return Ok(courseService.UpdateCourse(dto));
+                return Ok(courseService.Update(dto));
             }
             catch (Exception ex)
             {
@@ -96,7 +96,7 @@ namespace QuizSystem.API.Controllers
             }
 
             Log.Information("Get all courses is successful");
-            return Ok(courseService.GetAllCourses());
+            return Ok(courseService.GetAll());
         }
 
         [HttpPost]
@@ -110,7 +110,7 @@ namespace QuizSystem.API.Controllers
             }
 
             Log.Information($"Get course {dto.Id} is successful");
-            return Ok(courseService.GetCourseById(dto));
+            return Ok(courseService.GetById(dto));
         }
 
         [HttpPost]
@@ -140,7 +140,7 @@ namespace QuizSystem.API.Controllers
             }
 
             Log.Information($"Get courses for professor with id: {dto.Id} is successful");
-            return Ok(courseService.GetCoursesByProfessorId(dto));
+            return Ok(courseService.GetByProfessorId(dto));
         }
 
         [HttpPost]
@@ -157,7 +157,7 @@ namespace QuizSystem.API.Controllers
             {
                 Log.Information($"Course GetByStudentId successful");
 
-                return Ok(courseService.GetCourseByStudentId(dto));
+                return Ok(courseService.GetByStudentId(dto));
             }
             catch (Exception ex)
             {
@@ -179,7 +179,7 @@ namespace QuizSystem.API.Controllers
             try
             {
                 Log.Information($"Delete course with id: {dto.Id} is successful");
-                courseService.RemoveCourse(dto);
+                courseService.Remove(dto);
                 return Ok();
             }
             catch (Exception ex)
