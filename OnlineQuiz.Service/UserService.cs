@@ -86,11 +86,11 @@ namespace QuizSystem.Service
                 await userManager.AddToRoleAsync(user, dto.Role);
                 if (dto.Role.ToLower() == "student")
                 {
-                    studentService.CreateStudent(Guid.Parse(user.Id));
+                    studentService.Create(Guid.Parse(user.Id));
                 }
                 if(dto.Role.ToLower() == "professor")
                 {
-                    professorService.CreateProfessor(Guid.Parse(user.Id));
+                    professorService.Create(Guid.Parse(user.Id));
                 }
             }
 

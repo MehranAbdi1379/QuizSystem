@@ -5,11 +5,11 @@ namespace QuizSystem.Service
 {
     public interface IExamService
     {
-        Exam CreateExam(ExamCreateDTO dto);
-        Exam UpdateExam(ExamUpdateDTO dto);
-        public List<Exam> GetAllExamsByCourseId(IdDTO dto);
+        Exam Create(ExamCreateDTO dto);
+        Exam Update(ExamUpdateDTO dto);
+        public List<Exam> GetAllByCourseId(IdDTO dto);
         public Exam GetById(IdDTO dto);
-        public void DeleteExam(IdDTO dto);
+        public void Remove(IdDTO dto);
 
     }
 }

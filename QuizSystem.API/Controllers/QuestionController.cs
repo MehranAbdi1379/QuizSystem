@@ -88,7 +88,7 @@ namespace QuizSystem.API.Controllers
             try
             {
                 Log.Information($"Descriptive question with id: {dto.Id} delete successful");
-                descriptiveQuestionService.Delete(dto);
+                descriptiveQuestionService.Remove(dto);
                 return Ok();
             }
             catch (Exception ex)
@@ -113,7 +113,7 @@ namespace QuizSystem.API.Controllers
             try
             {
                 Log.Information($"GetDescriptiveQuestionByExamId was successful");
-                return Ok(descriptiveQuestionService.GetWithExamId(dto));
+                return Ok(descriptiveQuestionService.GetByExamId(dto));
             }
             catch (Exception ex)
             {
@@ -138,7 +138,7 @@ namespace QuizSystem.API.Controllers
             try
             {
                 Log.Information($"Descriptive question getByCourseAndProfessorId successful");
-                return Ok(descriptiveQuestionService.GetWithCourseAndProfessorId(dto));
+                return Ok(descriptiveQuestionService.GetByCourseAndProfessorId(dto));
             }
             catch (Exception ex)
             {
@@ -162,7 +162,7 @@ namespace QuizSystem.API.Controllers
             try
             {
                 Log.Information($"Descriptive question getById successful");
-                return Ok(descriptiveQuestionService.GetWithId(dto));
+                return Ok(descriptiveQuestionService.GetById(dto));
             }
             catch (Exception ex)
             {
@@ -234,7 +234,7 @@ namespace QuizSystem.API.Controllers
             try
             {
                 Log.Information($"MultipleChoice question delete successful");
-                multipleChoiceQuestionService.Delete(dto);
+                multipleChoiceQuestionService.Remove(dto);
                 return Ok();
             }
             catch (Exception ex)
@@ -259,7 +259,7 @@ namespace QuizSystem.API.Controllers
             try
             {
                 Log.Information($"GetMultipleChoiceQuestionByExamId was successful");
-                return Ok(multipleChoiceQuestionService.GetWithExamId(dto));
+                return Ok(multipleChoiceQuestionService.GetByExamId(dto));
             }
             catch (Exception ex)
             {
@@ -284,7 +284,7 @@ namespace QuizSystem.API.Controllers
             try
             {
                 Log.Information($"MultipleChoice question GetByCourseAndProfessorId successful");
-                return Ok(multipleChoiceQuestionService.GetWithCourseAndProfessorId(dto));
+                return Ok(multipleChoiceQuestionService.GetByCourseAndProfessorId(dto));
             }
             catch (Exception ex)
             {
@@ -308,7 +308,7 @@ namespace QuizSystem.API.Controllers
             try
             {
                 Log.Information($"Multiple choice question getById successful");
-                return Ok(multipleChoiceQuestionService.GetWithId(dto));
+                return Ok(multipleChoiceQuestionService.GetById(dto));
             }
             catch (Exception ex)
             {
@@ -356,7 +356,7 @@ namespace QuizSystem.API.Controllers
             try
             {
                 Log.Information($"MultipleChoice answer delete successful");
-                multipleChoiceQuestionService.DeleteAnswer(dto);
+                multipleChoiceQuestionService.RemoveAnswer(dto);
                 return Ok();
             }
             catch (Exception ex)
@@ -453,7 +453,7 @@ namespace QuizSystem.API.Controllers
             try
             {
                 Log.Information($"Graded question delete successful");
-                gradedQuestionService.Delete(dto);
+                gradedQuestionService.Remove(dto);
                 return Ok();
             }
             catch (Exception ex)

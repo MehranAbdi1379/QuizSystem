@@ -28,7 +28,7 @@ namespace QuizSystem.Service
             this.userManager = userManager;
         }
 
-        public Professor CreateProfessor(Guid id)
+        public Professor Create(Guid id)
         {
             var professor = new Professor(id);
 
@@ -38,7 +38,7 @@ namespace QuizSystem.Service
             return professor;
         }
 
-        public Professor RemoveProfessor(UserIdDTO dto)
+        public Professor Remove(UserIdDTO dto)
         {
             Professor professor = repository.GetWithId(dto.Id);
 
@@ -48,7 +48,7 @@ namespace QuizSystem.Service
             return professor;
         }
 
-        public Professor AcceptProfessor(UserIdDTO dto)
+        public Professor Accept(UserIdDTO dto)
         {
             Professor professor = repository.GetWithId(dto.Id);
 
@@ -60,7 +60,7 @@ namespace QuizSystem.Service
             return professor;
         }
 
-        public Professor UnAcceptProfessor(UserIdDTO dto)
+        public Professor UnAccept(UserIdDTO dto)
         {
             Professor professor = repository.GetWithId(dto.Id);
 
@@ -84,7 +84,7 @@ namespace QuizSystem.Service
                 repository.Save();
         }
 
-        public async Task<ProfessorGetDTO> GetProfessorById(UserIdStringDTO dto)
+        public async Task<ProfessorGetDTO> GetById(UserIdStringDTO dto)
         {
             var data = await userManager.FindByIdAsync(dto.Id);
             var courses = courseRepository.GetByProfessorId(Guid.Parse(dto.Id));
@@ -105,7 +105,7 @@ namespace QuizSystem.Service
             };
         }
 
-        public async Task<List<ProfessorGetDTO>> GetAllProfessors()
+        public async Task<List<ProfessorGetDTO>> GetAll()
         {
             var data = await userManager.GetUsersInRoleAsync("Professor");
             var professors = new List<ProfessorGetDTO>();

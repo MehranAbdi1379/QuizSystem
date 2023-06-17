@@ -5,12 +5,12 @@ namespace QuizSystem.Service
 {
     public interface IStudentService
     {
-        public Student CreateStudent(Guid id);
-        public void RemoveStudent(UserIdDTO dto);
-        public Student AcceptStudent(UserIdDTO dto);
-        public Student UnAcceptStudent(UserIdDTO dto);
+        public Student Create(Guid id);
+        public void Remove(UserIdDTO dto);
+        public Student Accept(UserIdDTO dto);
+        public Student UnAccept(UserIdDTO dto);
         public void ChangeStudentToProfessor(UserIdDTO dto);
-        public Task<StudentGetDTO> GetStudentById(UserIdStringDTO dto);
-        public Task<List<StudentGetDTO>> GetAllStudents();
+        public Task<StudentGetDTO> GetById(UserIdStringDTO dto);
+        public Task<List<StudentGetDTO>> GetAll();
     }
 }

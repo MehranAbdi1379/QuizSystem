@@ -53,30 +53,30 @@ namespace QuizSystem.Service
             return question;
         }
 
-        public void Delete(IdDTO dto)
+        public void Remove(IdDTO dto)
         {
             var gradedQuestions = gradedQuestionService.GetByQuestionId(dto);
 
             foreach (var gradedQuestion in gradedQuestions)
             {
-                gradedQuestionService.Delete(new IdDTO { Id = gradedQuestion.Id });
+                gradedQuestionService.Remove(new IdDTO { Id = gradedQuestion.Id });
             }
             var question = descriptiveQuestionRepository.GetWithId(dto.Id);
             descriptiveQuestionRepository.Delete(question);
             descriptiveQuestionRepository.Save();
         }
 
-        public List<DescriptiveQuestion> GetWithCourseAndProfessorId(CourseAndProfessorIdDTO dto)
+        public List<DescriptiveQuestion> GetByCourseAndProfessorId(CourseAndProfessorIdDTO dto)
         {
             return descriptiveQuestionRepository.GetByCourseAndProfessorId(dto.CourseId, dto.ProfessorId);
         }
 
-        public DescriptiveQuestion GetWithId(IdDTO dto)
+        public DescriptiveQuestion GetById(IdDTO dto)
         {
             return descriptiveQuestionRepository.GetWithId(dto.Id);
         }
 
-        public List<DescriptiveQuestion> GetWithExamId(IdDTO dto)
+        public List<DescriptiveQuestion> GetByExamId(IdDTO dto)
         {
             var questions = new List<DescriptiveQuestion>();
             var descriptiveGradedQuestions = gradedQuestionService.GetDescriptiveQuestionsOnly(dto);

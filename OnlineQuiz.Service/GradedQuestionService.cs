@@ -38,7 +38,7 @@ namespace QuizSystem.Service
             return answer;
         }
 
-        public void Delete(IdDTO dto)
+        public void Remove(IdDTO dto)
         {
             var examStudentQuestions = examStudentQuestionRepository.GetAllByGradedQuestionId(dto.Id);
 

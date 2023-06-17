@@ -7,13 +7,13 @@ namespace QuizSystem.Service
     {
         MultipleChoiceQuestion Create(QuestionCreateDTO dto);
         MultipleChoiceAnswer CreateAnswer(MultipleChoiceAnswerCreateDTO dto);
-        void Delete(IdDTO dto);
-        void DeleteAnswer(IdDTO dto);
-        List<MultipleChoiceQuestion> GetWithCourseAndProfessorId(CourseAndProfessorIdDTO dto);
+        void Remove(IdDTO dto);
+        void RemoveAnswer(IdDTO dto);
+        List<MultipleChoiceQuestion> GetByCourseAndProfessorId(CourseAndProfessorIdDTO dto);
         MultipleChoiceQuestion Update(QuestionUpdateDTO dto);
         public List<MultipleChoiceAnswer> GetAnswersByQuestionId(IdDTO dto);
         public MultipleChoiceAnswer UpdateAnswer(MultipleChoiceAnswerUpdateDTO dto);
-        public MultipleChoiceQuestion GetWithId(IdDTO dto);
-        public List<MultipleChoiceQuestion> GetWithExamId(IdDTO dto);
+        public MultipleChoiceQuestion GetById(IdDTO dto);
+        public List<MultipleChoiceQuestion> GetByExamId(IdDTO dto);
     }
 }

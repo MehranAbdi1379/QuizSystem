@@ -98,7 +98,7 @@ public class CourseService : ICourseService
         var descriptiveQuestions = descriptiveQuestionRepository.GetAllByCourseId(dto.Id);
         foreach (var item in descriptiveQuestions)
         {
-            descriptiveQuestionService.Delete(new IdDTO { Id = item.Id });
+            descriptiveQuestionService.Remove(new IdDTO { Id = item.Id });
         }
     }
 
@@ -108,7 +108,7 @@ public class CourseService : ICourseService
 
         foreach (var item in multipleChoiceQuestions)
         {
-            multipleChoiceQuestionService.Delete(new IdDTO { Id = item.Id });
+            multipleChoiceQuestionService.Remove(new IdDTO { Id = item.Id });
         }
     }
 
@@ -118,7 +118,7 @@ public class CourseService : ICourseService
 
         foreach (var item in exams)
         {
-            examService.DeleteExam(new IdDTO { Id = item.Id }); ;
+            examService.Remove(new IdDTO { Id = item.Id }); ;
         }
     }
 

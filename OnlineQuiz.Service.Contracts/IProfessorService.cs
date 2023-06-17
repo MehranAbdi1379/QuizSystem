@@ -5,13 +5,13 @@ namespace QuizSystem.Service
 {
     public interface IProfessorService
     {
-        public Professor CreateProfessor(Guid id);
-public Professor RemoveProfessor(UserIdDTO dto);
-public Professor AcceptProfessor(UserIdDTO dto);
-public Professor UnAcceptProfessor(UserIdDTO dto);
+        public Professor Create(Guid id);
+public Professor Remove(UserIdDTO dto);
+public Professor Accept(UserIdDTO dto);
+public Professor UnAccept(UserIdDTO dto);
 public void ChangeProfessorToStudent(UserIdDTO dto);
-        public  Task<ProfessorGetDTO> GetProfessorById(UserIdStringDTO dto);
-        public  Task<List<ProfessorGetDTO>> GetAllProfessors();
+        public  Task<ProfessorGetDTO> GetById(UserIdStringDTO dto);
+        public  Task<List<ProfessorGetDTO>> GetAll();
 
 
 

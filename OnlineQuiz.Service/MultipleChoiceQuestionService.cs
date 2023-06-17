@@ -50,7 +50,7 @@ namespace QuizSystem.Service
             return question;
         }
 
-        public void Delete(IdDTO dto)
+        public void Remove(IdDTO dto)
         {
             var question = multipleChoiceQuestionRepository.GetWithId(dto.Id);
             var answers = multipleChoiceAnswerRepository.GetByQuestionId(question.Id);
@@ -64,13 +64,13 @@ namespace QuizSystem.Service
 
             foreach (var item in gradedQuestions)
             {
-                gradedQuestionService.Delete(new IdDTO { Id = item.Id });
+                gradedQuestionService.Remove(new IdDTO { Id = item.Id });
             }
             multipleChoiceQuestionRepository.Delete(question);
             multipleChoiceQuestionRepository.Save();
         }
 
-        public List<MultipleChoiceQuestion> GetWithExamId(IdDTO dto)
+        public List<MultipleChoiceQuestion> GetByExamId(IdDTO dto)
         {
             var questions = new List<MultipleChoiceQuestion>();
             var multipleChoiceQuestions = gradedQuestionService.GetMultipleChoiceQuestionsOnly(dto);
@@ -83,7 +83,7 @@ namespace QuizSystem.Service
             return questions;
         }
 
-        public List<MultipleChoiceQuestion> GetWithCourseAndProfessorId(CourseAndProfessorIdDTO dto)
+        public List<MultipleChoiceQuestion> GetByCourseAndProfessorId(CourseAndProfessorIdDTO dto)
         {
             return multipleChoiceQuestionRepository.GetByCourseAndProfessorId(dto.CourseId, dto.ProfessorId);
         }
@@ -96,7 +96,7 @@ namespace QuizSystem.Service
             return answer;
         }
 
-        public void DeleteAnswer(IdDTO dto)
+        public void RemoveAnswer(IdDTO dto)
         {
             var answer = multipleChoiceAnswerRepository.GetWithId(dto.Id);
             multipleChoiceAnswerRepository.Delete(answer);
@@ -120,7 +120,7 @@ namespace QuizSystem.Service
             return answer;
         }
 
-        public MultipleChoiceQuestion GetWithId(IdDTO dto)
+        public MultipleChoiceQuestion GetById(IdDTO dto)
         {
             return multipleChoiceQuestionRepository.GetWithId(dto.Id);
         }

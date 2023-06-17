@@ -29,7 +29,7 @@ namespace QuizSystem.API.Controllers
                 
             }
             Log.Information($"Student with if of {dto.Id} is accepted");
-            return Ok(studentService.AcceptStudent(dto));
+            return Ok(studentService.Accept(dto));
             
         }
 
@@ -45,7 +45,7 @@ namespace QuizSystem.API.Controllers
                 
             }
             Log.Information($"Student with id of {dto.Id} is unaccepted");
-            return Ok(studentService.UnAcceptStudent(dto));
+            return Ok(studentService.UnAccept(dto));
             
         }
 
@@ -61,7 +61,7 @@ namespace QuizSystem.API.Controllers
 
             }
             Log.Information($"Student get by id is completed for student: {dto.Id}");
-            return Ok(await studentService.GetStudentById(dto));
+            return Ok(await studentService.GetById(dto));
         }
 
         [HttpGet]
@@ -76,7 +76,7 @@ namespace QuizSystem.API.Controllers
 
             }
             Log.Information($"Student get all is successful");
-            return Ok(await studentService.GetAllStudents());
+            return Ok(await studentService.GetAll());
         }
     }
 }

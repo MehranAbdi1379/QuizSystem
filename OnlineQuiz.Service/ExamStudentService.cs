@@ -56,12 +56,12 @@ namespace QuizSystem.Service
             return examStudent;
         }
 
-        public bool StudentExamExist(ExamStudentCreateDTO dto)
+        public bool IsStudentExamExist(ExamStudentCreateDTO dto)
         {
             return repository.IsExamStudentAlreadyExist(dto.ExamId, dto.StudentId);
         }
 
-        public bool isExamFinished(ExamStudentCreateDTO dto)
+        public bool IsExamFinished(ExamStudentCreateDTO dto)
         {
             var examStudent = repository.GetByExamAndStudentId(dto.ExamId, dto.StudentId);
 
@@ -104,7 +104,7 @@ namespace QuizSystem.Service
             return examStudentQuestion;
         }
 
-        public void Delete(IdDTO dto)
+        public void Remove(IdDTO dto)
         {
             var examStudent = repository.GetWithId(dto.Id);
 

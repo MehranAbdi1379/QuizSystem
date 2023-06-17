@@ -6,7 +6,7 @@ namespace QuizSystem.Service
     public interface IGradedQuestionService
     {
         GradedQuestion Create(GradedQuestionCreateDTO dto);
-        void Delete(IdDTO dto);
+        void Remove(IdDTO dto);
         public List<GradedQuestion> GetAllByExamId(IdDTO dto);
         public GradedQuestion Update(GradedQuestionUpdateDTO dto);
         public List<GradedQuestion> GetByQuestionId(IdDTO dto);

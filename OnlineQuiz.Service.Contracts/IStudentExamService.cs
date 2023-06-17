@@ -6,13 +6,13 @@ namespace QuizSystem.Service
     public interface IExamStudentService
     {
         public ExamStudentQuestion UpdateGrade(ExamStudentQuestionUpdateGradeDTO dto);
-        void Delete(IdDTO dto);
+        void Remove(IdDTO dto);
         ExamStudentQuestion UpdateQuestion(ExamStudentQuestionUpdateDTO dto);
         public ExamStudent Create(ExamStudentCreateDTO dto);
         public ExamStudent GetByStudentAndExamId(ExamStudentCreateDTO dto);
         public ExamStudentQuestion GetQuestion(ExamStudentQuestionGetDTO dto);
-        public bool StudentExamExist(ExamStudentCreateDTO dto);
-        public bool isExamFinished(ExamStudentCreateDTO dto);
+        public bool IsStudentExamExist(ExamStudentCreateDTO dto);
+        public bool IsExamFinished(ExamStudentCreateDTO dto);
         public List<ExamStudent> GetAllByExamId(IdDTO dto);
         public List<ExamStudentQuestion> GetAllQuestionsByExamAndStudentId(ExamStudentQuestionsGetByExamAndStudentIdDTO dto);
 

@@ -35,7 +35,7 @@ namespace QuizSystem.API.Controllers
             try
             {
                 Log.Information("New exam created");
-                return Ok(examService.CreateExam(dto));
+                return Ok(examService.Create(dto));
             }
             catch (Exception ex)
             {
@@ -61,7 +61,7 @@ namespace QuizSystem.API.Controllers
             try
             {
                 Log.Information($"Exam with id : {dto.Id} updated");
-                return Ok(examService.UpdateExam(dto));
+                return Ok(examService.Update(dto));
             }
             catch (Exception ex)
             {
@@ -86,7 +86,7 @@ namespace QuizSystem.API.Controllers
             try
             {
                 Log.Information($"Get exams for course with id {dto.Id}");
-                return Ok(examService.GetAllExamsByCourseId(dto));
+                return Ok(examService.GetAllByCourseId(dto));
             }
             catch (Exception ex)
             {
@@ -123,7 +123,7 @@ namespace QuizSystem.API.Controllers
             }
 
             Log.Information($"Delete exam with id {dto.Id} is successful");
-            examService.DeleteExam(dto);
+            examService.Remove(dto);
             return Ok();
         }
 
@@ -189,7 +189,7 @@ namespace QuizSystem.API.Controllers
             try
             {
                 Log.Information("ExamStudentExist successful");
-                return Ok(examStudentService.StudentExamExist(dto));
+                return Ok(examStudentService.IsStudentExamExist(dto));
             }
             catch (Exception ex)
             {
@@ -213,7 +213,7 @@ namespace QuizSystem.API.Controllers
             try
             {
                 Log.Information($"Delete examStudent with id {dto.Id} is successful");
-                examStudentService.Delete(dto);
+                examStudentService.Remove(dto);
                 return Ok();
             }
             catch (Exception ex)
@@ -240,7 +240,7 @@ namespace QuizSystem.API.Controllers
             try
             {
                 Log.Information("ExamStudentFinished successful");
-                return Ok(examStudentService.isExamFinished(dto));
+                return Ok(examStudentService.IsExamFinished(dto));
             }
             catch (Exception ex)
             {

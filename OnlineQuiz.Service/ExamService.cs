@@ -26,7 +26,7 @@ namespace QuizSystem.Service
             this.examStudentRepository = examStudentRepository;
         }
 
-        public Exam CreateExam(ExamCreateDTO dto)
+        public Exam Create(ExamCreateDTO dto)
         {
             var exam = new Exam(courseRepository, repository, dto.Title, dto.CourseId, dto.Description, dto.Time);
             repository.Create(exam);
@@ -34,7 +34,7 @@ namespace QuizSystem.Service
             return exam;
         }
 
-        public Exam UpdateExam(ExamUpdateDTO dto)
+        public Exam Update(ExamUpdateDTO dto)
         {
             var exam = repository.GetWithId(dto.Id);
             exam.SetTime(dto.Time);
@@ -46,7 +46,7 @@ namespace QuizSystem.Service
             return exam;
         }
 
-        public List<Exam> GetAllExamsByCourseId(IdDTO dto)
+        public List<Exam> GetAllByCourseId(IdDTO dto)
         {
             return repository.GetAllExams(dto.Id);
         }
@@ -56,7 +56,7 @@ namespace QuizSystem.Service
             return repository.GetWithId(dto.Id);
         }
 
-        public void DeleteExam(IdDTO dto)
+        public void Remove(IdDTO dto)
         {
             var exam = repository.GetWithId(dto.Id);
             repository.Delete(exam);
@@ -73,7 +73,7 @@ namespace QuizSystem.Service
 
             foreach (var item in examStudents)
             {
-                examStudentService.Delete(new IdDTO { Id = item.Id }) ;
+                examStudentService.Remove(new IdDTO { Id = item.Id }) ;
             }
         }
 
