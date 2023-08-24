@@ -114,7 +114,7 @@ namespace QuizSystem.API.Extensions
                     ValidIssuer = jwtSettings["Issuer"],
                     ValidAudience = jwtSettings["Audience"],
                     IssuerSigningKey = new
-    SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey))
+                    SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey))
                 };
             });
 

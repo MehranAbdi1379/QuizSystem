@@ -30,6 +30,9 @@ builder.Services.AddSwagger();
 
 var app = builder.Build();
 
+//TODO: Add migrate async
+
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {

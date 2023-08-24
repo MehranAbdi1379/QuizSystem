@@ -44,7 +44,8 @@ namespace QuizSystem.API.Controllers
                 Log.Error(lengthError);
                 return BadRequest(lengthError);
             }
-            if (dto.Role.ToLower() != "admin")
+            //todo: admin
+            if (dto.Role.ToLower() != "")
             {
                 var task = await userService.SignUp(dto, userManager);
 

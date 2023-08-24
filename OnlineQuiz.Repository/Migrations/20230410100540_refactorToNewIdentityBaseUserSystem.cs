@@ -67,35 +67,11 @@ namespace QuizSystem.Repository.Migrations
             migrationBuilder.DropColumn(
                 name: "Password",
                 table: "Professors");
-
-            migrationBuilder.InsertData(
-                table: "AspNetRoles",
-                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[,]
-                {
-                    { "1fb1cfe7-6960-4683-afe2-074f564b5018", "8e52b787-263c-4223-b63a-812aedcc70d2", "Professor", "PROFESSOR" },
-                    { "2e304326-1338-4b59-b135-459e7f330105", "2e30f543-7c7d-4abd-af2b-76833896b5f8", "Admin", "ADMIN" },
-                    { "832317e5-ccab-4467-b507-45c998f9f8d4", "f060680a-d175-43a7-93b6-a0320b052439", "Student", "STUDENT" }
-                });
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DeleteData(
-                table: "AspNetRoles",
-                keyColumn: "Id",
-                keyValue: "1fb1cfe7-6960-4683-afe2-074f564b5018");
-
-            migrationBuilder.DeleteData(
-                table: "AspNetRoles",
-                keyColumn: "Id",
-                keyValue: "2e304326-1338-4b59-b135-459e7f330105");
-
-            migrationBuilder.DeleteData(
-                table: "AspNetRoles",
-                keyColumn: "Id",
-                keyValue: "832317e5-ccab-4467-b507-45c998f9f8d4");
 
             migrationBuilder.AddColumn<DateTime>(
                 name: "BirthDate",
@@ -174,16 +150,6 @@ namespace QuizSystem.Repository.Migrations
                 maxLength: 50,
                 nullable: false,
                 defaultValue: "");
-
-            migrationBuilder.InsertData(
-                table: "AspNetRoles",
-                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[,]
-                {
-                    { "ab14f91f-519e-45d6-a754-81f22ca3eb78", "990cac3b-470f-49af-a420-29771bfae3c8", "Professor", "PROFESSOR" },
-                    { "ca0621d4-f904-408b-b941-4b3f711ea330", "fe37f3da-572e-4e41-8041-24d236f27111", "Admin", "ADMIN" },
-                    { "eb8c9c94-cd50-476f-b019-21608c210649", "8aafdd59-776d-411b-a2cc-defdeb284600", "Student", "STUDENT" }
-                });
         }
     }
 }
