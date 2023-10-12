@@ -52,7 +52,7 @@ namespace QuizSystem.Domain.Models
 
         public void SetTime(int time)
         {
-            if (time < 1)
+            if (time < 5)
                 throw new ExamTimeShortException();
             Time = time;
         }

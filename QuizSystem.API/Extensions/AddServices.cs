@@ -14,6 +14,7 @@ using Serilog;
 using System.Runtime.CompilerServices;
 using Microsoft.OpenApi.Models;
 using Microsoft.EntityFrameworkCore;
+using QuizSystem.Repository.SeedData;
 
 namespace QuizSystem.API.Extensions
 {
@@ -153,6 +154,38 @@ namespace QuizSystem.API.Extensions
         }
     });
             });
+        }
+
+        public async static void SeedUsers(this IServiceCollection services)
+        {
+            using var scoped = services.BuildServiceProvider().CreateScope();
+            var userManager = scoped.ServiceProvider.GetService<UserManager<ApiUser>>();
+            if (userManager.Users.Count() == 0)
+                await UserSeedData.SeedData(userManager);
+        }
+
+        public async static void SeedCourses(this IServiceCollection services)
+        {
+            using var scoped = services.BuildServiceProvider().CreateScope();
+            var context = scoped.ServiceProvider.GetService<QuizSystemContext>();
+            if (context.Set<Course>().Count() == 0)
+                await CourseSeedData.SeedData(context);
+        }
+
+        public async static void SeedExams(this IServiceCollection services)
+        {
+            using var scoped = services.BuildServiceProvider().CreateScope();
+            var context = scoped.ServiceProvider.GetService<QuizSystemContext>();
+            if(context.Set<Exam>().Count() == 0)
+                await ExamSeedData.SeedData(context);
+        }
+
+        public async static void SeedDescriptiveQuestions(this IServiceCollection services)
+        {
+            using var scoped = services.BuildServiceProvider().CreateScope();
+            var context = scoped.ServiceProvider.GetService<QuizSystemContext>();
+            if(context.Set<DescriptiveQuestion>().Count() == 0)
+                await DescriptiveQuestionSeedData.SeedData(context);
         }
     }
 }
