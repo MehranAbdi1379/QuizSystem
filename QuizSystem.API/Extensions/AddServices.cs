@@ -15,6 +15,7 @@ using System.Runtime.CompilerServices;
 using Microsoft.OpenApi.Models;
 using Microsoft.EntityFrameworkCore;
 using QuizSystem.Repository.SeedData;
+using QuizSystem.Service.Contracts.DTO;
 
 namespace QuizSystem.API.Extensions
 {
@@ -158,18 +159,22 @@ namespace QuizSystem.API.Extensions
 
         public async static void SeedUsers(this IServiceCollection services)
         {
-            using var scoped = services.BuildServiceProvider().CreateScope();
+            var scoped = services.BuildServiceProvider().CreateScope();
+            var secondScoped = services.BuildServiceProvider().CreateScope();
             var userManager = scoped.ServiceProvider.GetService<UserManager<ApiUser>>();
+            var context = secondScoped.ServiceProvider.GetService<QuizSystemContext>();
             if (userManager.Users.Count() == 0)
-                await UserSeedData.SeedData(userManager);
+                await UserSeedData.SeedData(userManager,context);
         }
 
         public async static void SeedCourses(this IServiceCollection services)
         {
             using var scoped = services.BuildServiceProvider().CreateScope();
+            using var secondScope = services.BuildServiceProvider().CreateScope();
             var context = scoped.ServiceProvider.GetService<QuizSystemContext>();
+            var userManager = secondScope.ServiceProvider.GetService<UserManager<ApiUser>>();
             if (context.Set<Course>().Count() == 0)
-                await CourseSeedData.SeedData(context);
+                await CourseSeedData.SeedData(context, userManager);
         }
 
         public async static void SeedExams(this IServiceCollection services)
