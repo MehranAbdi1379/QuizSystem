@@ -1,4 +1,5 @@
 ﻿using Bogus;
+using Microsoft.AspNetCore.Identity;
 using QuizSystem.Domain.Models;
 using QuizSystem.Domain.Value_Object;
 using QuizSystem.Repository.DataBase;
@@ -12,13 +13,13 @@ namespace QuizSystem.Repository.SeedData
 {
     public static class CourseSeedData
     {
-        public async static Task SeedData(QuizSystemContext context)
+        public async static Task SeedData(QuizSystemContext context , UserManager<ApiUser> userManager)
         {
-            var professorIds = context.Set<Professor>().ToList().Select(p => p.Id).ToList();
+            var professorIds = userManager.GetUsersInRoleAsync("professor").Result.Select(u => Guid.Parse(u.Id)).ToList();
 
             var courseFaker = new Faker<Course>()
                 .RuleFor(c => c.Title, f => f.Random.Words(2))
-                .RuleFor(c => c.TimePeriod, f => new TimePeriod(f.Date.Future(1), f.Date.Future(2)))
+                .RuleFor(c => c.TimePeriod, f => new TimePeriod(DateTime.Now.AddDays(f.Random.Number(1,60)), f.Date.Future(2,DateTime.Now)))
                 .RuleFor(c => c.ProfessorId, f => f.PickRandom(professorIds));
 
             List<Course> dummyCourses = courseFaker.Generate(20);
