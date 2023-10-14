@@ -12,7 +12,7 @@ namespace QuizSystem.Repository.SeedData
 {
     public static class UserSeedData
     {
-        public static async Task SeedData(UserManager<ApiUser> userManager)
+        public static async Task SeedData(UserManager<ApiUser> userManager, QuizSystemContext context)
         {
             var faker = new Faker<ApiUser>()
             .RuleFor(u => u.FirstName, f => f.Person.FirstName)
@@ -27,7 +27,10 @@ namespace QuizSystem.Repository.SeedData
                 user.UserName = user.NationalCode;
                 await userManager.CreateAsync(user, "123456");
                 await userManager.AddToRoleAsync(user, "student");
+                var student = new Student(Guid.Parse(user.Id));
+                context.Set<Student>().Add(student);
             }
+            
 
             dummyUsers = faker.Generate(20);
 
@@ -36,7 +39,11 @@ namespace QuizSystem.Repository.SeedData
                 user.UserName = user.NationalCode;
                 await userManager.CreateAsync(user, "123456");
                 await userManager.AddToRoleAsync(user, "professor");
+                var professor = new Professor(Guid.Parse(user.Id));
+                context.Set<Professor>().Add(professor);
             }
+
+            context.SaveChanges();
 
             var admin = new ApiUser() { FirstName = "Mehran", LastName = "Abdi"
                 , BirthDate = new DateTime(2000, 10, 28) , NationalCode = "2741723486"};
