@@ -17,7 +17,7 @@ namespace QuizSystem.Repository.SeedData
 
             var facker = new Faker<DescriptiveQuestion>()
                 .RuleFor(e => e.Description, f => f.Lorem.Sentence())
-                .RuleFor(e => e.Title, f => f.Random.Words(2))
+                .RuleFor(e => e.Title, f => { var randomWord = f.Random.Word(); return randomWord.Length < 20 ? randomWord : randomWord.Substring(0, 18);})
                 .RuleFor(e => e.ProfessorId, f => f.PickRandom(courses.Select(c => c.ProfessorId)))
                 .RuleFor(e => e.CourseId , f => f.PickRandom(courses.Select(c => c.Id)));
 
