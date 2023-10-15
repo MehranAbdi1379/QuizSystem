@@ -19,7 +19,7 @@ namespace QuizSystem.Repository.SeedData
 
             var courseFaker = new Faker<Course>()
                 .RuleFor(c => c.Title, f => f.Random.Words(2))
-                .RuleFor(c => c.TimePeriod, f => new TimePeriod(DateTime.Now.AddDays(f.Random.Number(1,60)), f.Date.Future(2,DateTime.Now)))
+                .RuleFor(c => c.TimePeriod, f => new TimePeriod(DateTime.Now.AddDays(f.Random.Number(1,360)), DateTime.Now.AddDays(f.Random.Number(390, 700))))
                 .RuleFor(c => c.ProfessorId, f => f.PickRandom(professorIds));
 
             List<Course> dummyCourses = courseFaker.Generate(20);
