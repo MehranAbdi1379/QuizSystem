@@ -157,7 +157,7 @@ namespace QuizSystem.API.Extensions
             });
         }
 
-        public async static void SeedUsers(this IServiceCollection services)
+        public async static Task SeedUsers(this IServiceCollection services)
         {
             var scoped = services.BuildServiceProvider().CreateScope();
             var secondScoped = services.BuildServiceProvider().CreateScope();
@@ -167,7 +167,7 @@ namespace QuizSystem.API.Extensions
                 await UserSeedData.SeedData(userManager,context);
         }
 
-        public async static void SeedCourses(this IServiceCollection services)
+        public async static Task SeedCourses(this IServiceCollection services)
         {
             using var scoped = services.BuildServiceProvider().CreateScope();
             using var secondScope = services.BuildServiceProvider().CreateScope();
@@ -177,7 +177,7 @@ namespace QuizSystem.API.Extensions
                 await CourseSeedData.SeedData(context, userManager);
         }
 
-        public async static void SeedExams(this IServiceCollection services)
+        public async static Task SeedExams(this IServiceCollection services)
         {
             using var scoped = services.BuildServiceProvider().CreateScope();
             var context = scoped.ServiceProvider.GetService<QuizSystemContext>();
@@ -185,12 +185,20 @@ namespace QuizSystem.API.Extensions
                 await ExamSeedData.SeedData(context);
         }
 
-        public async static void SeedDescriptiveQuestions(this IServiceCollection services)
+        public async static Task SeedDescriptiveQuestions(this IServiceCollection services)
         {
             using var scoped = services.BuildServiceProvider().CreateScope();
             var context = scoped.ServiceProvider.GetService<QuizSystemContext>();
             if(context.Set<DescriptiveQuestion>().Count() == 0)
                 await DescriptiveQuestionSeedData.SeedData(context);
+        }
+
+        public async static void SeedData(this IServiceCollection services)
+        {
+            await SeedUsers(services);
+            await SeedCourses(services);
+            await SeedExams(services);
+            await SeedDescriptiveQuestions(services);
         }
     }
 }

@@ -23,10 +23,7 @@ builder.AddAuthenticationAndAuthorization();
 builder.AddDIForRepositoryClasses();
 builder.AddDIForServiceClasses();
 
-builder.Services.SeedUsers();
-builder.Services.SeedCourses();
-builder.Services.SeedDescriptiveQuestions();
-builder.Services.SeedExams();
+builder.Services.SeedData();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
